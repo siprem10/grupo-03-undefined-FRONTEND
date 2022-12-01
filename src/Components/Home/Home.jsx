@@ -1,5 +1,3 @@
-import BaseButton from "../BaseButton/BaseButton";
-
 export default function Home(){
 
     return (
