@@ -11,7 +11,7 @@ function App() {
         <Route exact path='/login' element={<Login />} >
         </Route>
       </Routes>
-    </BrowserRouter>    
+    </BrowserRouter>
   )
 }
 
