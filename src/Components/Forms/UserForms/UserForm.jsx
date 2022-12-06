@@ -1,8 +1,14 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { FaUser } from 'react-icons/fa';
+import {
+    FormLabel,
+    FormButton,
+    FormInput,
+    ErrorMessage,
+} from './FormComponents';
 
-function UserForm({ title, validations, onSubmit, buttonTitle }) {
+function UserForm({ title, validationSchema, onSubmit, buttonTitle }) {
     const formik = useFormik({
         initialValues: {
             firstName: '',
@@ -11,7 +17,7 @@ function UserForm({ title, validations, onSubmit, buttonTitle }) {
             password: '',
             avatar: '',
         },
-        validationSchema: validations,
+        validationSchema,
         onSubmit,
     });
 
@@ -22,103 +28,90 @@ function UserForm({ title, validations, onSubmit, buttonTitle }) {
             </h1>
             <div className='flex flex-wrap -mx-3 mb-6'>
                 <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-                    <label
-                        className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-                        htmlFor='firstName'
-                    >
-                        First Name
-                    </label>
-                    <input
-                        className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-500'
+                    <FormLabel htmlFor='firstName'>First Name</FormLabel>
+
+                    <FormInput
                         id='firstName'
                         name='firstName'
                         type='text'
                         onChange={formik.handleChange}
                         value={formik.values.firstName}
+                        formikError={formik.errors.firstName}
                         placeholder='Jane'
                     />
+                    {formik.values.firstName.length > 0 &&
+                        formik.errors.firstName && (
+                            <ErrorMessage msg={formik.errors.firstName} />
+                        )}
                 </div>
                 <div className='w-full md:w-1/2 px-3'>
-                    <label
-                        className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-                        htmlFor='lastName'
-                    >
-                        Last Name
-                    </label>
-                    <input
-                        className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-teal-500'
+                    <FormLabel htmlFor='lastName'>Last Name</FormLabel>
+                    <FormInput
                         id='lastName'
                         name='lastName'
                         type='text'
                         onChange={formik.handleChange}
                         value={formik.values.lastName}
+                        formikError={formik.errors.lastName}
                         placeholder='Doe'
                     />
+                    {formik.values.lastName.length > 0 &&
+                        formik.errors.lastName && (
+                            <ErrorMessage msg={formik.errors.lastName} />
+                        )}
                 </div>
             </div>
             <div className='flex flex-wrap -mx-3 mb-6'>
                 <div className='w-full px-3'>
-                    <label
-                        className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-                        htmlFor='email'
-                    >
-                        Email
-                    </label>
-                    <input
-                        className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-500'
+                    <FormLabel htmlFor='email'>Email</FormLabel>
+                    <FormInput
                         id='email'
                         name='email'
                         type='email'
                         onChange={formik.handleChange}
                         value={formik.values.email}
+                        formikError={formik.errors.email}
                         placeholder='jondoe@email.com'
                     />
+                    {formik.values.email.length > 0 && formik.errors.email && (
+                        <ErrorMessage msg={formik.errors.email} />
+                    )}
                 </div>
             </div>
             <div className='flex flex-wrap -mx-3 mb-6'>
                 <div className='w-full px-3'>
-                    <label
-                        className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-                        htmlFor='password'
-                    >
-                        Password
-                    </label>
-                    <input
-                        className='appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-teal-500'
+                    <FormLabel htmlFor='password'>Password</FormLabel>
+                    <FormInput
                         id='password'
                         name='password'
                         type='password'
                         onChange={formik.handleChange}
                         value={formik.values.password}
+                        formikError={formik.errors.password}
                         placeholder='******************'
                     />
+                    {formik.values.password.length > 0 &&
+                        formik.errors.password && (
+                            <ErrorMessage msg={formik.errors.password} />
+                        )}
                 </div>
             </div>
             <div>
-                <label
-                    className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
-                    htmlFor='avatar'
-                >
-                    Avatar
-                </label>
-                <button
-                    className='flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded'
-                    type='button'
-                >
-                    Upload Image
-                </button>
+                <FormLabel htmlFor='avatar'>
+                    Avatar <small>(Optional)</small>
+                </FormLabel>
+                <FormButton>Upload Image</FormButton>
             </div>
             <div className='flex justify-center mt-10'>
-                <button
-                    className='flex items-center gap-1 flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded'
-                    type='submit'
-                >
+                <FormButton className='flex items-center gap-1' type='submit'>
                     <FaUser />
                     {buttonTitle}
-                </button>
+                </FormButton>
+
                 <button
                     className='flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded'
                     type='button'
+                    onClick={formik.handleReset}
                 >
                     Clear Form
                 </button>
