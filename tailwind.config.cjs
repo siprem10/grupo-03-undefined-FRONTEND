@@ -10,7 +10,11 @@ module.exports = {
       tertiary: "#e16162",
       accent: "#f9bc60",
       white: "#fffffe",
-      black: "#001e1d"
+      black: "#001e1d",
+      success: "#20FC8F",
+      info: "#2660A4",
+      alert: "#F0A202",
+      error: "#FF2E00"
     },
     extend: {},
   },
