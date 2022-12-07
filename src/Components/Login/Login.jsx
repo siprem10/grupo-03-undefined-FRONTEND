@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { alert } from "../../Utils/UI";
 import { isValidEmail } from "../../Utils/Validator";
 import BaseButton from "../BaseButton/BaseButton";
-import "./Login.css";
+import "../styles/Form.css";
 
 export default function Login() {
 
@@ -74,53 +74,55 @@ export default function Login() {
     }
 
     return (
-        <div>
-            <h1 className="title">Login</h1>
+        <div className="flex flex-col w-full h-full mt-10">
+            <div className="flex flex-col justify-center items-center">
+                <h1 className="title">Login</h1>
 
-            <form className="form" onSubmit={e => e.preventDefault()}>
+                <form className="form" onSubmit={e => e.preventDefault()}>
 
-                <div className="mb-4">
-                    <label className="label">
-                        Email
-                    </label>
-                    <input className="inputForm"
-                        type="text"
-                        placeholder="Email"
-                        name="email"
-                        value={inputState.email}
-                        onChange={(e) => handleSetInput(e)}>
-                    </input>
-                    <div className="h-5">
-                        {inputError.email && <p className="inputFormErr">{inputError.email}</p>}
+                    <div className="mb-4">
+                        <label className="label">
+                            Email
+                        </label>
+                        <input className="inputForm"
+                            type="text"
+                            placeholder="Email"
+                            name="email"
+                            value={inputState.email}
+                            onChange={(e) => handleSetInput(e)}>
+                        </input>
+                        <div className="h-5">
+                            {inputError.email && <p className="inputFormErr">{inputError.email}</p>}
+                        </div>
                     </div>
-                </div>
 
-                <div className="mb-4">
-                    <label className="label">
-                        Password
-                    </label>
-                    <input className="inputForm"
-                        placeholder="Password"
-                        type="password"
-                        name="password"
-                        value={inputState.password}
-                        onChange={(e) => handleSetInput(e)}>
-                    </input>
-                    <div className="h-5">
-                        {inputError.password && <p className="inputFormErr">{inputError.password}</p>}
+                    <div className="mb-4">
+                        <label className="label">
+                            Password
+                        </label>
+                        <input className="inputForm"
+                            placeholder="Password"
+                            type="password"
+                            name="password"
+                            value={inputState.password}
+                            onChange={(e) => handleSetInput(e)}>
+                        </input>
+                        <div className="h-5">
+                            {inputError.password && <p className="inputFormErr">{inputError.password}</p>}
+                        </div>
                     </div>
-                </div>
 
-                <div className="flex flex-col w-full h-full">
-                    <BaseButton
-                        onClick={(e) => handleOnSubmit(e)}
-                        disabled={isButtonDisabled()}
-                        type='submit'>
-                    </BaseButton>
-                    <p className="mt-2 mb-1 flex justify-center">Don't have an account?</p>
-                    <Link to="/register" className="flex justify-center underline">Register</Link>
-                </div>
-            </form>
+                    <div className="flex flex-col w-full h-full">
+                        <BaseButton
+                            onClick={(e) => handleOnSubmit(e)}
+                            disabled={isButtonDisabled()}
+                            type='submit'>
+                        </BaseButton>
+                        <p className="mt-2 mb-1 flex justify-center">Don't have an account?</p>
+                        <Link to="/register" className="flex justify-center underline">Register</Link>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

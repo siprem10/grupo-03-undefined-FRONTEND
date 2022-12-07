@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { alert2 } from "../../Utils/UI";
 import { isValidEmail, isValidName } from "../../Utils/Validator";
 import BaseButton from "../BaseButton/BaseButton";
-import "./Register.css";
+import "../styles/Form.css";
 
 export default function Register() {
 
@@ -116,100 +116,102 @@ export default function Register() {
     }
 
     return (
-        <div>
-            <h1 className="title">Register</h1>
-
-            <form className="form" onSubmit={e => e.preventDefault()}>
-                <div className="mb-4">
-                    <label className="label">
-                        Firstname
-                    </label>
-                    <input className="inputForm"
-                        type="text"
-                        placeholder="Firstname"
-                        name="firstName"
-                        value={inputState.firstName}
-                        onChange={(e) => handleSetInput(e)}>
-                    </input>
-                    <div className="h-5">
-                        {inputError.firstName && <p className="inputFormErr">{inputError.firstName}</p>}
+        <div className="flex flex-col w-full h-full mt-10">
+            <div className="flex flex-col justify-center items-center">
+                <h1 className="title">Register</h1>
+                <form className="form" onSubmit={e => e.preventDefault()}>
+                    <div className="mb-4">
+                        <label className="label">
+                            Firstname
+                        </label>
+                        <input className="inputForm"
+                            type="text"
+                            placeholder="Firstname"
+                            name="firstName"
+                            value={inputState.firstName}
+                            onChange={(e) => handleSetInput(e)}>
+                        </input>
+                        <div className="h-5">
+                            {inputError.firstName && <p className="inputFormErr">{inputError.firstName}</p>}
+                        </div>
                     </div>
-                </div>
 
-                <div className="mb-4">
-                    <label className="label">
-                        Lastname
-                    </label>
-                    <input className="inputForm"
-                        type="text"
-                        placeholder="Lastname"
-                        name="lastName"
-                        value={inputState.lastName}
-                        onChange={(e) => handleSetInput(e)}>
-                    </input>
-                    <div className="h-5">
-                        {inputError.lastName && <p className="inputFormErr">{inputError.lastName}</p>}
+                    <div className="mb-4">
+                        <label className="label">
+                            Lastname
+                        </label>
+                        <input className="inputForm"
+                            type="text"
+                            placeholder="Lastname"
+                            name="lastName"
+                            value={inputState.lastName}
+                            onChange={(e) => handleSetInput(e)}>
+                        </input>
+                        <div className="h-5">
+                            {inputError.lastName && <p className="inputFormErr">{inputError.lastName}</p>}
+                        </div>
                     </div>
-                </div>
 
-                <div className="mb-4">
-                    <label className="label">
-                        Email
-                    </label>
-                    <input className="inputForm"
-                        type="text"
-                        placeholder="Email"
-                        name="email"
-                        value={inputState.email}
-                        onChange={(e) => handleSetInput(e)}>
-                    </input>
-                    <div className="h-5">
-                        {inputError.email && <p className="inputFormErr">{inputError.email}</p>}
+                    <div className="mb-4">
+                        <label className="label">
+                            Email
+                        </label>
+                        <input className="inputForm"
+                            type="text"
+                            placeholder="Email"
+                            name="email"
+                            value={inputState.email}
+                            onChange={(e) => handleSetInput(e)}>
+                        </input>
+                        <div className="h-5">
+                            {inputError.email && <p className="inputFormErr">{inputError.email}</p>}
+                        </div>
                     </div>
-                </div>
 
-                <div className="mb-4">
-                    <label className="label">
-                        Password
-                    </label>
-                    <input className="inputForm"
-                        placeholder="Password"
-                        type="password"
-                        name="password"
-                        value={inputState.password}
-                        onChange={(e) => handleSetInput(e)}>
-                    </input>
-                    <div className="h-5">
-                        {inputError.password && <p className="inputFormErr">{inputError.password}</p>}
+                    <div className="mb-4">
+                        <label className="label">
+                            Password
+                        </label>
+                        <input className="inputForm"
+                            placeholder="Password"
+                            type="password"
+                            name="password"
+                            value={inputState.password}
+                            onChange={(e) => handleSetInput(e)}>
+                        </input>
+                        <div className="h-5">
+                            {inputError.password && <p className="inputFormErr">{inputError.password}</p>}
+                        </div>
                     </div>
-                </div>
 
-                <div className="mb-4">
-                    <label className="label">
-                        Confirm Password
-                    </label>
-                    <input className="inputForm"
-                        placeholder="Confirm Password"
-                        type="password"
-                        name="passwordConfirm"
-                        value={inputState.passwordConfirm}
-                        onChange={(e) => handleSetInput(e)}>
-                    </input>
-                    <div className="h-5">
-                        {inputError.passwordConfirm && <p className="inputFormErr">{inputError.passwordConfirm}</p>}
+                    <div className="mb-4">
+                        <label className="label">
+                            Confirm Password
+                        </label>
+                        <input className="inputForm"
+                            placeholder="Confirm Password"
+                            type="password"
+                            name="passwordConfirm"
+                            value={inputState.passwordConfirm}
+                            onChange={(e) => handleSetInput(e)}>
+                        </input>
+                        <div className="h-5">
+                            {inputError.passwordConfirm && <p className="inputFormErr">{inputError.passwordConfirm}</p>}
+                        </div>
                     </div>
-                </div>
 
-                <div className="flex flex-col w-full h-full">
-                    <BaseButton
-                        onClick={(e) => handleOnSubmit(e)}
-                        disabled={isButtonDisabled()}
-                        type='submit'>
-                    </BaseButton>                    
-                    <p className="mt-2 mb-1 flex justify-center">Do you already have an account?</p>
-                    <Link to="/login" className="flex justify-center underline">Login</Link>
-                </div>
-            </form>
+                    <div className="flex flex-col w-full h-full">
+                        <BaseButton
+                            onClick={(e) => handleOnSubmit(e)}
+                            disabled={isButtonDisabled()}
+                            type='submit'>
+                        </BaseButton>
+                        <p className="mt-2 mb-1 flex justify-center">Do you already have an account?</p>
+                        <Link to="/login" className="flex justify-center underline">Login</Link>
+                    </div>
+                </form>
+
+            </div>
         </div>
     )
 }
