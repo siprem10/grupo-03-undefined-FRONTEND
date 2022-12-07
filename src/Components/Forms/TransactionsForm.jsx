@@ -7,7 +7,6 @@ import React from 'react';
 
 
    return (
-        <Layout>
             <div
             className='flex flex-col w-screen items-center justify-center'
             >
@@ -99,7 +98,6 @@ import React from 'react';
             )}
             </Formik>
             </div>
-        </Layout>
  )};
  
  export default TransactionsForm;
