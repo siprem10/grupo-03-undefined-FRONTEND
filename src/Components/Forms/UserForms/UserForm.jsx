@@ -8,18 +8,30 @@ import {
     ErrorMessage,
     PreviewImage,
 } from './FormComponents';
+import { usersApi } from '../../../api/usersApi';
+import { useNavigate } from 'react-router-dom';
 
-function UserForm({ title, validationSchema, onSubmit, buttonTitle }) {
+function UserForm({ title, validationSchema, buttonTitle }) {
+    const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
             firstName: '',
             lastName: '',
             email: '',
             password: '',
-            avatar: '',
+            avatar: null,
         },
         validationSchema,
-        onSubmit,
+        onSubmit: async userData => {
+            try {
+                await usersApi.post('/', userData);
+                //notificacion: usuario fue creado con exito!
+                navigate('/');
+            } catch (error) {
+                // Aca deberia mostrar las notificaciones con el respectivo error
+                console.error(error);
+            }
+        },
     });
 
     return (
