@@ -6,6 +6,7 @@ import {
     FormButton,
     FormInput,
     ErrorMessage,
+    PreviewImage,
 } from './FormComponents';
 
 function UserForm({ title, validationSchema, onSubmit, buttonTitle }) {
@@ -100,7 +101,29 @@ function UserForm({ title, validationSchema, onSubmit, buttonTitle }) {
                 <FormLabel htmlFor='avatar'>
                     Avatar <small>(Optional)</small>
                 </FormLabel>
-                <FormButton>Upload Image</FormButton>
+                <FormLabel labelButton={true} htmlFor='avatar'>
+                    Select File
+                </FormLabel>
+                <FormInput
+                    id='avatar'
+                    type='file'
+                    name='avatar'
+                    onChange={e =>
+                        formik.setFieldValue('avatar', e.target.files[0])
+                    }
+                    invisible={true}
+                />
+                <div className='justify-center'>
+                    {formik.values.avatar && (
+                        <PreviewImage
+                            file={formik.values.avatar}
+                            onClick={() => formik.setFieldValue('avatar', '')}
+                        />
+                    )}
+                    {formik.values.avatar && formik.errors.avatar && (
+                        <ErrorMessage msg={formik.errors.avatar} />
+                    )}
+                </div>
             </div>
             <div className='flex justify-center mt-10'>
                 <FormButton className='flex items-center gap-1' type='submit'>
