@@ -1,4 +1,4 @@
-export default function BaseButton({ text, color, onClick }) {
+export default function BaseButton({ text, color, onClick, disabled }) {
 
     function getBackgroundColor() {
         const background = {
@@ -14,6 +14,7 @@ export default function BaseButton({ text, color, onClick }) {
         <button className="px-4 py-2 font-semibold rounded"
             type="submit"
             onClick={onClick}
+            disabled={disabled ? disabled : false}
             style={{ background: getBackgroundColor(color) }}>
             {text ? text : "Aceptar"}
         </button>
