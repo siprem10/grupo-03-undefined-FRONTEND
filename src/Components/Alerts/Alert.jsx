@@ -5,8 +5,8 @@ export function errorAlert() {
         title: 'Oops!',
         text: 'There is an error',
         icon: 'error',
-        confirmButtonText: 'Ok'
-    })
+        confirmButtonText: 'Ok',
+    });
 }
 
 export function infoAlert() {
@@ -14,8 +14,8 @@ export function infoAlert() {
         title: 'Title for info!',
         text: 'Do you want to continue',
         icon: 'info',
-        confirmButtonText: 'Ok'
-    })
+        confirmButtonText: 'Ok',
+    });
 }
 
 export function successAlert() {
@@ -23,6 +23,25 @@ export function successAlert() {
         title: 'Awesome!',
         text: 'Do you want to continue',
         icon: 'success',
-        confirmButtonText: 'Cool'
-    })
+        confirmButtonText: 'Cool',
+    });
+}
+
+export function confirmationAlert(
+    title,
+    text,
+    showCancelButton = true,
+    confirmButtonText,
+    cb
+) {
+    Swal.fire({
+        title,
+        text,
+        icon: 'warning',
+        showCancelButton,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText,
+        cancelButtonText: 'Cancelar',
+    }).then(cb);
 }
