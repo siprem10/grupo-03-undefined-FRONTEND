@@ -1,9 +1,13 @@
 import React from 'react';
  import { Formik } from 'formik';
- import Layout from '../../Layout/Layout';
  import BaseButton from '../BaseButton/BaseButton';
  
- const CategoriesForm = () => {
+ const CategoriesForm = ({ 
+    title,
+    userAccount,
+    buttonText,
+    onSubmit
+  }) => {
 
 
    return (
@@ -11,15 +15,18 @@ import React from 'react';
             className='flex flex-col w-screen items-center justify-center'
             >
             <h1
-            className='text-4xl mb-3 text-left w-6/12'
-            >NUEVA CATEGORIA</h1>
+            className='text-3xl text-left w-11/12 sm:w-8/12 md:w-6/12 sm:text-4xl'
+            >{title}</h1>
+            <p
+            className='text-m mb-3 text-left w-11/12 sm:w-8/12 md:w-6/12'
+            >{userAccount}</p>
             <Formik
             initialValues={{ 
                 name: '', 
                 description: ''
             }}
             onSubmit={(values, {resetForm}) => {
-                console.log(values);
+                onSubmit(values)
                 resetForm({
                     values: ''
                 })
@@ -46,7 +53,7 @@ import React from 'react';
                 isSubmitting
             }) => (
                 <form 
-                className='flex flex-col w-6/12'
+                className='flex flex-col w-11/12 sm:w-8/12 md:w-6/12'
                 onSubmit={handleSubmit}
                 >
                 <input
@@ -69,7 +76,7 @@ import React from 'react';
                 />
                 {touched.description && errors.description && <p className='text-red-600'>{errors.description}</p>}
                 <BaseButton
-                text='Enviar'
+                text={buttonText}
                 type="submit" 
                 />
                 </form>
