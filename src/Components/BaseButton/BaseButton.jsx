@@ -1,21 +1,21 @@
 export default function BaseButton({ text, color, onClick, disabled }) {
 
-    function getBackgroundColor() {
-        const background = {
-            blue: "blue",
-            green: "green",
-            red: "red",
-            default: "#804000"
-        }
-        return background[color] ?? [background.default];
-    }
+    // function getBackgroundColor() {
+    //     const background = {
+    //         blue: "blue",
+    //         green: "green",
+    //         red: "red",
+    //         default: "#804000"
+    //     }
+    //     return background[color] ?? [background.default];
+    // }
 
     return (
-        <button className="px-4 py-2 font-semibold rounded"
+        <button className="primaryButton"
             type="submit"
             onClick={onClick}
-            disabled={disabled ? disabled : false}
-            style={{ background: getBackgroundColor(color) }}>
+            // style={{ background: getBackgroundColor(color) }}
+            disabled={disabled ? disabled : false}>
             {text ? text : "Aceptar"}
         </button>
     )
