@@ -24,7 +24,7 @@ function UserForm({ title, validationSchema, buttonTitle, modify = false }) {
         validationSchema,
         onSubmit: async userData => {
             try {
-                if (modify) {
+                if (!modify) {
                     await usersApi.post('/', userData);
                     navigate('/');
                     //notificacion: usuario fue creado con exito!
