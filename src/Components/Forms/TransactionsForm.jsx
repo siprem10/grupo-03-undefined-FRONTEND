@@ -1,21 +1,25 @@
 import React from 'react';
  import { Formik } from 'formik';
- import Layout from '../../Layout/Layout';
  import BaseButton from '../BaseButton/BaseButton';
  
- const TransactionsForm = () => {
-
+ const TransactionsForm = ({
+    title,
+    userAccount,
+    categoriesList,
+    buttonText,
+    onSubmit
+ }) => {
 
    return (
             <div
             className='flex flex-col w-screen items-center justify-center'
             >
             <h1
-            className='text-4xl text-left w-6/12'
-            >NUEVA TRANSACCION</h1>
+            className='text-3xl text-left w-11/12 sm:w-8/12 md:w-6/12 sm:text-4xl'
+            >{title}</h1>
             <p
-            className='text-m mb-3 text-left w-6/12'
-            >Cuenta de Usuario</p>
+            className='text-m mb-3 text-left w-11/12 sm:w-8/12 md:w-6/12'
+            >{userAccount}</p>
             <Formik
             initialValues={{ 
                 amount: 0, 
@@ -23,7 +27,7 @@ import React from 'react';
                 category: '' 
             }}
             onSubmit={(values, {resetForm}) => {
-                console.log(values);
+                onSubmit(values);
                 resetForm({
                     values: ''
                 })
@@ -47,18 +51,17 @@ import React from 'react';
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                isSubmitting,
-                /* and other goodies */
+                isSubmitting
             }) => (
                 <form 
-                className='flex flex-col w-6/12'
+                className='flex flex-col w-11/12 sm:w-8/12 md:w-6/12'
                 onSubmit={handleSubmit}
                 >
                 <input
                     className={`${touched.amount && errors.amount && 'border-red-500 bg-red-100'} rounded border my-2 px-5 py-2 w-full`}
                     type="number"
                     name="amount"
-                    placeholder='Amount'
+                    placeholder='Cantidad'
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.amount}
@@ -73,10 +76,9 @@ import React from 'react';
                 value={values.category}
                 >
                     <option disabled value="">Categoría</option>
-                    <option value="educacion">Educacion</option>
-                    <option value="alimentos">Alimentos</option>
-                    <option value="limpieza">Limpieza</option>
-                    <option value="ocio">Ocio</option>
+                    {categoriesList.map( (category, i) => (
+                        <option key={i} value={category}>{category}</option>
+                        ))}
                 </select>
                 {touched.category && errors.category && <p className='text-red-600'>{errors.category}</p>}
                 <textarea
@@ -88,7 +90,7 @@ import React from 'react';
                     value={values.description}
                 />
                 <BaseButton
-                text='Enviar'
+                text={buttonText}
                 type="submit" 
                 // disabled={isSubmitting} 
                 />
