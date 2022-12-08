@@ -7,24 +7,21 @@ export default function Header() {
     const sections = ['gastos', 'balance', 'movimientos'];
 
     return (
-        <nav className='flex w-full h-20 px-10 items-center justify-between shadow-lg'>
-            <div className='flex px-4'>
-                <h1 className='font-bold text-xl tracking-wider'>Alkybank Wallet</h1>
-            </div>
-            <div>
-                <ul className='flex gap-8'>
-                    {sections?.map(section => {
-                        return (
-                            <Link to={`/${section}`}>
-                                <li className='uppercase text-slate-900'>{section}</li>
-                            </Link>
-                        )
-                    })}
-                </ul>
-            </div>
+        <nav className='flex w-full h-20 px-10 items-center justify-between shadow-lg bg-white text-primary'>
+            <h1 className='px-4 font-bold text-2xl tracking-wider'>Alkybank Wallet</h1>
+            <ul className='flex gap-8'>
+                {sections?.map(section => {
+                    return (
+                        <Link to={`/${section}`}>
+                            <li className='font-semibold uppercase text-slate-900 hover:text-tertiary ease-out duration-300'>{section}</li>
+                        </Link>
+                    )
+                })}
+            </ul>
             <div className='flex gap-4'>
-                <BaseButton text={`Cargar saldo`} color={`default`} />
-                <BaseButton text={`Enviar dinero`} color={`default`} />
+                {/* <BaseButton text={`Cargar saldo`} /> */}
+                <button className='secondaryButton'>Enviar dinero</button>
+                <BaseButton text={`Cargar saldo`} />
             </div>
         </nav>
     )
