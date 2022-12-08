@@ -11,7 +11,7 @@ import {
 import { usersApi } from '../../../api/usersApi';
 import { useNavigate } from 'react-router-dom';
 
-function UserForm({ title, validationSchema, buttonTitle }) {
+function UserForm({ title, validationSchema, buttonTitle, modify = false }) {
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
@@ -24,9 +24,23 @@ function UserForm({ title, validationSchema, buttonTitle }) {
         validationSchema,
         onSubmit: async userData => {
             try {
-                await usersApi.post('/', userData);
-                //notificacion: usuario fue creado con exito!
-                navigate('/');
+                if (modify) {
+                    await usersApi.post('/', userData);
+                    navigate('/');
+                    //notificacion: usuario fue creado con exito!
+                } else {
+                    const { firstName, lastName, avatar, email, password } =
+                        userData;
+
+                    // Validacion para ver si ninguno de los campos se ha modificado
+                    if ((firstName, lastName, avatar, email, password)) {
+                    }
+
+                    // Validacion de datos ya creados, y demas validaciones
+
+                    await usersApi.put('/:id', userData);
+                    //notificacion: usuario fue actualizado con exito!
+                }
             } catch (error) {
                 // Aca deberia mostrar las notificaciones con el respectivo error
                 console.error(error);
@@ -36,9 +50,11 @@ function UserForm({ title, validationSchema, buttonTitle }) {
 
     return (
         <form className='w-full max-w-lg' onSubmit={formik.handleSubmit}>
-            <h1 className='flex items-center gap-2 uppercase tracking-wide text-xl font-semibold text-gray-700 mb-10'>
-                <FaUser /> {title}
-            </h1>
+            <div className='flex justify-between'>
+                <h1 className='flex items-center gap-2 uppercase tracking-wide text-xl font-semibold text-gray-700 mb-10'>
+                    <FaUser /> {title}
+                </h1>
+            </div>
             <div className='flex flex-wrap -mx-3 mb-6'>
                 <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
                     <FormLabel htmlFor='firstName'>First Name</FormLabel>
