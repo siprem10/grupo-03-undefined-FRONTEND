@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '../Layout/Layout';
 import { ButtonProfile } from '../Components/Buttons';
 import { AiOutlineDelete, AiFillEdit } from 'react-icons/ai';
-import { UserForm } from '../Components/Forms/UserForms';
-// import Modal from '../Components/Modal'
+import ModifyProfile from '../Components/ModifyProfile';
+import { confirmationAlert } from '../Components/Alerts/Alert';
 
 function Profile() {
+    const [modifyProfile, setModifyProfile] = useState(false);
     const hardcodedUser = {
         firstName: 'Luciano',
         lastName: 'Piñol',
@@ -15,8 +16,22 @@ function Profile() {
         points: 400,
     };
 
-    const editProfile = () => {
-        console.log('Editando Perfil');
+    const openModal = () => setModifyProfile(true);
+
+    const confirmationModal = boolean => {
+        const confirmation = result => {
+            if (result.isConfirmed) {
+                setModifyProfile(boolean);
+            }
+        };
+
+        confirmationAlert(
+            'Estas seguro de que quiere salir?',
+            'Los cambios no seran guardados',
+            true,
+            'No quiero modificar el perfil',
+            confirmation
+        );
     };
 
     const deleteAccount = () => {
@@ -26,6 +41,12 @@ function Profile() {
     return (
         <Layout>
             <div className='flex flex-col gap-5'>
+                {/* Modal para modificar el perfil */}
+                {modifyProfile && (
+                    <ModifyProfile
+                        closeModal={() => confirmationModal(false)}
+                    />
+                )}
                 {/* Profile Image*/}
                 <img
                     className='rounded-full shadow-2xl shadow-black border-indigo-700 border'
@@ -35,7 +56,7 @@ function Profile() {
                 <p className='text-center'>{hardcodedUser.firstName}</p>
                 <ButtonProfile
                     className='bg-accent hover:bg-orange-300 border-accent hover:border-orange-300 font-semibold text-primary'
-                    onClick={editProfile}
+                    onClick={openModal}
                 >
                     <AiFillEdit size={20} />
                     Editar Cuenta
