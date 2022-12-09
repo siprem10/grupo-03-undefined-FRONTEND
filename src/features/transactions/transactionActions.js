@@ -13,7 +13,7 @@ export const getTransactions = createAsyncThunk('transactions/getTransactions', 
 
 export const createTransaction = createAsyncThunk(
   'user/createTransaction',
-  async ({ amount, description, userId, categoryId, date }, { rejectWithValue }) => {
+  async ({ amount, description, userId, categoryId, date }) => {
     try {
       const response = await apiPrivate.post('/transactions', {
         amount,
@@ -25,7 +25,7 @@ export const createTransaction = createAsyncThunk(
       const transactions = response.data.transactions;
       return transactions;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return error.response.data;
     }
   }
 );
