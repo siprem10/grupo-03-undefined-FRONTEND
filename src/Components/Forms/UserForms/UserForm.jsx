@@ -8,7 +8,6 @@ import {
     ErrorMessage,
     PreviewImage,
 } from './FormComponents';
-import { usersApi } from '../../../api/usersApi';
 import { useNavigate } from 'react-router-dom';
 
 function UserForm({ title, validationSchema, buttonTitle }) {
@@ -24,7 +23,7 @@ function UserForm({ title, validationSchema, buttonTitle }) {
         validationSchema,
         onSubmit: async userData => {
             try {
-                await usersApi.post('/', userData);
+                //await usersApi.post('/', userData);
                 //notificacion: usuario fue creado con exito!
                 navigate('/');
             } catch (error) {
