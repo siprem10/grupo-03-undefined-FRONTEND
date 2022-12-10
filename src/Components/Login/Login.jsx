@@ -17,7 +17,7 @@ export default function Login() {
         password: "",
     }
 
-    const {status, userData} = useSelector(state => state.auth);     
+    const {status, userData, error} = useSelector(state => state.auth);     
     const dispatch = useDispatch();
     const navigate = useNavigate();  
 
@@ -26,7 +26,7 @@ export default function Login() {
             dispatch(getUserInfo());            
             Object.keys(userData).length ? navigate("/") : dispatch(setLogout());
         } else if(status === "failed") {
-            alertErr("Invalid credentials!");
+            alertErr(error);
             dispatch(setLogout());
         }
     }, [status, Object.keys(userData).length]); 
