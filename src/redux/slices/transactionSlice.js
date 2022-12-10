@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTransactions } from './transactionActions';
+import { getTransactions } from '../actions/transactionActions';
 
 const initialState = {
   status: 'idle', // 'idle' | 'loading' | 'failed' | 'success
