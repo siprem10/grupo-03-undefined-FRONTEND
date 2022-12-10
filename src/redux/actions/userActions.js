@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { apiPrivate } from '../../service/getData';
+import { apiPrivate } from '../../service/httpRequest';
 
 export const fetchUserInfo = createAsyncThunk('user/fetchUserInfo', async () => {
   try {

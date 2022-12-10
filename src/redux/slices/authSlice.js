@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, tokenFromLocal } from './authActions';
+import { login, tokenFromLocal } from '../actions/authActions';
 
 const initialState = {
   status: 'idle', // 'idle' | 'loading' | 'failed' | 'success'

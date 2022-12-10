@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { apiPrivate, apiPublic } from '../../service/getData';
+import { apiPrivate, apiPublic } from '../../service/httpRequest';
 
 export const tokenFromLocal = createAsyncThunk(
   'auth/tokenFromLocal',
