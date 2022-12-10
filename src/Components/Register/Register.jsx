@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
-import { alert2 } from "../../Utils/UI";
+import { apiPublic } from "../../Service/HttpService";
+import { alertErr, alertOkClick } from "../../Utils/UI";
 import { isValidEmail, isValidName } from "../../Utils/Validator";
 import BaseButton from "../BaseButton/BaseButton";
 import "../styles/Form.css";
@@ -109,10 +110,22 @@ export default function Register() {
         );
     }
 
-    function handleOnSubmit(e) {
+    async function handleOnSubmit(e) {
         e.preventDefault();
-        setResetStates();
-        alert2(() => navigate("/login"), "User created successfully!");
+
+        try {
+            const newUser = await apiPublic.post('/users', inputState);
+            
+            if(newUser.data.body){
+                setResetStates();
+                alertOkClick(() => navigate("/login"), "User created successfully!");
+            } else {
+                alertErr(newUser.data.message);      
+            }
+            
+        } catch (error) {   
+            alertErr(JSON.parse(error.request.response).error[0].msg);      
+        }
     }
 
     return (
@@ -200,7 +213,7 @@ export default function Register() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col w-full h-full">
+                    <div className="flex flex-col w-full">
                         <BaseButton
                             onClick={(e) => handleOnSubmit(e)}
                             disabled={isButtonDisabled()}

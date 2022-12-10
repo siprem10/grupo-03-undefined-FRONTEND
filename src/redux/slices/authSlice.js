@@ -59,7 +59,7 @@ export const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload;
+        state.error = action.payload.error.message ?? action.payload.error["0"].msg;
       });
   }
 });

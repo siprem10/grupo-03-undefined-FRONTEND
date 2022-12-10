@@ -16,7 +16,7 @@ export default function BaseButton({ text, color, onClick, disabled }) {
             onClick={onClick}
             // style={{ background: getBackgroundColor(color) }}
             disabled={disabled ? disabled : false}>
-            {text ? text : "Aceptar"}
+            {text ? text : "Accept"}
         </button>
     )
 }

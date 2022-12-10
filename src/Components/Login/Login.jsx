@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { getUserInfo, login } from "../../redux/actions/authActions";
-import { alert } from "../../Utils/UI";
+import { alertErr } from "../../Utils/UI";
 import { isValidEmail } from "../../Utils/Validator";
 import BaseButton from "../BaseButton/BaseButton";
 import { setLogout } from "../../redux/slices/authSlice";
@@ -17,7 +17,7 @@ export default function Login() {
         password: "",
     }
 
-    const {status, userData} = useSelector(state => state.auth);     
+    const {status, userData, error} = useSelector(state => state.auth);     
     const dispatch = useDispatch();
     const navigate = useNavigate();  
 
@@ -26,7 +26,7 @@ export default function Login() {
             dispatch(getUserInfo());            
             Object.keys(userData).length ? navigate("/") : dispatch(setLogout());
         } else if(status === "failed") {
-            alert("Oops...", "Invalid credentials!", "error");
+            alertErr(error);
             dispatch(setLogout());
         }
     }, [status, Object.keys(userData).length]); 
@@ -119,12 +119,13 @@ export default function Login() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col w-full h-full">
+                    <div className="flex flex-col w-full">
                         <BaseButton
                             onClick={(e) => handleOnSubmit(e)}
                             disabled={isButtonDisabled()}
                             type='submit'>
                         </BaseButton>
+                        <Link to="/forgot-password" className="mt-1 flex justify-center underline">Forgot Password?</Link>
                         <p className="mt-2 mb-1 flex justify-center">Don't have an account?</p>
                         <Link to="/register" className="flex justify-center underline">Register</Link>
                     </div>
