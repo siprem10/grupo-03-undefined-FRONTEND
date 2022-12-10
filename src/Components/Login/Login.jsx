@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { getUserInfo, login } from "../../redux/actions/authActions";
 import { alert } from "../../Utils/UI";
 import { isValidEmail } from "../../Utils/Validator";
 import BaseButton from "../BaseButton/BaseButton";
+import { setLogout } from "../../redux/slices/authSlice";
+import { getToken } from "../../Utils/Auth";
 import "../styles/Form.css";
 
 export default function Login() {
@@ -12,7 +17,20 @@ export default function Login() {
         password: "",
     }
 
-    const navigate = useNavigate();
+    const {status, userData} = useSelector(state => state.auth);     
+    const dispatch = useDispatch();
+    const navigate = useNavigate();  
+
+    useEffect(() => {
+        if(status === "success" && getToken()) {   
+            dispatch(getUserInfo());            
+            Object.keys(userData).length ? navigate("/") : dispatch(setLogout());
+        } else if(status === "failed") {
+            alert("Oops...", "Invalid credentials!", "error");
+            dispatch(setLogout());
+        }
+    }, [status, Object.keys(userData).length]); 
+
     const [inputState, setInputState] = useState({ ...defaultsValues });
     const [inputError, setInputError] = useState({ ...defaultsValues });
 
@@ -43,11 +61,6 @@ export default function Login() {
         return errors;
     }
 
-    function setResetStates() {
-        setInputState({ ...defaultsValues });
-        setInputError({ ...defaultsValues });
-    }
-
     function handleSetInputErrs(name, value) {
         const objErrors = validateErrs({ ...inputState, [name]: value });
         setInputError(objErrors);
@@ -64,13 +77,7 @@ export default function Login() {
 
     function handleOnSubmit(e) {
         e.preventDefault();
-        setResetStates();
-
-        /*Logea*/if (true) {
-            navigate("/");
-        } else {
-            alert("Oops...", "Invalid credentials!", "error");
-        }
+        dispatch(login(inputState));
     }
 
     return (
