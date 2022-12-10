@@ -1,16 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getToken, getUserData } from '../../Utils/Auth';
 import { login, tokenFromLocal } from '../actions/authActions';
 
 const initialState = {
-  status: 'idle', // 'idle' | 'loading' | 'failed' | 'success'
-  token: null,
+  status: getToken() ? 'success' : 'idle', // 'idle' | 'loading' | 'failed' | 'success'
+  token: getToken(),
+  userData: getUserData() || {},
   error: null
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setUserData: (state, action) => {
+      state.userData = action.payload;
+      localStorage.setItem("userData", JSON.stringify(action.payload));
+    },
+    setLogout: (state) => {
+      state = {
+        status: "idle",
+        token: null,
+        error: null,
+        userData: null
+      }
+    }
+  },
   extraReducers: builder => {
     // Session actions
     builder
@@ -34,15 +49,13 @@ export const authSlice = createSlice({
         state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
-        console.log('login.fulfilled', action.payload);
         state.status = 'success';
         state.token = action.payload;
         state.error = null;
 
         // Save token to local storage
-        localStorage.setItem('userToken', JSON.stringify(action.payload));
-
-
+        localStorage.setItem('accessToken', JSON.stringify(action.payload));
+        
       })
       .addCase(login.rejected, (state, action) => {
         state.status = 'failed';
@@ -50,5 +63,11 @@ export const authSlice = createSlice({
       });
   }
 });
+
+export const { 
+  setUserData,
+  setLogout
+
+} = authSlice.actions;
 
 export default authSlice.reducer;
