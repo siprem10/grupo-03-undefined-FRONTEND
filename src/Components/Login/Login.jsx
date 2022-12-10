@@ -119,7 +119,7 @@ export default function Login() {
                         </div>
                     </div>
 
-                    <div className="flex flex-col w-full h-full">
+                    <div className="flex flex-col w-full">
                         <BaseButton
                             onClick={(e) => handleOnSubmit(e)}
                             disabled={isButtonDisabled()}
