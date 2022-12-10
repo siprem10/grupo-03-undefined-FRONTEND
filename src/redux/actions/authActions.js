@@ -29,20 +29,6 @@ export const login = createAsyncThunk(
   }
 );
 
-export const register = createAsyncThunk(
-  'auth/register',
-  async ({ email, password, firstName, lastName }, { rejectWithValue }) => {
-    try {
-      const response = await apiPublic.post('/users', { email, password, firstName, lastName });
-      const user = response.data.body;
-
-      return user;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
-  }
-);
-
 export const getUserInfo = () => async (dispatch) => {
 
   try {
