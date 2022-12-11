@@ -57,7 +57,6 @@ export default function SessionDropdown() {
             </button>
 
             <div
-                id="dropdownDivider"
                 style={{top: "70px" }}
                 className={!isOpen ? "hidden" : "absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"}>
                 <ul
