@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Layout from '../Layout/Layout';
+import Layout from '../Components/Layout/Layout';
 import { ButtonProfile } from '../Components/Buttons';
 import { AiOutlineDelete, AiFillEdit } from 'react-icons/ai';
 import ModifyProfile from '../Components/ModifyProfile';
