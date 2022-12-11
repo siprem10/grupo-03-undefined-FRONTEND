@@ -30,7 +30,7 @@ export default function SessionDropdown() {
     }
 
     return (
-        <div>
+        <div className="flex justify-center">
             <button
                 onClick={handleShow}
                 id="dropdownDividerButton"
@@ -58,7 +58,8 @@ export default function SessionDropdown() {
 
             <div
                 id="dropdownDivider"
-                className={!isOpen ? "hidden" : "absolute z-10 w-40 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"}>
+                style={{top: "70px" }}
+                className={!isOpen ? "hidden" : "absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"}>
                 <ul
                     className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
                     {items?.map((item, i) =>
