@@ -35,10 +35,10 @@ export default function SessionDropdown() {
                 onClick={handleShow}
                 id="dropdownDividerButton"
                 data-dropdown-toggle="dropdownDivider"
-                className="text-white bg-emerald-900 hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white bg-emerald-900 hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-3.5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button">
-                <img src={userData.avatar ?? "err"} onError={(e) => setImgUserErr(e)} alt="img found" className="shadow rounded-full h-10 border-none mr-2" />
-                {userData.firstName ?? "Dropdown"}
+                <img src={userData.avatar ?? "err"} onError={(e) => setImgUserErr(e)} alt="img found" className="shadow rounded-full md:h-10 h-7 border-none mr-2 ease-out duration-300" />
+                {userData.firstName ?? ""}
 
                 <svg
                     className="ml-2 w-4 h-4"
@@ -58,7 +58,7 @@ export default function SessionDropdown() {
 
             <div
                 style={{top: "70px" }}
-                className={!isOpen ? "hidden" : "absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"}>
+                className={!isOpen ? "hidden" : "t-10 absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"}>
                 <ul
                     className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
                     {items?.map((item, i) =>
