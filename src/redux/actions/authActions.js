@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { apiPublic, HttpService } from '../../Service/HttpService';
 import { getToken } from '../../Utils/Auth';
-import { setUserData } from '../slices/authSlice';
+import { setUserData, setLogout } from '../slices/authSlice';
 
 export const tokenFromLocal = createAsyncThunk(
   'auth/tokenFromLocal',
@@ -46,8 +46,22 @@ export const getUserInfo = () => async (dispatch) => {
       roleId,
       points
     };
-
+    
+    localStorage.setItem("userData", JSON.stringify(userData));
     dispatch(setUserData(userData));
+
+  } catch (error) {
+    return error.message;
+  }
+};
+
+export const logout = () => async (dispatch) => {
+
+  try {    
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userData');
+    dispatch(setLogout());
+
   } catch (error) {
     return error.message;
   }
