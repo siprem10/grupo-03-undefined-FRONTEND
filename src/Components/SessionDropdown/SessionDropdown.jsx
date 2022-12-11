@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { logout } from "../../redux/actions/authActions";
 import { setImgUserErr } from "../../Utils/ImgErr";
 
 export default function SessionDropdown() {
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();    
+    const dispatch = useDispatch();  
     const [isOpen, setIsOpen] = useState(false);
     const { userData } = useSelector(state => state.auth);
 
@@ -15,7 +14,6 @@ export default function SessionDropdown() {
         { name: "Mi perfil", to: "/user-info" },
         { name: "Cerrar sesión", onClick: () => {
                 dispatch(logout());
-                navigate("/login");
             } 
         },
     ];
