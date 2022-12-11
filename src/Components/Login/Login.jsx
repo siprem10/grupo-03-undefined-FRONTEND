@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getUserInfo, login, logout } from "../../redux/actions/authActions";
 import { alertErr } from "../../Utils/UI";
 import { isValidEmail } from "../../Utils/Validator";
@@ -17,14 +17,10 @@ export default function Login() {
 
     const {status, userData, error} = useSelector(state => state.auth);     
     const dispatch = useDispatch();
-    const navigate = useNavigate();  
 
     useEffect(() => {
         if(status === "success" && !Object.keys(userData).length) {   
             dispatch(getUserInfo());            
-        }
-        else if(Object.keys(userData).length){
-            navigate("/");
         }
         else if(status === "failed") {
             alertErr(error);
