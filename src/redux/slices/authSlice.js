@@ -3,7 +3,7 @@ import { getToken, getUserData } from '../../Utils/Auth';
 import { login, tokenFromLocal } from '../actions/authActions';
 
 const initialState = {
-  status: getToken() ? 'success' : 'idle', // 'idle' | 'loading' | 'failed' | 'success'
+  status: getToken() ? 'success' : 'idle',
   token: getToken(),
   userData: getUserData() || {},
   error: null
@@ -15,15 +15,12 @@ export const authSlice = createSlice({
   reducers: {
     setUserData: (state, action) => {
       state.userData = action.payload;
-      localStorage.setItem("userData", JSON.stringify(action.payload));
     },
-    setLogout: (state) => {
-      state = {
-        status: "idle",
-        token: null,
-        error: null,
-        userData: null
-      }
+    setLogout: (state) => { 
+      state.status = 'idle';
+      state.token = null;
+      state.userData = {};
+      state.error = null;  
     }
   },
   extraReducers: builder => {
