@@ -31,44 +31,44 @@ export default function Register() {
 
   function validateErrs(input) {
     let errors = {};
-    const maxName = 56;
+    const maxName = 25;
     const minName = 3;
-    const minPwd = 8;
-
-    if (!input.lastName) {
-      errors.lastName = 'Lastname is required';
-    } else if (!isValidName(input.lastName)) {
-      errors.lastName = 'Lastname is invalid';
-    } else if (input.lastName.length < minName) {
-      errors.lastName = `Lastname is too short (${input.lastName.length}/${minName})`;
-    } else if (input.lastName.length > maxName) {
-      errors.lastName = `Lastname is too long (${input.lastName.length}/${maxName})`;
-    }
+    const minPwd = 8;    
 
     if (!input.firstName) {
-      errors.firstName = 'Firstname is required';
+      errors.firstName = 'Nombre requerido';
     } else if (!isValidName(input.firstName)) {
-      errors.firstName = 'Firstname is invalid';
+      errors.firstName = 'Nombre invalido';
     } else if (input.firstName.length < minName) {
-      errors.firstName = `Firstname is too short (${input.firstName.length}/${minName})`;
+      errors.firstName = `Nombre muy corto (${input.firstName.length}/${minName})`;
     } else if (input.firstName.length > maxName) {
-      errors.firstName = `Firstname is too long (${input.firstName.length}/${maxName})`;
+      errors.firstName = `Nombre muy largo (${input.firstName.length}/${maxName})`;
+    }
+
+    if (!input.lastName) {
+      errors.lastName = 'Apellido requerido';
+    } else if (!isValidName(input.lastName)) {
+      errors.lastName = 'Apellido inválido';
+    } else if (input.lastName.length < minName) {
+      errors.lastName = `Apellido muy corto (${input.lastName.length}/${minName})`;
+    } else if (input.lastName.length > maxName) {
+      errors.lastName = `Apellido muy largo (${input.lastName.length}/${maxName})`;
     }
 
     if (!input.email) {
-      errors.email = 'Email is required';
+      errors.email = 'Email requerido';
     } else if (!isValidEmail(input.email)) {
-      errors.email = `Email is invalid`;
+      errors.email = `Email invalido`;
     }
 
     if (!input.password) {
-      errors.password = 'Password is required';
+      errors.password = 'Contraseña requerida';
     } else if (input.password.length < minPwd) {
-      errors.password = `Password is too short (${input.password.length}/${minPwd})`;
+      errors.password = `Contraseña muy corta (${input.password.length}/${minPwd})`;
     }
 
     if (!errors.password && input.passwordConfirm !== input.password) {
-      errors.passwordConfirm = 'Passwords do not match';
+      errors.passwordConfirm = 'Las contraseñas no coinciden';
     }
 
     return errors;
@@ -107,7 +107,7 @@ export default function Register() {
 
       if (newUser.data.body) {
         setResetStates();
-        alertOkClick(() => navigate('/login'), 'User created successfully!');
+        alertOkClick(() => navigate('/login'), '¡Usuario creado con éxito!');
       } else {
         alertErr(newUser.data.message);
       }
@@ -201,8 +201,10 @@ export default function Register() {
                 disabled={isButtonDisabled()}
                 type="submit"
               />
-              <p className="mt-2 mb-1 flex justify-center">¿Ya tienes una cuenta?</p>
-              <Link to="/login" className="flex justify-center underline">
+              <p className="mt-2 mb-1 flex justify-center text-black dark:text-white">¿Ya tienes una cuenta?</p>
+              <Link 
+                to="/login" 
+                className="flex justify-center underline text-black dark:text-white">
                 Inicia sesión
               </Link>
             </div>
