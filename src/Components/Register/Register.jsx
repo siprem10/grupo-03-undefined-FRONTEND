@@ -201,8 +201,12 @@ export default function Register() {
                 disabled={isButtonDisabled()}
                 type="submit"
               />
-              <p className="mt-2 mb-1 flex justify-center">¿Ya tienes una cuenta?</p>
-              <Link to="/login" className="flex justify-center underline">
+              <p className="mt-2 mb-1 flex justify-center text-black dark:text-white">
+                ¿Ya tienes una cuenta?
+              </p>
+              <Link
+                to="/login"
+                className="flex justify-center underline text-black dark:text-white">
                 Inicia sesión
               </Link>
             </div>
