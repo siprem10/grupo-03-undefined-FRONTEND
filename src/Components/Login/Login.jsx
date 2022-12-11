@@ -71,7 +71,7 @@ export default function Login() {
 
   return (
     <Layout>
-      <div className="flex flex-col w-full h-full mt-10">
+      <div className="flex flex-col w-full h-full my-5">
         <div className="flex flex-col justify-center items-center">
           <h1 className="title">Iniciar sesión</h1>
 

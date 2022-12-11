@@ -13,7 +13,7 @@ export default function Header() {
   const { status } = useSelector(state => state.auth);
 
   const sections = [
-    { name: 'Inicio', to: '/', icon: BiHomeAlt },
+    { name: 'Inicio', to: '/home', icon: BiHomeAlt },
     { name: 'Actividad', to: '/transactions', icon: TbHeartRateMonitor }
   ];
 
@@ -21,9 +21,11 @@ export default function Header() {
     <nav
       className={`p-4 flex flex-wrap w-full h-auto px-10 items-center shadow-lg bg-white text-primary ${isVeryLowRes ? 'justify-center' : 'justify-between'
         }`}>
-      <h1 className="flex justify-center py-2 px-4 rounded-full border-2 bg-main border-emerald-900 md:text-2xl font-bold text-md tracking-wider ease-out duration-300">
-        {isLowRes ? 'AW' : 'AlkyBank Wallet'}
-      </h1>
+      <Link to={"/"}>
+        <h1 className="flex justify-center py-2 px-4 rounded-full border-2 bg-main border-emerald-900 md:text-2xl font-bold text-md tracking-wider ease-out duration-300">
+          {isLowRes ? 'AW' : 'AlkyBank Wallet'}
+        </h1>
+      </Link>
       {status === "success" &&
         <ul className="flex flex-wrap self-center">
           {sections?.map((section, i) => (

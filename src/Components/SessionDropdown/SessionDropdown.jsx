@@ -69,7 +69,6 @@ export default function SessionDropdown() {
           : (
             <span className='md:p-1 p-0.5 ease-out duration-300'>Iniciar Sesión</span>
           )
-
         }
       </button>
 
