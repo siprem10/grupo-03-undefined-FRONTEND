@@ -119,9 +119,9 @@ export default function Login() {
                 ¿Aun no tienes una cuenta?
               </p>
               <Link
-                to="/register"
+                to="/login"
                 className="flex justify-center underline text-black dark:text-white">
-                Regístrate
+                Login
               </Link>
             </div>
           </form>
