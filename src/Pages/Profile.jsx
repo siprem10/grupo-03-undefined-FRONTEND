@@ -3,10 +3,28 @@ import Layout from '../Layout/Layout';
 import { ButtonProfile } from '../Components/Buttons';
 import { AiOutlineDelete, AiFillEdit } from 'react-icons/ai';
 import ModifyProfile from '../Components/ModifyProfile';
-import { confirmationAlert } from '../Components/Alerts/Alert';
 import { GoVerified } from 'react-icons/go';
 
 function Profile() {
+    function confirmationAlert(
+        title,
+        text,
+        showCancelButton = true,
+        confirmButtonText,
+        cb
+    ) {
+        Swal.fire({
+            title,
+            text,
+            icon: 'warning',
+            showCancelButton,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText,
+            cancelButtonText: 'Cancelar',
+        }).then(cb);
+    }
+
     const [modifyProfile, setModifyProfile] = useState(false);
     const hardcodedUser = {
         firstName: 'Luciano',

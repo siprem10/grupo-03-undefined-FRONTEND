@@ -8,7 +8,6 @@ import {
     ErrorMessage,
     PreviewImage,
 } from './FormComponents';
-import { usersApi } from '../../../api/usersApi';
 import { useNavigate } from 'react-router-dom';
 
 function UserForm({ title, validationSchema, buttonTitle, modify = false }) {
@@ -23,28 +22,29 @@ function UserForm({ title, validationSchema, buttonTitle, modify = false }) {
         },
         validationSchema,
         onSubmit: async userData => {
-            try {
-                if (!modify) {
-                    await usersApi.post('/', userData);
-                    navigate('/');
-                    //notificacion: usuario fue creado con exito!
-                } else {
-                    const { firstName, lastName, avatar, email, password } =
-                        userData;
+            console.log('enviando');
+            // try {
+            //     if (!modify) {
+            //         await usersApi.post('/', userData);
+            //         navigate('/');
+            //         //notificacion: usuario fue creado con exito!
+            //     } else {
+            //         const { firstName, lastName, avatar, email, password } =
+            //             userData;
 
-                    // Validacion para ver si ninguno de los campos se ha modificado
-                    if ((firstName, lastName, avatar, email, password)) {
-                    }
+            //         // Validacion para ver si ninguno de los campos se ha modificado
+            //         if ((firstName, lastName, avatar, email, password)) {
+            //         }
 
-                    // Validacion de datos ya creados, y demas validaciones
+            //         // Validacion de datos ya creados, y demas validaciones
 
-                    await usersApi.put('/:id', userData);
-                    //notificacion: usuario fue actualizado con exito!
-                }
-            } catch (error) {
-                // Aca deberia mostrar las notificaciones con el respectivo error
-                console.error(error);
-            }
+            //         await usersApi.put('/:id', userData);
+            //         //notificacion: usuario fue actualizado con exito!
+            //     }
+            // } catch (error) {
+            //     // Aca deberia mostrar las notificaciones con el respectivo error
+            //     console.error(error);
+            // }
         },
     });
 
