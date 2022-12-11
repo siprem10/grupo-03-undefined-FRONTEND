@@ -1,19 +1,19 @@
-.title {
-    @apply text-center mb-5 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white
+.form {
+    @apply md:w-[400px] p-6 shadow-md bg-secondary rounded-md shadow-md
 }
 
-.form {
-    @apply md:w-96 p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700
+.form_title {
+    @apply mb-4 md:mb-8 font-semibold text-3xl text-primary text-center
 }
 
 .label {
-    @apply block text-gray-700 text-lg font-bold mb-1
+    @apply block mb-2 font-medium text-black text-base
 }
 
 .inputForm {
-    @apply mb-1 shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none
+    @apply w-full mb-2 py-2 px-4 font-medium text-lg placeholder:text-secondary border-2 rounded-md focus:outline-none focus:text-primary
 }
 
 .inputFormErr {
-    @apply text-red-600 font-bold
+    @apply font-semibold text-sm text-error
 }

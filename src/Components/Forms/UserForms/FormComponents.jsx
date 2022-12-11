@@ -16,11 +16,10 @@ export function FormInput({
             className={
                 invisible === true
                     ? 'invisible m-0 w-0 h-0 l-0 r-0'
-                    : `mb-3 appearance-none block w-full bg-gray-200 text-gray-700 border ${
-                          value.length > 0 && formikError
-                              ? 'border-red-500'
-                              : 'border-gray-200'
-                      } rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 ${className}`
+                    : `mb-3 appearance-none block w-full bg-gray-200 text-gray-700 border ${value.length > 0 && formikError
+                        ? 'border-red-500'
+                        : 'border-gray-200'
+                    } rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 ${className}`
             }
             id={id}
             name={name}

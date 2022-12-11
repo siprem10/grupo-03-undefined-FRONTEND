@@ -4,7 +4,7 @@ import BaseButton from '../BaseButton/BaseButton';
 
 export default function Header() {
 
-    const sections = ['gastos', 'balance', 'movimientos'];
+    const sections = ['transacciones', 'categorías'];
 
     return (
         <nav className='flex w-full h-20 px-10 items-center justify-between shadow-lg bg-white text-primary'>

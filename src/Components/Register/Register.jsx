@@ -24,13 +24,11 @@ export default function Register() {
         setInputState({
             ...inputState,
             [e.target.name]: e.target.value
-        });
-
+        })
         handleSetInputErrs(e.target.name, e.target.value);
     }
 
     function validateErrs(input) {
-
         let errors = {};
         const maxName = 56;
         const minName = 3;
@@ -48,7 +46,6 @@ export default function Register() {
         else if (input.lastName.length > maxName) {
             errors.lastName = `Lastname is too long (${input.lastName.length}/${maxName})`;
         }
-
         if (!input.firstName) {
             errors.firstName = 'Firstname is required';
         }
@@ -61,26 +58,21 @@ export default function Register() {
         else if (input.firstName.length > maxName) {
             errors.firstName = `Firstname is too long (${input.firstName.length}/${maxName})`;
         }
-
         if (!input.email) {
             errors.email = 'Email is required';
         }
         else if (!isValidEmail(input.email)) {
             errors.email = `Email is invalid`;
         }
-
         if (!input.password) {
             errors.password = 'Password is required';
         }
         else if (input.password.length < minPwd) {
             errors.password = `Password is too short (${input.password.length}/${minPwd})`;
         }
-
-
         if (!errors.password && input.passwordConfirm !== input.password) {
             errors.passwordConfirm = 'Passwords do not match';
         }
-
         return errors;
     }
 
@@ -95,7 +87,6 @@ export default function Register() {
     }
 
     function isButtonDisabled() {
-
         return (
             !inputState.firstName ||
             !inputState.lastName ||
@@ -107,24 +98,21 @@ export default function Register() {
             inputError.email ||
             inputError.password ||
             inputError.passwordConfirm
-        );
+        )
     }
 
     async function handleOnSubmit(e) {
         e.preventDefault();
-
         try {
             const newUser = await apiPublic.post('/users', inputState);
-            
-            if(newUser.data.body){
+            if (newUser.data.body) {
                 setResetStates();
                 alertOkClick(() => navigate("/login"), "User created successfully!");
             } else {
-                alertErr(newUser.data.message);      
+                alertErr(newUser.data.message);
             }
-            
-        } catch (error) {   
-            alertErr(JSON.parse(error.request.response).error[0].msg);      
+        } catch (error) {
+            alertErr(JSON.parse(error.request.response).error[0].msg);
         }
     }
 
@@ -148,7 +136,6 @@ export default function Register() {
                             {inputError.firstName && <p className="inputFormErr">{inputError.firstName}</p>}
                         </div>
                     </div>
-
                     <div className="mb-4">
                         <label className="label">
                             Lastname
@@ -164,7 +151,6 @@ export default function Register() {
                             {inputError.lastName && <p className="inputFormErr">{inputError.lastName}</p>}
                         </div>
                     </div>
-
                     <div className="mb-4">
                         <label className="label">
                             Email
@@ -180,7 +166,6 @@ export default function Register() {
                             {inputError.email && <p className="inputFormErr">{inputError.email}</p>}
                         </div>
                     </div>
-
                     <div className="mb-4">
                         <label className="label">
                             Password
@@ -196,7 +181,6 @@ export default function Register() {
                             {inputError.password && <p className="inputFormErr">{inputError.password}</p>}
                         </div>
                     </div>
-
                     <div className="mb-4">
                         <label className="label">
                             Confirm Password
@@ -212,7 +196,6 @@ export default function Register() {
                             {inputError.passwordConfirm && <p className="inputFormErr">{inputError.passwordConfirm}</p>}
                         </div>
                     </div>
-
                     <div className="flex flex-col w-full">
                         <BaseButton
                             onClick={(e) => handleOnSubmit(e)}
@@ -223,7 +206,6 @@ export default function Register() {
                         <Link to="/login" className="flex justify-center underline">Login</Link>
                     </div>
                 </form>
-
             </div>
         </div>
     )

@@ -18,7 +18,7 @@ function UserForm({ title, validationSchema, buttonTitle }) {
             lastName: '',
             email: '',
             password: '',
-            avatar: null,
+            avatar: null
         },
         validationSchema,
         onSubmit: async userData => {
@@ -30,7 +30,7 @@ function UserForm({ title, validationSchema, buttonTitle }) {
                 // Aca deberia mostrar las notificaciones con el respectivo error
                 console.error(error);
             }
-        },
+        }
     });
 
     return (
@@ -40,8 +40,7 @@ function UserForm({ title, validationSchema, buttonTitle }) {
             </h1>
             <div className='flex flex-wrap -mx-3 mb-6'>
                 <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-                    <FormLabel htmlFor='firstName'>First Name</FormLabel>
-
+                    <FormLabel htmlFor='firstName'>Nombre</FormLabel>
                     <FormInput
                         id='firstName'
                         name='firstName'
@@ -57,7 +56,7 @@ function UserForm({ title, validationSchema, buttonTitle }) {
                         )}
                 </div>
                 <div className='w-full md:w-1/2 px-3'>
-                    <FormLabel htmlFor='lastName'>Last Name</FormLabel>
+                    <FormLabel htmlFor='lastName'>Apellido</FormLabel>
                     <FormInput
                         id='lastName'
                         name='lastName'
@@ -92,7 +91,7 @@ function UserForm({ title, validationSchema, buttonTitle }) {
             </div>
             <div className='flex flex-wrap -mx-3 mb-6'>
                 <div className='w-full px-3'>
-                    <FormLabel htmlFor='password'>Password</FormLabel>
+                    <FormLabel htmlFor='password'>Contraseña</FormLabel>
                     <FormInput
                         id='password'
                         name='password'
@@ -110,7 +109,7 @@ function UserForm({ title, validationSchema, buttonTitle }) {
             </div>
             <div>
                 <FormLabel htmlFor='avatar'>
-                    Avatar <small>(Optional)</small>
+                    Avatar <small>(opcional)</small>
                 </FormLabel>
                 <FormLabel labelButton={true} htmlFor='avatar'>
                     Select File
@@ -141,17 +140,16 @@ function UserForm({ title, validationSchema, buttonTitle }) {
                     <FaUser />
                     {buttonTitle}
                 </FormButton>
-
                 <button
                     className='flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded'
                     type='button'
                     onClick={formik.handleReset}
                 >
-                    Clear Form
+                    Limpiar formulario
                 </button>
             </div>
         </form>
-    );
+    )
 }
 
 export default UserForm;
