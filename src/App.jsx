@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home/Home';
 import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
+import PanelAdmin from './Pages/PanelAdmin/PanelAdmin';
 import { CreateCategories, CreateTransactions, EditCategories, EditTransactions } from './Pages';
 import { UserForm, createUserFields } from './Components/Forms/UserForms';
 
@@ -13,6 +14,7 @@ function App() {
                 <Route path='/' element={<Home />} />
                 <Route exact path='/register' element={<Register />} />
                 <Route exact path='/login' element={<Login />} />
+                <Route path="/panel-admin" element={<PanelAdmin />} />
                 <Route
                     path='/create-user'
                     element={<UserForm {...createUserFields} />}
