@@ -43,13 +43,13 @@ export default function Login() {
     let errors = {};
 
     if (!input.email) {
-      errors.email = 'Email is required';
+      errors.email = 'Email requerido';
     } else if (!isValidEmail(input.email)) {
-      errors.email = `Email is invalid`;
+      errors.email = `Email inválido`;
     }
 
     if (!input.password) {
-      errors.password = 'Password is required';
+      errors.password = 'Contraseña requerida';
     }
 
     return errors;
