@@ -35,7 +35,7 @@ export default function Home() {
           <BaseButton
             text={authStatus === 'success' ? 'Ir a mis Transacciones' : 'Iniciar sesión'}
             onClick={onClick}
-            className="hover:opacity-60 text-white py-4 px-8 rounded-md m-8"
+            className="mt-8"
           />
         </div>
 

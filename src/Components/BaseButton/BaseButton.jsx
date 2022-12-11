@@ -1,5 +1,5 @@
 
-export default function BaseButton({ text, color, onClick, disabled }) {
+export default function BaseButton({ text, color, onClick, disabled, className }) {
 
   function getClassName() {
     const background = {
@@ -11,7 +11,7 @@ export default function BaseButton({ text, color, onClick, disabled }) {
 
   return (
     <button
-      className={`${getClassName()} hover:opacity-80 text-white p-3 rounded-md shadow-md`}
+      className={`${getClassName()} hover:opacity-80 text-white p-3 rounded-md shadow-md ${className ?? ""}`}
       type="submit"
       onClick={onClick}
       disabled={disabled ? disabled : false}>
