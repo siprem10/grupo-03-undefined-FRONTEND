@@ -1,32 +1,22 @@
-import { useEffect } from 'react';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { getUserInfo, login, logout } from '../../redux/actions/authActions';
-import { alertErr } from '../../Utils/UI';
-import { isValidEmail } from '../../Utils/Validator';
+import { Link, useNavigate } from 'react-router-dom';
+import { apiPublic } from '../../Service/HttpService';
+import { alertErr, alertOkClick } from '../../Utils/UI';
+import { isValidEmail, isValidName } from '../../Utils/Validator';
 import BaseButton from '../BaseButton/BaseButton';
 import Layout from '../Layout/Layout';
 import '../styles/Form.css';
 
-export default function Login() {
+export default function Register() {
   const defaultsValues = {
+    lastName: '',
+    firstName: '',
     email: '',
-    password: ''
+    password: '',
+    passwordConfirm: ''
   };
 
-  const { status, userData, error } = useSelector(state => state.auth);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (status === 'success' && !Object.keys(userData).length) {
-      dispatch(getUserInfo());
-    } else if (status === 'failed') {
-      alertErr(error);
-      dispatch(logout());
-    }
-  }, [dispatch, status, Object.keys(userData).length]);
-
+  const navigate = useNavigate();
   const [inputState, setInputState] = useState({ ...defaultsValues });
   const [inputError, setInputError] = useState({ ...defaultsValues });
 
@@ -41,18 +31,52 @@ export default function Login() {
 
   function validateErrs(input) {
     let errors = {};
+    const maxName = 25;
+    const minName = 3;
+    const minPwd = 8;    
+
+    if (!input.firstName) {
+      errors.firstName = 'Nombre requerido';
+    } else if (!isValidName(input.firstName)) {
+      errors.firstName = 'Nombre invalido';
+    } else if (input.firstName.length < minName) {
+      errors.firstName = `Nombre muy corto (${input.firstName.length}/${minName})`;
+    } else if (input.firstName.length > maxName) {
+      errors.firstName = `Nombre muy largo (${input.firstName.length}/${maxName})`;
+    }
+
+    if (!input.lastName) {
+      errors.lastName = 'Apellido requerido';
+    } else if (!isValidName(input.lastName)) {
+      errors.lastName = 'Apellido inválido';
+    } else if (input.lastName.length < minName) {
+      errors.lastName = `Apellido muy corto (${input.lastName.length}/${minName})`;
+    } else if (input.lastName.length > maxName) {
+      errors.lastName = `Apellido muy largo (${input.lastName.length}/${maxName})`;
+    }
 
     if (!input.email) {
       errors.email = 'Email requerido';
     } else if (!isValidEmail(input.email)) {
-      errors.email = `Email inválido`;
+      errors.email = `Email invalido`;
     }
 
     if (!input.password) {
       errors.password = 'Contraseña requerida';
+    } else if (input.password.length < minPwd) {
+      errors.password = `Contraseña muy corta (${input.password.length}/${minPwd})`;
+    }
+
+    if (!errors.password && input.passwordConfirm !== input.password) {
+      errors.passwordConfirm = 'Las contraseñas no coinciden';
     }
 
     return errors;
+  }
+
+  function setResetStates() {
+    setInputState({ ...defaultsValues });
+    setInputError({ ...defaultsValues });
   }
 
   function handleSetInputErrs(name, value) {
@@ -61,21 +85,71 @@ export default function Login() {
   }
 
   function isButtonDisabled() {
-    return !inputState.email || !inputState.password || inputError.email || inputError.password;
+    return (
+      !inputState.firstName ||
+      !inputState.lastName ||
+      !inputState.email ||
+      !inputState.password ||
+      !inputState.passwordConfirm ||
+      inputError.firstName ||
+      inputError.lastName ||
+      inputError.email ||
+      inputError.password ||
+      inputError.passwordConfirm
+    );
   }
 
-  function handleOnSubmit(e) {
+  async function handleOnSubmit(e) {
     e.preventDefault();
-    dispatch(login(inputState));
+
+    try {
+      const newUser = await apiPublic.post('/users', inputState);
+
+      if (newUser.data.body) {
+        setResetStates();
+        alertOkClick(() => navigate('/login'), '¡Usuario creado con éxito!');
+      } else {
+        alertErr(newUser.data.message);
+      }
+    } catch (error) {
+      alertErr(JSON.parse(error.request.response).error[0].msg);
+    }
   }
 
   return (
     <Layout>
       <div className="flex flex-col w-full h-full mt-10">
         <div className="flex flex-col justify-center items-center">
-          <h1 className="title">Iniciar sesión</h1>
-
+          <h1 className="title">Registro</h1>
           <form className="form" onSubmit={e => e.preventDefault()}>
+            <div className="mb-4">
+              <label className="label">Nombre</label>
+              <input
+                className="inputForm"
+                type="text"
+                placeholder="Brenda"
+                name="firstName"
+                value={inputState.firstName}
+                onChange={e => handleSetInput(e)}></input>
+              <div className="h-5">
+                {inputError.firstName && <p className="inputFormErr">{inputError.firstName}</p>}
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <label className="label">Apellidos</label>
+              <input
+                className="inputForm"
+                type="text"
+                placeholder="Romero Acuña"
+                name="lastName"
+                value={inputState.lastName}
+                onChange={e => handleSetInput(e)}></input>
+              <div className="h-5">
+                {inputError.lastName && <p className="inputFormErr">{inputError.lastName}</p>}
+              </div>
+            </div>
+
             <div className="mb-4">
               <label className="label">Correo</label>
               <input
@@ -104,24 +178,34 @@ export default function Login() {
               </div>
             </div>
 
+            <div className="mb-4">
+              <label className="label">Confirmar Contraseña</label>
+              <input
+                className="inputForm"
+                placeholder="************"
+                type="password"
+                name="passwordConfirm"
+                value={inputState.passwordConfirm}
+                onChange={e => handleSetInput(e)}></input>
+              <div className="h-5">
+                {inputError.passwordConfirm && (
+                  <p className="inputFormErr">{inputError.passwordConfirm}</p>
+                )}
+              </div>
+            </div>
+
             <div className="flex flex-col w-full">
               <BaseButton
-                text="Ingresar"
+                text="Registrarse"
                 onClick={e => handleOnSubmit(e)}
                 disabled={isButtonDisabled()}
-                type="submit"></BaseButton>
-              <Link
-                to="/forgot-password"
-                className="mt-1 flex justify-center underline text-black dark:text-white">
-                ¿Olvidaste la contraseña?
-              </Link>
-              <p className="mt-2 mb-1 flex justify-center text-black dark:text-white">
-                ¿Aun no tienes una cuenta?
-              </p>
-              <Link
-                to="/login"
+                type="submit"
+              />
+              <p className="mt-2 mb-1 flex justify-center text-black dark:text-white">¿Ya tienes una cuenta?</p>
+              <Link 
+                to="/login" 
                 className="flex justify-center underline text-black dark:text-white">
-                Login
+                Inicia sesión
               </Link>
             </div>
           </form>
