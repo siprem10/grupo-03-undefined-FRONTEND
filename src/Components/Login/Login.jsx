@@ -2,12 +2,10 @@ import { useEffect } from "react";
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { getUserInfo, login } from "../../redux/actions/authActions";
+import { getUserInfo, login, logout } from "../../redux/actions/authActions";
 import { alertErr } from "../../Utils/UI";
 import { isValidEmail } from "../../Utils/Validator";
 import BaseButton from "../BaseButton/BaseButton";
-import { setLogout } from "../../redux/slices/authSlice";
-import { getToken } from "../../Utils/Auth";
 import "../styles/Form.css";
 
 export default function Login() {
@@ -22,14 +20,17 @@ export default function Login() {
     const navigate = useNavigate();  
 
     useEffect(() => {
-        if(status === "success" && getToken()) {   
+        if(status === "success" && !Object.keys(userData).length) {   
             dispatch(getUserInfo());            
-            Object.keys(userData).length ? navigate("/") : dispatch(setLogout());
-        } else if(status === "failed") {
-            alertErr(error);
-            dispatch(setLogout());
         }
-    }, [status, Object.keys(userData).length]); 
+        else if(Object.keys(userData).length){
+            navigate("/");
+        }
+        else if(status === "failed") {
+            alertErr(error);
+            dispatch(logout());
+        }
+    }, [dispatch, status, Object.keys(userData).length]); 
 
     const [inputState, setInputState] = useState({ ...defaultsValues });
     const [inputError, setInputError] = useState({ ...defaultsValues });
