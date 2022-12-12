@@ -1,16 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { HttpService } from '../../Service/HttpService';
+import { setTransactions } from '../slices/transactionSlice';
 
-export const getTransactions = createAsyncThunk('transactions/getTransactions', async () => {
+export const getTransactions = (name = "") => async (dispatch) => {
   try {
     const httpService = new HttpService();
-    const response = await httpService.apiPrivate().get('/transactions');
-    const transactions = response.data.transactions;
-    return transactions;
+    const response = await httpService.apiPrivate().get(`/transactions?name=${name}`);
+    dispatch(setTransactions(response));
+    
   } catch (error) {
-    return error.response.data;
+    return error.message;
   }
-});
+};
 
 export const createTransaction = createAsyncThunk(
   'user/createTransaction',
