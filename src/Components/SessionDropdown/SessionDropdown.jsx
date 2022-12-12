@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../redux/actions/authActions';
 import { setImgUserErr } from '../../Utils/ImgErr';
+import avatar_default from "../../assets/user/avatar_default.png";
 
 export default function SessionDropdown() {
   const dispatch = useDispatch();
@@ -48,10 +49,10 @@ export default function SessionDropdown() {
         {authenticated ? (
           <>
             <img
-              src={userData.avatar ?? 'err'}
-              onError={e => setImgUserErr(e)}
-              alt="img found"
               className="shadow rounded-full md:h-10 h-7 border-none mr-2 ease-out duration-300"
+              src={userData.avatar ?? avatar_default}
+              onError={setImgUserErr}
+              alt="img found"
             />
             <span>{userData.firstName ?? ''}</span>
             <svg
