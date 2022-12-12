@@ -28,16 +28,16 @@ export default function Header() {
       </Link>
       {status === "success" &&
         <ul className="flex flex-wrap self-center">
-          {sections?.map((section, i) => (<Link
-            to={section.to}>
-            <li
-              key={i}
-              className={`${path === section.to ? 'text-emerald-900' : 'text-gray-500'} p-3.5 flex md:text-xl items-center justify-center text-base font-bold uppercase hover:text-tertiary anim`}>
-              {!isLowRes && <section.icon className="flex mr-2 md:w-6 w-5 h-auto"></section.icon>}
-              {section.name}
+          {sections?.map((section, i) => 
+            <li key={i}>
+              <Link
+                to={section.to}
+                className={`${path === section.to ? 'text-emerald-900' : 'text-gray-500'} p-3.5 flex md:text-xl items-center justify-center text-base font-bold uppercase hover:text-tertiary anim`}>
+                {!isLowRes && <section.icon className="flex mr-2 md:w-6 w-5 h-auto"></section.icon>}
+                {section.name}
+              </Link>
             </li>
-          </Link>
-          ))}
+          )}
         </ul>
       }
       <SessionDropdown />
