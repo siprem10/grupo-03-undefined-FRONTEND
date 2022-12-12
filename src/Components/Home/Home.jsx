@@ -1,11 +1,19 @@
+import Balance from './Balance/Balance';
+import Card from '../Card/Card';
 import Layout from '../Layout/Layout';
+import Shortcuts from './Shortcuts/Shortcuts';
+import CreditCard from './CreditCard/CreditCard';
 
 export default function Home() {
 
   return (
     <Layout>
-      <div className="flex flex-col lg:flex-row w-full xl:p-20 p-10 items-stretch">
-        
+      <div className="flex w-full justify-center">
+        <Card>
+          <Balance />
+          <Shortcuts />
+          <CreditCard />
+        </Card>
       </div>
     </Layout>
   );

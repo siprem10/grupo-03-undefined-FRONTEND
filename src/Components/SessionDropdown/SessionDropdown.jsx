@@ -49,7 +49,7 @@ export default function SessionDropdown() {
         {authenticated ? (
           <>
             <img
-              className="shadow rounded-full md:h-10 h-7 border-none mr-2 ease-out duration-300"
+              className="anim shadow rounded-full md:h-10 h-7 border-none mr-2"
               src={userData.avatar ?? avatar_default}
               onError={setImgUserErr}
               alt="img found"
@@ -70,7 +70,7 @@ export default function SessionDropdown() {
             </svg>
           </>)
           : (
-            <span className='md:p-1 p-0.5 ease-out duration-300'>Iniciar Sesión</span>
+            <span className='anim md:p-1 p-0.5'>Iniciar Sesión</span>
           )
         }
       </button>
