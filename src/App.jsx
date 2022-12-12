@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Landing from './Components/Landing/Landing';
 import Home from './Components/Home/Home';
 import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
@@ -20,14 +21,15 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<Home />} />
+                <Route path='/' element={<Landing />} />
+                <Route path='/home' element={isSession ? <Home /> : <Navigate to='/' />} />
                 <Route
                     path='/register'
-                    element={isSession ? <Navigate to='/' /> : <Register />}
+                    element={isSession ? <Navigate to='/home' /> : <Register />}
                 />
                 <Route
                     path='/login'
-                    element={isSession ? <Navigate to='/' /> : <Login />}
+                    element={isSession ? <Navigate to='/home' /> : <Login />}
                 />
                 <Route
                     path='/admin-panel'
@@ -37,13 +39,7 @@ function App() {
                 />
                 <Route
                     path='/create-user'
-                    element={
-                        isSession ? (
-                            <Navigate to='/' />
-                        ) : (
-                            <UserForm {...createUserFields} />
-                        )
-                    }
+                    element={<UserForm {...createUserFields} />}
                 />
                 <Route
                     path='/categories/create'
@@ -89,6 +85,7 @@ function App() {
                     path='/user-info'
                     element={!isSession ? <Navigate to='/' /> : <Profile />}
                 />
+
             </Routes>
         </BrowserRouter>
     );
