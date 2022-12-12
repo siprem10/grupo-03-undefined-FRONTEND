@@ -28,17 +28,15 @@ export default function Header() {
       </Link>
       {status === "success" &&
         <ul className="flex flex-wrap self-center">
-          {sections?.map((section, i) => (
+          {sections?.map((section, i) => (<Link
+            to={section.to}>
             <li
               key={i}
-              className="p-3.5 flex md:text-xl items-center justify-center text-base font-bold uppercase text-gray-500 hover:text-tertiary anim">
+              className={`${path === section.to ? 'text-emerald-900' : 'text-gray-500'} p-3.5 flex md:text-xl items-center justify-center text-base font-bold uppercase hover:text-tertiary anim`}>
               {!isLowRes && <section.icon className="flex mr-2 md:w-6 w-5 h-auto"></section.icon>}
-              <Link
-                to={section.to}
-                className={path === section.to ? 'text-emerald-900 hover:text-tertiary' : ''}>
-                {section.name}
-              </Link>
+              {section.name}
             </li>
+          </Link>
           ))}
         </ul>
       }
