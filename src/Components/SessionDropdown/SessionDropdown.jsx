@@ -12,7 +12,7 @@ export default function SessionDropdown() {
   const authenticated = status === 'success' && Object.keys(userData).length;
 
   const items = [
-    { name: 'Mi perfil', to: '/user-info' },
+    { name: 'Mi perfil', to: '/profile' },
     {
       name: 'Cerrar sesión',
       onClick: () => {
