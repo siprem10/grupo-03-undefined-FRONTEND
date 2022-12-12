@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { FaUser } from 'react-icons/fa';
+import { RiLockPasswordFill } from 'react-icons/ri';
 import {
     FormLabel,
     FormButton,
@@ -8,43 +9,100 @@ import {
     ErrorMessage,
     PreviewImage,
 } from './FormComponents';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { HttpService } from '../../../Service/HttpService';
+import { alertErr, alertOkClick } from '../../../Utils/UI';
 
-function UserForm({ title, validationSchema, buttonTitle, modify = false }) {
-    const navigate = useNavigate();
+function UserForm({
+    title,
+    validationSchema,
+    buttonTitle,
+    modify = false,
+    closeModal,
+    closeModalWithoutConfirmation,
+}) {
+    const { id, firstName, lastName, email, avatar } = useSelector(
+        user => user.auth.userData
+    );
+    const [hidePasswordFields, setHidePasswordFields] = useState(false);
+
+    console.log('avatar', avatar);
+
     const formik = useFormik({
         initialValues: {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            avatar: null,
+            firstName,
+            lastName,
+            email,
+            image: avatar,
+            currentPassword: '',
+            newPassword: '',
+            repeatPassword: '',
         },
         validationSchema,
         onSubmit: async userData => {
-            console.log('enviando');
-            // try {
-            //     if (!modify) {
-            //         await usersApi.post('/', userData);
-            //         navigate('/');
-            //         //notificacion: usuario fue creado con exito!
-            //     } else {
-            //         const { firstName, lastName, avatar, email, password } =
-            //             userData;
+            console.log('userData', userData);
+            try {
+                const {
+                    firstName,
+                    lastName,
+                    email,
+                    currentPassword,
+                    newPassword,
+                    avatar,
+                    repeatPassword,
+                } = userData;
 
-            //         // Validacion para ver si ninguno de los campos se ha modificado
-            //         if ((firstName, lastName, avatar, email, password)) {
-            //         }
+                if (!firstName || !lastName || !email) {
+                    const camposRequeridos = `${!firstName ? '- Nombre' : ''} ${
+                        !lastName ? '- Apellido' : ''
+                    } ${!email ? '- Email' : ''}`;
 
-            //         // Validacion de datos ya creados, y demas validaciones
+                    return alertErr(
+                        camposRequeridos,
+                        'Falta completar los siguientes campos:'
+                    );
+                }
 
-            //         await usersApi.put('/:id', userData);
-            //         //notificacion: usuario fue actualizado con exito!
-            //     }
-            // } catch (error) {
-            //     // Aca deberia mostrar las notificaciones con el respectivo error
-            //     console.error(error);
-            // }
+                if (
+                    (currentPassword && !newPassword) ||
+                    (currentPassword && !repeatPassword)
+                ) {
+                    return alertErr(
+                        'Si desea cambiar la contraseña debe proporcionar una nueva',
+                        'Error'
+                    );
+                }
+
+                if (!currentPassword && newPassword && repeatPassword) {
+                    return alertErr(
+                        'Debe introducir su actual contraseña para poder cambiarla',
+                        'Error'
+                    );
+                }
+
+                const filteredData = {
+                    firstName,
+                    lastName,
+                    email,
+                    image: avatar,
+                    currentPassword,
+                    newPassword,
+                };
+
+                const httpService = new HttpService();
+                await httpService
+                    .apiPrivate()
+                    .put(`/users/${id}`, filteredData);
+
+                alertOkClick(
+                    closeModalWithoutConfirmation,
+                    'Se ha modificado el perfil correctamente',
+                    'Actualizado!'
+                );
+            } catch (error) {
+                console.log('error', error);
+                alertErr(JSON.parse(error.request.response).error[0].msg);
+            }
         },
     });
 
@@ -57,7 +115,7 @@ function UserForm({ title, validationSchema, buttonTitle, modify = false }) {
             </div>
             <div className='flex flex-wrap -mx-3 mb-6'>
                 <div className='w-full md:w-1/2 px-3 mb-6 md:mb-0'>
-                    <FormLabel htmlFor='firstName'>First Name</FormLabel>
+                    <FormLabel htmlFor='firstName'>Nombre</FormLabel>
 
                     <FormInput
                         id='firstName'
@@ -74,7 +132,7 @@ function UserForm({ title, validationSchema, buttonTitle, modify = false }) {
                         )}
                 </div>
                 <div className='w-full md:w-1/2 px-3'>
-                    <FormLabel htmlFor='lastName'>Last Name</FormLabel>
+                    <FormLabel htmlFor='lastName'>Apellido</FormLabel>
                     <FormInput
                         id='lastName'
                         name='lastName'
@@ -107,21 +165,80 @@ function UserForm({ title, validationSchema, buttonTitle, modify = false }) {
                     )}
                 </div>
             </div>
-            <div className='flex flex-wrap -mx-3 mb-6'>
+            <FormLabel
+                className='mb-10 gap-2'
+                labelButton={true}
+                onClick={() => setHidePasswordFields(!hidePasswordFields)}
+            >
+                <RiLockPasswordFill size={16} />
+                Cambiar Contraseña
+            </FormLabel>
+            {modify && (
+                <div
+                    className={`flex flex-wrap -mx-3 mb-6 ${
+                        hidePasswordFields === true && 'hidden'
+                    }`}
+                >
+                    <div className='w-full px-3'>
+                        <FormLabel htmlFor='currentPassword'>
+                            Contraseña Actual:
+                        </FormLabel>
+                        <FormInput
+                            id='currentPassword'
+                            name='currentPassword'
+                            type='password'
+                            onChange={formik.handleChange}
+                            value={formik.values.currentPassword}
+                            placeholder='***********'
+                        />
+                    </div>
+                </div>
+            )}
+            <div
+                className={`flex flex-wrap -mx-3 mb-6 ${
+                    hidePasswordFields === true && 'hidden'
+                }`}
+            >
                 <div className='w-full px-3'>
-                    <FormLabel htmlFor='password'>Password</FormLabel>
+                    <FormLabel htmlFor='newPassword'>
+                        Nueva Contraseña
+                    </FormLabel>
                     <FormInput
-                        id='password'
-                        name='password'
+                        id='newPassword'
+                        name='newPassword'
                         type='password'
                         onChange={formik.handleChange}
-                        value={formik.values.password}
-                        formikError={formik.errors.password}
-                        placeholder='******************'
+                        value={formik.values.newPassword}
+                        formikError={formik.errors.newPassword}
+                        placeholder='***********'
                     />
-                    {formik.values.password.length > 0 &&
-                        formik.errors.password && (
-                            <ErrorMessage msg={formik.errors.password} />
+                    {formik.values.newPassword.length > 0 &&
+                        formik.errors.newPassword && (
+                            <ErrorMessage msg={formik.errors.newPassword} />
+                        )}
+                </div>
+            </div>
+            <div
+                className={`flex flex-wrap -mx-3 mb-6 ${
+                    hidePasswordFields === true && 'hidden'
+                }`}
+            >
+                <div className='w-full px-3'>
+                    <FormLabel htmlFor='repeatPassword'>
+                        Repetir Nueva Contraseña
+                    </FormLabel>
+                    <FormInput
+                        id='repeatPassword'
+                        name='repeatPassword'
+                        type='password'
+                        onChange={formik.handleChange}
+                        value={formik.values.repeatPassword}
+                        formikError={formik.errors.repeatPassword}
+                        placeholder='***********'
+                    />
+                    {formik.values.repeatPassword.length > 0 &&
+                        formik.errors.repeatPassword && (
+                            <ErrorMessage msg={formik.errors.repeatPassword} />
                         )}
                 </div>
             </div>
@@ -129,27 +246,27 @@ function UserForm({ title, validationSchema, buttonTitle, modify = false }) {
                 <FormLabel htmlFor='avatar'>
                     Avatar <small>(Optional)</small>
                 </FormLabel>
-                <FormLabel labelButton={true} htmlFor='avatar'>
+                <FormLabel labelButton={true} htmlFor='image'>
                     Select File
                 </FormLabel>
                 <FormInput
-                    id='avatar'
+                    id='image'
                     type='file'
-                    name='avatar'
+                    name='image'
                     onChange={e =>
-                        formik.setFieldValue('avatar', e.target.files[0])
+                        formik.setFieldValue('image', e.target.files[0])
                     }
                     invisible={true}
                 />
                 <div className='justify-center'>
-                    {formik.values.avatar && (
+                    {formik.values.image && (
                         <PreviewImage
-                            file={formik.values.avatar}
-                            onClick={() => formik.setFieldValue('avatar', '')}
+                            file={formik.values.image}
+                            onClick={() => formik.setFieldValue('image', null)}
                         />
                     )}
-                    {formik.values.avatar && formik.errors.avatar && (
-                        <ErrorMessage msg={formik.errors.avatar} />
+                    {formik.values.image && formik.errors.image && (
+                        <ErrorMessage msg={formik.errors.image} />
                     )}
                 </div>
             </div>
@@ -161,10 +278,10 @@ function UserForm({ title, validationSchema, buttonTitle, modify = false }) {
 
                 <button
                     className='flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded'
-                    type='button'
+                    type='reset'
                     onClick={formik.handleReset}
                 >
-                    Clear Form
+                    Reset Form
                 </button>
             </div>
         </form>

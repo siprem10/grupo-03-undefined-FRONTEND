@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from '../Modal';
 import { UserForm, editUserFields } from '../Forms/UserForms';
 
-function ModifyPerfil({ closeModal }) {
+function ModifyPerfil({ closeModal, closeModalWithoutConfirmation }) {
     return (
         <Modal closeModal={closeModal}>
             <button
@@ -11,7 +11,12 @@ function ModifyPerfil({ closeModal }) {
             >
                 X
             </button>
-            <UserForm modify={true} {...editUserFields} />
+            <UserForm
+                closeModalWithoutConfirmation={closeModalWithoutConfirmation}
+                closeModal={closeModal}
+                modify={true}
+                {...editUserFields}
+            />
         </Modal>
     );
 }

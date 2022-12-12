@@ -52,15 +52,22 @@ export function FormButton({ children, className, type, onClick }) {
     );
 }
 
-export function FormLabel({ labelButton = false, children, htmlFor }) {
+export function FormLabel({
+    labelButton = false,
+    children,
+    htmlFor,
+    onClick,
+    className,
+}) {
     return (
         <label
             className={
                 labelButton === true
-                    ? 'flex space-x-2 justify-center items-center w-fit m-0 px-6 py-2.5 bg-teal-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-teal-700 hover:shadow-lg focus:bg-teal-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-800 active:shadow-lg transition duration-150 ease-in-out hover:cursor-pointer'
-                    : 'block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'
+                    ? `flex space-x-2 justify-center items-center w-fit m-0 px-6 py-2.5 bg-teal-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-teal-700 hover:shadow-lg focus:bg-teal-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-800 active:shadow-lg transition duration-150 ease-in-out hover:cursor-pointer ${className}`
+                    : `block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 ${className}`
             }
             htmlFor={htmlFor}
+            onClick={onClick}
         >
             {children}
         </label>
@@ -68,9 +75,10 @@ export function FormLabel({ labelButton = false, children, htmlFor }) {
 }
 
 export function PreviewImage({ file, onClick }) {
-    const [preview, setPreview] = useState('');
+    const [preview, setPreview] = useState(null);
+    const nameImage = !file.name ? file.split('/')[4] : file.name;
 
-    if (file) {
+    if (file.type) {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
@@ -87,8 +95,8 @@ export function PreviewImage({ file, onClick }) {
                 X
             </button>
             <img
-                src={preview}
-                alt={file.name}
+                src={file.type ? preview : file}
+                alt={nameImage}
                 className='h-32 w-36 rounded-full'
             />
         </div>
