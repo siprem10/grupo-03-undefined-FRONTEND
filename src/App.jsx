@@ -85,7 +85,10 @@ function App() {
                         )
                     }
                 />
-                <Route path='/profile' element={<Profile />} />
+                <Route
+                    path='/user-info'
+                    element={!isSession ? <Navigate to='/' /> : <Profile />}
+                />
             </Routes>
         </BrowserRouter>
     );
