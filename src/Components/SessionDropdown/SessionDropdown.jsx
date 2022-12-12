@@ -25,13 +25,11 @@ export default function SessionDropdown() {
     items.push({ name: 'Panel admin', to: '/admin-panel' });
   }
 
-  function handleShow(e) {
+  function handleShow() {
     if (!authenticated) {
       return navigate("/login");
     }
-
     setIsOpen(!isOpen);
-    e.stopPropagation();
   }
 
   return (
