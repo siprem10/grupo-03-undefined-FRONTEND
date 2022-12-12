@@ -28,8 +28,12 @@ export default function SessionDropdown() {
   function handleShow() {
     if (!authenticated) {
       return navigate("/login");
-    }
+    } 
     setIsOpen(!isOpen);
+  }
+
+  function handleClose() {    
+    setIsOpen(false);
   }
 
   return (
@@ -81,7 +85,7 @@ export default function SessionDropdown() {
           className="py-1 text-sm text-gray-700 dark:text-gray-200"
           aria-labelledby="dropdownDividerButton">
           {items?.map((item, i) => (
-            <li key={i}>
+            <li key={i} onClick={handleClose}>
               {item.to && (
                 <Link
                   to={item.to}
