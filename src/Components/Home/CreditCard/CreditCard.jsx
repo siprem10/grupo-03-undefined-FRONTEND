@@ -16,7 +16,7 @@ export default function CreditCard() {
 
     return (
         <div onClick={handleShow} className="flex flex-col justify-center items-start">
-            <div className="w-full bg-emerald-600 hover:bg-emerald-500 p-5 rounded-xl flex flex-col justify-center items-start anim cursor-pointer">
+            <div className="w-full bg-emerald-500 hover:bg-emerald-400 p-5 rounded-xl flex flex-col justify-center items-start anim cursor-pointer">
                 <div className="w-full flex justify-between">
                     <img src={logoMc} className="h-6 xl:h-8 anim" alt="not found" />
                     <img src={aw} className="h-7 xl:h-9 anim" alt="not found" />
