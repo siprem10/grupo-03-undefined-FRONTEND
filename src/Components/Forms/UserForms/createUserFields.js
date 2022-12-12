@@ -11,6 +11,10 @@ export default {
         password: Yup.string()
             .min(8, 'Debe tener al menos 8 caracteres')
             .required('Debe escribir su contraseña'),
+        repeatPassword: Yup.string().oneOf(
+            [Yup.ref('password')],
+            'Las contraseñas no coinciden'
+        ),
         avatar: Yup.lazy(value => {
             if (value === null || value === undefined) {
                 return Yup.mixed().optional();
