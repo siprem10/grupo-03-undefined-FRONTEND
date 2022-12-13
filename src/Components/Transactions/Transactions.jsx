@@ -14,7 +14,7 @@ export default function Home() {
     const { transactionsFilter } = useSelector(state => state.transactions);
     const { filter } = useSelector(state => state.transactions);
     const [isShow, setShow] = useState(false);
-    const h1Style = "anim text-primary font-bold uppercase md:text-md xl:text-xl lg:text-lg break-words";
+    const h1Style = "anim text-primary text-gray-700 font-bold uppercase md:text-md xl:text-xl lg:text-lg break-words";
 
     useEffect(() => {
         const interval = setInterval(() => dispatch(getTransactions(id, filter)), 7000);
@@ -54,17 +54,17 @@ export default function Home() {
     return (
         <Layout>
             <div className="flex w-full justify-center m-5">
-                <Card className="flex flex-col w-full items-center">
+                <Card className="flex flex-col w-full items-center w-fit">
                     {/* <h1>MOVIMIENTOS</h1> */}
                     <div className='flex w-full justify-start items-center'>   
-                        <Filter className="flex w-full" />
+                        <Filter currentFilter={filter} className="flex w-full" />
                         <img className="mb-1 cursor-pointer" onClick={handleShow} src={getIconShow()} alt="img found"></img>    
                     </div>
                     {transactionsFilter?.map((transaction) =>
                         <Card className='flex flex-col m-2 md:w-full 2xl:w-full w-full cursor-pointer hover:bg-gray-100 anim' key={transaction.id}>
                             <div className='flex justify-between w-full'>
-                                <h1 className={h1Style}>{transaction.Category.name}</h1>
-                                <h1 className={h1Style}>{`${isIngreso(transaction.type) ? "+" : "-"} $ ${transaction.amount}`}</h1>
+                                <h1 className={`${h1Style} pr-6 xl:pr-12`}>{transaction.Category.name}</h1>
+                                <h1 className={`${h1Style} ${isIngreso(transaction.type) ? "text-green-600" : "text-red-600"}`}>{`${isIngreso(transaction.type) ? "+" : "-"} $ ${transaction.amount}`}</h1>
                             </div>
                             {showIfTransfer(transaction.Category.name) &&
                                 <div className='flex flex-inline items-center'>
