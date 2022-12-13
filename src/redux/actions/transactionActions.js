@@ -73,11 +73,11 @@ export const createTransaction = createAsyncThunk(
     try {
       const httpService = new HttpService();
       const response = await httpService.apiPrivate().post('/transactions', {
-        amount,
         concept,
+        amount,
         userId,
         toUserId,
-        categoryId
+        categoryId,
       });
       const transactions = response.data.transactions;
 
