@@ -10,23 +10,20 @@ import {
     PreviewImage,
 } from './FormComponents';
 import { useSelector } from 'react-redux';
-import { HttpService } from '../../../Service/HttpService';
 import { alertErr, alertOkClick } from '../../../Utils/UI';
+import { apiUsers } from './apiUser';
 
 function UserForm({
     title,
     validationSchema,
     buttonTitle,
     modify = false,
-    closeModal,
     closeModalWithoutConfirmation,
 }) {
     const { id, firstName, lastName, email, avatar } = useSelector(
         user => user.auth.userData
     );
-    const [hidePasswordFields, setHidePasswordFields] = useState(false);
-
-    console.log('avatar', avatar);
+    const [hidePasswordFields, setHidePasswordFields] = useState(true);
 
     const formik = useFormik({
         initialValues: {
@@ -48,7 +45,7 @@ function UserForm({
                     email,
                     currentPassword,
                     newPassword,
-                    avatar,
+                    image,
                     repeatPassword,
                 } = userData;
 
@@ -84,15 +81,12 @@ function UserForm({
                     firstName,
                     lastName,
                     email,
-                    image: avatar,
+                    image,
                     currentPassword,
                     newPassword,
                 };
 
-                const httpService = new HttpService();
-                await httpService
-                    .apiPrivate()
-                    .put(`/users/${id}`, filteredData);
+                await apiUsers.put(`/${id}`, filteredData);
 
                 alertOkClick(
                     closeModalWithoutConfirmation,
@@ -101,13 +95,17 @@ function UserForm({
                 );
             } catch (error) {
                 console.log('error', error);
-                alertErr(JSON.parse(error.request.response).error[0].msg);
+                alertErr(error.response.data.error);
             }
         },
     });
 
     return (
-        <form className='w-full max-w-lg' onSubmit={formik.handleSubmit}>
+        <form
+            className='w-full max-w-lg'
+            onSubmit={formik.handleSubmit}
+            encType='multipart/form-data'
+        >
             <div className='flex justify-between'>
                 <h1 className='flex items-center gap-2 uppercase tracking-wide text-xl font-semibold text-gray-700 mb-10'>
                     <FaUser /> {title}

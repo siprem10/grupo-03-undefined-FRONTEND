@@ -22,7 +22,10 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Landing />} />
-                <Route path='/home' element={isSession ? <Home /> : <Navigate to='/' />} />
+                <Route
+                    path='/home'
+                    element={isSession ? <Home /> : <Navigate to='/' />}
+                />
                 <Route
                     path='/register'
                     element={isSession ? <Navigate to='/home' /> : <Register />}
@@ -82,10 +85,9 @@ function App() {
                     }
                 />
                 <Route
-                    path='/user-info'
+                    path='/profile'
                     element={!isSession ? <Navigate to='/' /> : <Profile />}
                 />
-
             </Routes>
         </BrowserRouter>
     );

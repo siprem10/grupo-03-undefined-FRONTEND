@@ -8,14 +8,12 @@ import { confirmationAlert } from '../Utils/Alerts';
 import { useDispatch, useSelector } from 'react-redux';
 import { HttpService } from '../Service/HttpService';
 import { logout } from '../redux/actions/authActions';
+import defaultAvatar from '../assets/user/avatar_default.png';
 
 function Profile() {
     const [modifyProfile, setModifyProfile] = useState(false);
     const userData = useSelector(state => state.auth.userData);
     const dispatch = useDispatch();
-
-    console.log('userData', userData);
-    console.log('HttpService', HttpService);
 
     const openModal = () => setModifyProfile(true);
     const closeModalWithoutConfirmation = () => setModifyProfile(false);
@@ -77,9 +75,8 @@ function Profile() {
                 <div className='flex flex-col gap-5 bg-white text-black rounded-lg p-10 px-32 backdrop-blur-2xl'>
                     {/* Profile Image*/}
                     <img
-                        className='self-center rounded-full shadow-md shadow-black border-4 border-teal-600 border-spacing-x-60'
-                        width={150}
-                        src={userData.avatar}
+                        className='h-36 w-40 rounded-full self-center shadow-md shadow-black border-4 border-teal-600 border-spacing-x-60'
+                        src={userData.avatar || defaultAvatar}
                         alt={userData.firstName}
                     />
                     <h1 className='font-bold text-xl text-center'>
