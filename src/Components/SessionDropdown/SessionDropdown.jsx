@@ -29,11 +29,11 @@ export default function SessionDropdown() {
   function handleShow() {
     if (!authenticated) {
       return navigate("/login");
-    } 
+    }
     setIsOpen(!isOpen);
   }
 
-  function handleClose() {    
+  function handleClose() {
     setIsOpen(false);
   }
 
@@ -75,36 +75,34 @@ export default function SessionDropdown() {
         }
       </button>
 
-      <div
-        style={{ top: '70px' }}
-        className={
-          !isOpen
-            ? 'hidden'
-            : 't-10 absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600'
-        }>
-        <ul
-          className="py-1 text-sm text-gray-700 dark:text-gray-200"
-          aria-labelledby="dropdownDividerButton">
-          {items?.map((item, i) => (
-            <li key={i} onClick={handleClose}>
-              {item.to && (
-                <Link
-                  to={item.to}
-                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  {item.name}
-                </Link>
-              )}
-              {item.onClick && (
-                <p
-                  onClick={item.onClick}
-                  className="cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  {item.name}
-                </p>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {isOpen &&
+        <div
+          style={{ top: '70px' }}
+          className={'t-10 absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600'
+          }>
+          <ul
+            className="py-1 text-sm text-gray-700 dark:text-gray-200"
+            aria-labelledby="dropdownDividerButton">
+            {items?.map((item, i) => (
+              <li key={i} onClick={handleClose}>
+                {item.to && (
+                  <Link
+                    to={item.to}
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    {item.name}
+                  </Link>
+                )}
+                {item.onClick && (
+                  <p
+                    onClick={item.onClick}
+                    className="cursor-pointer block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    {item.name}
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>}
     </div >
   );
 }
