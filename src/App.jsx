@@ -5,9 +5,9 @@ import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
 import PanelAdmin from './Pages/PanelAdmin/PanelAdmin';
 import Transactions from './Components/Transactions/Transactions'
+import CreateTransaction from './Components/Transactions/CreateTransaction/CreateTransaction'
 import {
     CreateCategories,
-    CreateTransactions,
     EditCategories,
     EditTransactions,
 } from './Pages';
@@ -76,7 +76,7 @@ function App() {
                     path='/transactions/create'
                     element={
                         isSession ? (
-                            <CreateTransactions />
+                            <CreateTransaction />
                         ) : (
                             <Navigate to='/login' />
                         )

@@ -69,15 +69,15 @@ export const setFiltered = (filter = "") => async (dispatch) => {
 
 export const createTransaction = createAsyncThunk(
   'user/createTransaction',
-  async ({ amount, description, userId, categoryId, date }) => {
+  async ({ amount, concept, userId, categoryId }) => {
     try {
       const httpService = new HttpService();
       const response = await httpService.apiPrivate().post('/transactions', {
         amount,
-        description,
+        concept,
         userId,
-        categoryId,
-        date
+        toUserId,
+        categoryId
       });
       const transactions = response.data.transactions;
 
