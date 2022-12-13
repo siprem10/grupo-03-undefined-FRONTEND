@@ -47,7 +47,7 @@ export default function Home() {
         return isShow ? eyeShow : eyeHide;
     }
 
-    if (!transactionsFilter) {
+    if (!transactionsFilter.length) {
         return <h1>Cargando...</h1>
     }
 
