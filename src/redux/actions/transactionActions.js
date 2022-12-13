@@ -3,7 +3,7 @@ import { HttpService } from '../../Service/HttpService';
 import { setTransactions, setFilter } from '../slices/transactionSlice';
 import { formatDate } from '../../Utils/Date';
 
-export const getTransactions = (id, filter = "") => async (dispatch) => {
+export const getTransactions = (id, filter) => async (dispatch) => {
   try {
     const httpService = new HttpService();
     let transactions = await httpService.apiPrivate().get(`/transactions`);

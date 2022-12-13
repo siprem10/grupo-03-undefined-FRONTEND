@@ -6,6 +6,8 @@ import Layout from '../Layout/Layout';
 import Filter from './Filter/Filter';
 import eyeHide from "../../assets/balance/eyeHide.webp";
 import eyeShow from "../../assets/balance/eyeShow.webp";
+import Loader from '../Loader/Loader';
+import NotFound from '../NotFound/NotFound';
 
 export default function Home() {
 
@@ -13,13 +15,14 @@ export default function Home() {
     const { id } = useSelector(state => state.auth.userData);
     const { transactionsFilter } = useSelector(state => state.transactions);
     const { filter } = useSelector(state => state.transactions);
+    const [isLoading, setLoading] = useState(true);
     const [isShow, setShow] = useState(false);
     const h1Style = "anim text-primary text-gray-700 font-bold uppercase md:text-md xl:text-xl lg:text-lg break-words";
 
     useEffect(() => {
         const interval = setInterval(() => dispatch(getTransactions(id, filter)), 7000);
         dispatch(getTransactions(id, filter));
-
+        
         return () => clearInterval(interval);
 
     }, [dispatch, filter]);
@@ -48,7 +51,7 @@ export default function Home() {
     }
 
     if (!transactionsFilter.length) {
-        return <h1>Cargando...</h1>
+        return <NotFound title="No hay transacciones" />
     }
 
     return (
@@ -61,7 +64,7 @@ export default function Home() {
                         <img className="mb-1 cursor-pointer" onClick={handleShow} src={getIconShow()} alt="img found"></img>    
                     </div>
                     {transactionsFilter?.map((transaction) =>
-                        <Card className='flex flex-col m-2 md:w-full 2xl:w-full w-full cursor-pointer hover:bg-gray-100 anim' key={transaction.id}>
+                        <Card className='flex flex-col m-2 md:w-full 2xl:w-full w-full hover:bg-gray-100 anim' key={transaction.id}>
                             <div className='flex justify-between w-full'>
                                 <h1 className={`${h1Style} pr-6 xl:pr-12`}>{transaction.Category.name}</h1>
                                 <h1 className={`${h1Style} ${isIngreso(transaction.type) ? "text-green-600" : "text-red-600"}`}>{`${isIngreso(transaction.type) ? "+" : "-"} $ ${transaction.amount}`}</h1>

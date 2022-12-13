@@ -6,9 +6,8 @@ export default function Filter({ currentFilter, className }) {
 
     const dispatch = useDispatch();
     const [isShow, setShow] = useState(false);
-    const filterDefault = "";
     const items = [
-        { as: "", name: "Todos", onClick: () => setFilter(filterDefault) },
+        { as: "", name: "Todos", onClick: () => setFilter("") },
         { as: "Ingreso", name: "Ingresos", onClick: () => setFilter("Ingreso") },
         { as: "Egreso", name: "Egresos", onClick: () => setFilter("Egreso") },
     ]
@@ -27,9 +26,9 @@ export default function Filter({ currentFilter, className }) {
 
     return (
         <div className={`cursor-pointer ${className ?? ""}`}>
-            <span onClick={handleShow} className="p-2 items-center flex text-primary">Filtros
+            <span onClick={handleShow} className="p-2 items-center flex text-primary">Filtrar
                 <svg
-                    className="ml-2 w-4 h-4"
+                    className="-rotate-90 ml-2 w-4 h-4"
                     aria-hidden="true"
                     fill="none"
                     stroke="currentColor"
@@ -41,8 +40,7 @@ export default function Filter({ currentFilter, className }) {
                         strokeWidth="2"
                         d="M19 9l-7 7-7-7"></path>
                 </svg>
-                {currentFilter !== filterDefault &&
-                    <h1 className="ml-3 px-2 text-primary rounded-full border border-emerald-700">{currentFilter}</h1>}
+                <h1 className="ml-3 px-2 text-primary rounded-full border border-emerald-700">{currentFilter ? currentFilter + "s" : "Todos"}</h1>
             </span>
             {isShow &&
                 <div
