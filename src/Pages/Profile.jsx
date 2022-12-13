@@ -4,38 +4,19 @@ import { ButtonProfile } from '../Components/Buttons';
 import { AiOutlineDelete, AiFillEdit } from 'react-icons/ai';
 import ModifyProfile from '../Components/ModifyProfile';
 import { GoVerified } from 'react-icons/go';
+import { confirmationAlert } from '../Utils/Alerts';
+import { useDispatch, useSelector } from 'react-redux';
+import { HttpService } from '../Service/HttpService';
+import { logout } from '../redux/actions/authActions';
+import defaultAvatar from '../assets/user/avatar_default.png';
 
 function Profile() {
-    function confirmationAlert(
-        title,
-        text,
-        showCancelButton = true,
-        confirmButtonText,
-        cb
-    ) {
-        Swal.fire({
-            title,
-            text,
-            icon: 'warning',
-            showCancelButton,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText,
-            cancelButtonText: 'Cancelar',
-        }).then(cb);
-    }
-
     const [modifyProfile, setModifyProfile] = useState(false);
-    const hardcodedUser = {
-        firstName: 'Luciano',
-        lastName: 'Piñol',
-        email: 'luchemma@gmail.com',
-        avatar: 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/205.jpg',
-        roleId: 1,
-        points: 400,
-    };
+    const userData = useSelector(state => state.auth.userData);
+    const dispatch = useDispatch();
 
     const openModal = () => setModifyProfile(true);
+    const closeModalWithoutConfirmation = () => setModifyProfile(false);
 
     const confirmationModal = boolean => {
         const confirmation = result => {
@@ -54,7 +35,29 @@ function Profile() {
     };
 
     const deleteAccount = () => {
-        console.log('Eliminando perfil');
+        const httpService = new HttpService();
+
+        const confirmation = async result => {
+            if (result.isConfirmed) {
+                await httpService.apiPrivate().delete(`/users/${userData.id}`);
+                dispatch(logout());
+                window.location.href('/');
+            }
+        };
+
+        confirmationAlert(
+            'Estas seguro de que quiere eliminar su cuenta?',
+            '',
+            true,
+            'Si quiero eliminar mi cuenta',
+            confirmation
+        );
+    };
+
+    const roles = {
+        admin: 'Administrador',
+        premium: 'Premium',
+        standard: 'Standard',
     };
 
     return (
@@ -63,27 +66,30 @@ function Profile() {
                 {/* Modal para modificar el perfil */}
                 {modifyProfile && (
                     <ModifyProfile
+                        closeModalWithoutConfirmation={
+                            closeModalWithoutConfirmation
+                        }
                         closeModal={() => confirmationModal(false)}
                     />
                 )}
-                <div className='flex flex-col gap-5 bg-gray-300 rounded-lg p-10 px-32 backdrop-blur-sm'>
+                <div className='flex flex-col gap-5 bg-white text-black rounded-lg p-10 px-32 backdrop-blur-2xl'>
                     {/* Profile Image*/}
                     <img
-                        className='rounded-full shadow-md shadow-black border-4 border-teal-600 border-spacing-x-60'
-                        src={hardcodedUser.avatar}
-                        alt={hardcodedUser.firstName}
+                        className='h-36 w-40 rounded-full self-center shadow-md shadow-black border-4 border-teal-600 border-spacing-x-60'
+                        src={userData.avatar || defaultAvatar}
+                        alt={userData.firstName}
                     />
                     <h1 className='font-bold text-xl text-center'>
                         Datos del Usuario
                     </h1>
                     <div className='flex justify-center items-center gap-1'>
                         <p className='text-center font-medium text-lg'>
-                            {hardcodedUser.firstName}
+                            {userData.firstName}
                         </p>
                         <GoVerified size={16} color={'green'} />
                     </div>
                     <ButtonProfile
-                        className='bg-accent hover:bg-orange-300 border-accent hover:border-orange-300 font-semibold text-primary'
+                        className='bg-green-400 hover:bg-green-500 border-green-400 hover:border-green-500 font-semibold text-primary'
                         onClick={openModal}
                     >
                         <AiFillEdit size={20} />
@@ -101,33 +107,39 @@ function Profile() {
                         <p className='items-center rounded-lg font-bold'>
                             Nombre:
                         </p>
-                        <p>{hardcodedUser.firstName}</p>
+                        <p>{userData.firstName}</p>
                     </div>
 
                     <div className='flex gap-2'>
                         <p className='items-center rounded-lg font-bold'>
                             Apellido:
                         </p>
-                        <p>{hardcodedUser.lastName}</p>
+                        <p>{userData.lastName}</p>
                     </div>
 
                     <div className='flex gap-2'>
                         <p className='items-center rounded-lg font-bold'>
                             Rol de Usuario:
                         </p>
-                        <p>{hardcodedUser.roleId}</p>
+                        <p>
+                            {userData.roleId === 1
+                                ? roles.admin
+                                : userData.roleId === 2
+                                ? roles.premium
+                                : userData.roleId === 3
+                                ? roles.standard
+                                : userData.roleId === null
+                                ? roles.standard
+                                : null}
+                        </p>
                     </div>
 
                     <div className='flex gap-2'>
                         <p className='items-center rounded-lg font-bold'>
                             Puntos:
                         </p>
-                        <p>{hardcodedUser.points}</p>
+                        <p>{userData.points === null ? 0 : userData.points}</p>
                     </div>
-                </div>
-                <div className='flex flex-col gap-5 bg-white rounded-lg'>
-                    <h1 className='font-bold text-lg text-center'>Cuentas</h1>
-                    <hr />
                 </div>
             </div>
         </Layout>

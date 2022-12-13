@@ -7,7 +7,7 @@ function Modal({ children, closeModal, className }) {
     return (
         <article onClick={closeModal} className={css.modal}>
             <div
-                className={`${css.container} ${className}`}
+                className={`p-6 ${css.container} ${className}`}
                 onClick={handleModalContainerClick}
             >
                 {children}
