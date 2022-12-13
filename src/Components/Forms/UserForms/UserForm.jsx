@@ -9,9 +9,9 @@ import {
     ErrorMessage,
     PreviewImage,
 } from './FormComponents';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { alertErr, alertOkClick } from '../../../Utils/UI';
-import { apiUsers } from './apiUser';
+import { updateUserInfo } from '../../../redux/actions/authActions';
 
 function UserForm({
     title,
@@ -20,6 +20,7 @@ function UserForm({
     modify = false,
     closeModalWithoutConfirmation,
 }) {
+    const dispatch = useDispatch();
     const { id, firstName, lastName, email, avatar } = useSelector(
         user => user.auth.userData
     );
@@ -37,7 +38,6 @@ function UserForm({
         },
         validationSchema,
         onSubmit: async userData => {
-            console.log('userData', userData);
             try {
                 const {
                     firstName,
@@ -86,7 +86,7 @@ function UserForm({
                     newPassword,
                 };
 
-                await apiUsers.put(`/${id}`, filteredData);
+                dispatch(updateUserInfo(id, filteredData));
 
                 alertOkClick(
                     closeModalWithoutConfirmation,
