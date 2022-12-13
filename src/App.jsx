@@ -4,6 +4,7 @@ import Home from './Components/Home/Home';
 import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
 import PanelAdmin from './Pages/PanelAdmin/PanelAdmin';
+import Transactions from './Components/Transactions/Transactions'
 import {
     CreateCategories,
     CreateTransactions,
@@ -56,6 +57,16 @@ function App() {
                     element={
                         isSession ? (
                             <EditCategories />
+                        ) : (
+                            <Navigate to='/login' />
+                        )
+                    }
+                />
+                <Route
+                    path='/transactions'
+                    element={
+                        isSession ? (
+                            <Transactions />
                         ) : (
                             <Navigate to='/login' />
                         )
