@@ -161,7 +161,7 @@ export default function CreateTransaction() {
   async function handleSend() {
     try {
       const httpService = new HttpService();
-      const request = await httpService.apiPrivate().post(`/transactions?you=false`, { ...inputState, toUserId: findUser.id });
+      const request = await httpService.apiPrivate().post(`/transactions`, { ...inputState, toUserId: findUser.id });
       
       if (request.data.body) {
         alertOk("Transacción generada correctamente!");
