@@ -38,11 +38,6 @@ const columns = [
     renderCell: params => {
       return (
         <>
-          {/* <Tooltip title="Ver usuario" arrow>
-            <Button onClick={e => handleView(e, params.row)}>
-              <VisibilityIcon />
-            </Button>
-          </Tooltip> */}
           <Tooltip title="Editar" arrow enterNextDelay={1500}>
             <Button onClick={e => handleUpdate(e, params.row)}>
               <FaUserEdit color="secondary" />
