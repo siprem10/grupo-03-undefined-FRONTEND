@@ -26,6 +26,10 @@
   @apply font-bold text-3xl text-primary;
 }
 
+.disable {
+  @apply bg-gray-200;
+}
+
 .anim {
   @apply ease-out duration-300;
 }

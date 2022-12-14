@@ -8,6 +8,13 @@ export function isValidName(any) {
     );
 }
 
+export function isValidNum(any) {
+
+    if (!any) return false;
+
+    return isNaN(Number(any));
+}
+
 export function isValidEmail(any) {
 
     if (!any) return false;
