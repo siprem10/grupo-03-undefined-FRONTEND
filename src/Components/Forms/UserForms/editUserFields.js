@@ -1,7 +1,5 @@
 import * as Yup from 'yup';
 
-Yup.lazy();
-
 export default {
     title: 'Edit User:',
     validationSchema: Yup.object({
@@ -26,14 +24,31 @@ export default {
             return Yup.string().email('Email inválido');
         }),
 
-        password: Yup.lazy(value => {
+        currentPassword: Yup.lazy(value => {
             if (value === '' || value === undefined) {
                 return Yup.mixed().optional();
             }
             return Yup.string().min(8, 'Debe tener al menos 8 caracteres');
         }),
 
-        avatar: Yup.lazy(value => {
+        newPassword: Yup.lazy(value => {
+            if (value === '' || value === undefined) {
+                return Yup.mixed().optional();
+            }
+            return Yup.string().min(8, 'Debe tener al menos 8 caracteres');
+        }),
+
+        repeatPassword: Yup.lazy(value => {
+            if (value === '' || value === undefined) {
+                return Yup.mixed().optional();
+            }
+            return Yup.string().oneOf(
+                [Yup.ref('newPassword')],
+                'Las contraseñas no coinciden'
+            );
+        }),
+
+        image: Yup.lazy(value => {
             if (value === null || value === undefined) {
                 return Yup.mixed().optional();
             }

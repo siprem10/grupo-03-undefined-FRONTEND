@@ -29,7 +29,7 @@ export default function CreateTransaction({ selectType = "" }) {
 
   const dispatch = useDispatch();
   const { findUser } = useSelector(state => state.user);
-  const [typeTransaction, setTypeTransaction] = useState(selectType.length ?? "Carga de Saldo");
+  const [typeTransaction, setTypeTransaction] = useState(selectType ? selectType : "Carga de Saldo" );
   const [inputState, setInputState] = useState({ ...defaultsValues });
   const [inputError, setInputError] = useState({ ...defaultsValues });
 

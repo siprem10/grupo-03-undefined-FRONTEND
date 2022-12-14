@@ -23,7 +23,10 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path='/' element={<Landing />} />
-                <Route path='/home' element={isSession ? <Home /> : <Navigate to='/' />} />
+                <Route
+                    path='/home'
+                    element={isSession ? <Home /> : <Navigate to='/' />}
+                />
                 <Route
                     path='/register'
                     element={isSession ? <Navigate to='/home' /> : <Register />}
@@ -92,7 +95,10 @@ function App() {
                         )
                     }
                 />
-                <Route path='/profile' element={isSession ? <Profile /> : <Navigate to='/login' />} />
+                <Route
+                    path='/profile'
+                    element={!isSession ? <Navigate to='/' /> : <Profile />}
+                />
             </Routes>
         </BrowserRouter>
     );
