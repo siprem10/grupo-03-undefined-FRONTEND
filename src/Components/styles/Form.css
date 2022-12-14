@@ -1,0 +1,19 @@
+.title {
+  @apply text-center mb-5 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl dark:text-white;
+}
+
+.form {
+  @apply md:w-96 p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700;
+}
+
+.label {
+  @apply block text-gray-700 text-lg font-bold mb-1 dark:text-white;
+}
+
+.inputForm {
+  @apply mb-1 shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none;
+}
+
+.inputFormErr {
+  @apply text-red-600 font-bold;
+}
