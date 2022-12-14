@@ -3,9 +3,9 @@ import UsersTable from '../../Components/UsersTable/UsersTable';
 
 const PanelAdmin = () => {
   return (
-    <Layout title="Panel Admin">
+    <Layout>
       <div className="w-full p-6">
-        <h1 className="text-3xl font-medium text-white my-4 text-center">Panel Admin</h1>
+        <h1 className="text-3xl font-medium text-white my-4 text-center uppercase">Usuarios registrados</h1>
         <UsersTable />
       </div>
     </Layout>
