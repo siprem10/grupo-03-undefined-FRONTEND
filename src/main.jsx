@@ -5,7 +5,7 @@ import { store } from './redux/store.js';
 import App from './App';
 import './index.css';
 
-// store.dispatch(getUserInfo());
+axios.defaults.baseURL = process.env.REACT_APP_API || "http://127.0.0.1:5173/";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
