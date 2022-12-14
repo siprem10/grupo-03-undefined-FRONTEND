@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
     <div className="flex flex-col grow w-full h-full bg-primary">
       <Header />
       <main className="flex flex-row grow justify-center items-center py-20 px-5 text-white ">
-        <div className="container">{children}</div>
+        {children}
       </main>
       <Footer />
     </div>
