@@ -110,11 +110,11 @@ export default function Login() {
                 onClick={e => handleOnSubmit(e)}
                 disabled={isButtonDisabled()}
                 type="submit"></BaseButton>
-              <Link
+              {/* <Link
                 to="/forgot-password"
                 className="mt-1 flex justify-center underline text-black dark:text-white">
                 ¿Olvidaste la contraseña?
-              </Link>
+              </Link> */}
               <p className="mt-2 mb-1 flex justify-center text-black dark:text-white">
                 ¿Aun no tienes una cuenta?
               </p>
