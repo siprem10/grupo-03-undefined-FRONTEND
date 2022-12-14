@@ -179,7 +179,7 @@ export default function CreateTransaction() {
       <div className="flex w-full justify-center">
         <Card className="flex flex-col w-fit items-center justify-center">
           <h1 className="mb-2 text-primary font-bold text-2xl uppercase">Generar {typeTransaction}</h1>
-          <form className="form" onSubmit={e => e.preventDefault()}>
+          <form className="form w-full mt-1 mb-3" onSubmit={e => e.preventDefault()}>
             <Dropdown setState={setTypeTransaction} itemDefSelect={typeTransaction} className="mb-4 w-full" title={"Tipo de transacción"} items={type}></Dropdown>
 
             {typeTransaction === PAGO_DE_SERVICIOS &&
