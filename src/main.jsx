@@ -5,8 +5,6 @@ import { store } from './redux/store.js';
 import App from './App';
 import './index.css';
 
-// store.dispatch(getUserInfo());
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
