@@ -79,33 +79,21 @@ function Profile() {
               alt={userData.firstName}
             />
             <div className="flex justify-center items-center gap-1">
-              <p className="text-center font-medium text-xl dark:text-white">{userData.firstName}</p>
+              <p className="mb-1 text-center font-medium text-xl dark:text-white">{userData.firstName} {userData.lastName}</p>
               <GoVerified size={16} color={'green'} />
-            </div>
-            {/* Datos del Usuario*/}
-            <h1 className="font-bold text-xl text-center text-gray-500">Datos del Usuario</h1>
-
-            {/* Nombre */}
-            <div className="flex flex-col gap-2 items-center justify-center py-2">
-              <p className="items-center rounded-lg font-bold text-sm leading-3 text-gray-500">
-                Nombre completo
-              </p>
-              <p className="leading-3 text-xl dark:text-white">
-                {userData.firstName} {userData.lastName}
-              </p>
             </div>
 
             {/* Email  */}
-            <div className="flex flex-col gap-2 justify-center items-center py-2">
-              <p className="items-center rounded-lg font-bold text-sm leading-3 text-gray-500">
+            <div className="flex flex-col gap-2 justify-center items-center">
+              <p className="items-center rounded-lg font-bold text-lg leading-3 text-gray-500">
                 Correo
               </p>
               <p className="leading-3 dark:text-white">{userData.email}</p>
             </div>
 
             {/* Rol  */}
-            <div className="flex flex-col gap-2 justify-center items-center py-2">
-              <p className="items-center rounded-lg font-bold text-sm leading-3 text-gray-500">Rol</p>
+            <div className="flex flex-col gap-2 justify-center items-center">
+              <p className="items-center rounded-lg font-bold text-lg leading-3 text-gray-500">Rol</p>
               <p className="leading-3 dark:text-white">
                 {userData.roleId === 1
                   ? roles.admin
