@@ -6,9 +6,9 @@ export default function Shortcuts() {
     const navigate = useNavigate();
 
     const shortcuts = [
-        {name: "Ingresar dinero", to: "/deposit-money"},
-        {name: "Transferir dinero", to: "/transfer-money"},
-        {name: "Pagar servicios", to: "/pay-services"},
+        {name: "Ingresar dinero", to: "/transactions/create?deposit"},
+        {name: "Transferir dinero", to: "/transactions/create?transfer"},
+        {name: "Pagar servicios", to: "/transactions/create?services"},
     ];
 
     function redirect(to){

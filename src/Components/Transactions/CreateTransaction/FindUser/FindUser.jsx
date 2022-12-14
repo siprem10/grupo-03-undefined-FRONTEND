@@ -12,10 +12,7 @@ export default function FindUser({ className }) {
 
         return () => dispatch(resetUser());
     }, []);
-
-    function setFilter(filter) {
-        dispatch(setFiltered(filter));
-    }
+    
     return (
         <div className={className ?? ""}>
             {findUser.fullname &&

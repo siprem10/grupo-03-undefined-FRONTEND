@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { getCategories, getTransactions } from "../../../redux/actions/transactionActions";
 import { getUser } from "../../../redux/actions/userActions";
 import { resetUser } from "../../../redux/slices/userSlice";
@@ -19,6 +20,12 @@ export default function CreateTransaction({ selectType = "" }) {
   const CARGA_DE_SALDO = "Carga de Saldo";
   const TRANSFERENCIA = "Transferencia";
   const PAGO_DE_SERVICIOS = "Pago de Servicios";
+  
+  const enumLocation = {
+    "deposit-money": CARGA_DE_SALDO,
+    "transfer": TRANSFERENCIA,
+    "services": PAGO_DE_SERVICIOS,
+  };
 
   const type = [
     CARGA_DE_SALDO,
@@ -36,13 +43,17 @@ export default function CreateTransaction({ selectType = "" }) {
   const defaultsCategory = "";
 
   const dispatch = useDispatch();
+  const location = useLocation().search?.replace("?", "");
   const { id } = useSelector(state => state.auth.userData);
   const { findUser } = useSelector(state => state.user);
   const { categories, balance } = useSelector(state => state.transactions);
-  const [typeTransaction, setTypeTransaction] = useState(selectType ? selectType : CARGA_DE_SALDO);
+  const [typeTransaction, setTypeTransaction] = useState(enumLocation[location] ? enumLocation[location] : CARGA_DE_SALDO);
   const [categorySelect, setCategorySelect] = useState(defaultsCategory);
   const [inputState, setInputState] = useState({ ...defaultsValues });
   const [inputError, setInputError] = useState({ ...defaultsValues });
+
+  
+  console.log(location)
 
   useEffect(() => {
 
@@ -172,7 +183,7 @@ export default function CreateTransaction({ selectType = "" }) {
         <Card className="flex flex-col w-fit items-center justify-center">
           <h1 className="mb-2 text-primary font-bold text-2xl uppercase">Generar {typeTransaction}</h1>
           <form className="form" onSubmit={e => e.preventDefault()}>
-            <Dropdown setState={setTypeTransaction} itemDefSelect={CARGA_DE_SALDO} className="mb-4 w-full" title={"Tipo de transacción"} items={type}></Dropdown>
+            <Dropdown setState={setTypeTransaction} itemDefSelect={typeTransaction} className="mb-4 w-full" title={"Tipo de transacción"} items={type}></Dropdown>
 
             {typeTransaction === PAGO_DE_SERVICIOS &&
               <CategoryDropdown stateSelect={categorySelect} setState={handleSetCategory} className="mb-4 w-full" title={"Servicio a pagar"} items={categories}></CategoryDropdown>
