@@ -15,7 +15,7 @@ import Layout from "../../Layout/Layout";
 import CategoryDropdown from "./CategoryDropDown/CategoryDropDown";
 import FindUser from "./FindUser/FindUser";
 
-export default function CreateTransaction({ selectType = "" }) {
+export default function CreateTransaction() {
 
   const CARGA_DE_SALDO = "Carga de Saldo";
   const TRANSFERENCIA = "Transferencia";
@@ -51,9 +51,6 @@ export default function CreateTransaction({ selectType = "" }) {
   const [categorySelect, setCategorySelect] = useState(defaultsCategory);
   const [inputState, setInputState] = useState({ ...defaultsValues });
   const [inputError, setInputError] = useState({ ...defaultsValues });
-
-  
-  console.log(location)
 
   useEffect(() => {
 
@@ -164,7 +161,7 @@ export default function CreateTransaction({ selectType = "" }) {
   async function handleSend() {
     try {
       const httpService = new HttpService();
-      const request = await httpService.apiPrivate().post(`/transactions`, { ...inputState, toUserId: findUser.id });
+      const request = await httpService.apiPrivate().post(`/transactions?you=false`, { ...inputState, toUserId: findUser.id });
       
       if (request.data.body) {
         alertOk("Transacción generada correctamente!");
