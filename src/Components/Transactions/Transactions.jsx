@@ -78,8 +78,8 @@ export default function Home() {
                                     <h1 className={h1Style}>{type(transaction.pay) ? transaction.toUser.fullname : transaction.user.fullname}</h1>
                                 </div>
                             }
-                            {showIfService(transaction.pay) &&
-                                <h1 className={`${h1Style} mr-2`}>{`A: ${transaction?.Category?.name}`}</h1>                                   
+                            {showIfService(transaction.pay) && transaction?.Category?.name &&
+                                <h1 className={`${h1Style} mr-2`}>{`A: ${transaction.Category.name}`}</h1>                                   
                             }
                             <h1 className={h1Style}>{transaction.updatedAt ?? transaction.createdAt}</h1>
                             {isShow && transaction.concept &&
