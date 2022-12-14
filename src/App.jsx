@@ -4,9 +4,10 @@ import Home from './Components/Home/Home';
 import Register from './Components/Register/Register';
 import Login from './Components/Login/Login';
 import PanelAdmin from './Pages/PanelAdmin/PanelAdmin';
+import Transactions from './Components/Transactions/Transactions'
+import CreateTransaction from './Components/Transactions/CreateTransaction/CreateTransaction'
 import {
     CreateCategories,
-    CreateTransactions,
     EditCategories,
     EditTransactions,
 } from './Pages';
@@ -65,10 +66,20 @@ function App() {
                     }
                 />
                 <Route
+                    path='/transactions'
+                    element={
+                        isSession ? (
+                            <Transactions />
+                        ) : (
+                            <Navigate to='/login' />
+                        )
+                    }
+                />
+                <Route
                     path='/transactions/create'
                     element={
                         isSession ? (
-                            <CreateTransactions />
+                            <CreateTransaction />
                         ) : (
                             <Navigate to='/login' />
                         )

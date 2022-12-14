@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <Layout>
       <div className="flex w-full justify-center">
-        <Card>
+        <Card className="md:w-1/2 2xl:w-2/6	w-96">
           <Balance />
           <Shortcuts />
           <CreditCard />

@@ -1,17 +1,25 @@
-import { useState } from "react";
-import BounceLoader from "react-spinners/BounceLoader";
+import { useEffect } from "react";
+import BeatLoader from "react-spinners/BeatLoader";
+import Layout from "../Layout/Layout";
 
-export default function Loader() {
+export default function Loader({setLoading}) {    
 
-    // este estado debe estar en cada pagina donde vamos a usar el loader
-    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        setTimeout(() => setLoading(false), 1000);
+
+    }, []);
 
     return (
-        <BounceLoader
-            color="#36d7b7"
-            loading
-            size={120}
-            speedMultiplier={0.5}
-        />
+        <Layout>
+            <div className="flex w-full justify-center items-center">
+                <h1 className="mb-2 text-3xl font-bold text-primary text-gray-100 pr-2">Cargando</h1>
+                <BeatLoader
+                    color="#fafafa"
+                    loading
+                    size={12}
+                    speedMultiplier={0.5}
+                />
+            </div>
+        </Layout>
     )
 }

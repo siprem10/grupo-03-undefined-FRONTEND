@@ -1,35 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getTransactions } from '../actions/transactionActions';
 
 const initialState = {
-  status: 'idle', // 'idle' | 'loading' | 'failed' | 'success
-  list: [],
-  error: null
+  transactions: [],
+  transactionsFilter: [],
+  filter: "",
+  balance: null
 };
 
 export const transactionSlice = createSlice({
-  name: 'transactions',
+  name: 'transaction',
   initialState,
-  reducers: {},
-  extraReducers(builder) {
-    // Transactions actions
-    builder.addCase(getTransactions.pending, state => {
-      state.status = 'loading';
-      state.error = null;
-      state.success = false;
-    });
-    builder.addCase(getTransactions.fulfilled, (state, { payload }) => {
-      state.status = 'success';
-      state.list = payload;
-      state.error = null;
-    });
-    builder.addCase(getTransactions.rejected, (state, { payload }) => {
-      state.status = 'failed';
-      state.error = payload;
-    });
-  }
+  reducers: {
+    setTransactions: (state, action) => {
+      state.transactions = action.payload.transactions;
+      state.transactionsFilter = action.payload.transactionsFilter;
+      state.balance = action.payload.balance;
+    },
+    setFilter: (state, action) => {
+      state.filter = action.payload
+    },
+  },  
 });
 
-export const selectTransactions = state => state.transactions.list;
+export const { 
+  setTransactions,
+  setFilter,
+
+} = transactionSlice.actions;
 
 export default transactionSlice.reducer;
