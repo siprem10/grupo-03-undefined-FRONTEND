@@ -119,7 +119,7 @@ const BudgetChart = () => {
         Grafico de Ingresos vs. Gastos
       </h3>
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart className="w-[300px] h-[300px]">
+        <PieChart className="w-[280px] h-[300px]">
           <Pie
             activeIndex={activeIndex}
             activeShape={renderActiveShape}

@@ -57,94 +57,86 @@ function Profile() {
 
   const roles = {
     admin: 'Administrador',
-    premium: 'Premium',
     standard: 'Standard'
   };
 
   return (
     <Layout>
-      <div className="flex gap-32">
-        {/* Modal para modificar el perfil */}
-        {modifyProfile && (
-          <ModifyProfile
-            closeModalWithoutConfirmation={closeModalWithoutConfirmation}
-            closeModal={() => confirmationModal(false)}
-          />
-        )}
-        <div className="flex flex-col gap-5 bg-white  dark:bg-gray-800 dark:border-gray-700 text-black rounded-lg p-10 px-32 backdrop-blur-2xl">
-          {/* Profile Image*/}
-          <img
-            className="h-36 w-36 rounded-full self-center shadow-md shadow-black border-4 border-teal-600 border-spacing-x-60"
-            src={userData.avatar || defaultAvatar}
-            alt={userData.firstName}
-          />
-          <div className="flex justify-center items-center gap-1">
-            <p className="text-center font-medium text-xl dark:text-white">{userData.firstName}</p>
-            <GoVerified size={16} color={'green'} />
-          </div>
-          {/* Datos del Usuario*/}
-          <h1 className="font-bold text-xl text-center text-gray-500">Datos del Usuario</h1>
+      <div className='flex flex-col lg:flex-row gap-5'>
+        <div className="flex justify-center">
+          {/* Modal para modificar el perfil */}
+          {modifyProfile && (
+            <ModifyProfile
+              closeModalWithoutConfirmation={closeModalWithoutConfirmation}
+              closeModal={() => confirmationModal(false)}
+            />
+          )}
+          <div className="flex flex-col gap-5 bg-white dark:bg-gray-800 dark:border-gray-700 text-black rounded-lg p-10 px-32 backdrop-blur-2xl">
+            {/* Profile Image*/}
+            <img
+              className="h-36 w-36 rounded-full self-center shadow-md shadow-black border-4 border-teal-600 border-spacing-x-60"
+              src={userData.avatar || defaultAvatar}
+              alt={userData.firstName}
+            />
+            <div className="flex justify-center items-center gap-1">
+              <p className="text-center font-medium text-xl dark:text-white">{userData.firstName}</p>
+              <GoVerified size={16} color={'green'} />
+            </div>
+            {/* Datos del Usuario*/}
+            <h1 className="font-bold text-xl text-center text-gray-500">Datos del Usuario</h1>
 
-          {/* Nombre */}
-          <div className="flex flex-col gap-2 items-center justify-center py-2">
-            <p className="leading-3 text-xl dark:text-white">
-              {userData.firstName} {userData.lastName}
-            </p>
-            <p className="items-center rounded-lg font-bold text-sm leading-3 text-gray-500">
-              Nombre completo
-            </p>
-          </div>
+            {/* Nombre */}
+            <div className="flex flex-col gap-2 items-center justify-center py-2">
+              <p className="items-center rounded-lg font-bold text-sm leading-3 text-gray-500">
+                Nombre completo
+              </p>
+              <p className="leading-3 text-xl dark:text-white">
+                {userData.firstName} {userData.lastName}
+              </p>
+            </div>
 
-          {/* Email  */}
-          <div className="flex flex-col gap-2 justify-center items-center py-2">
-            <p className="leading-3 dark:text-white">{userData.email}</p>
-            <p className="items-center rounded-lg font-bold text-sm leading-3 text-gray-500">
-              Correo
-            </p>
-          </div>
+            {/* Email  */}
+            <div className="flex flex-col gap-2 justify-center items-center py-2">
+              <p className="items-center rounded-lg font-bold text-sm leading-3 text-gray-500">
+                Correo
+              </p>
+              <p className="leading-3 dark:text-white">{userData.email}</p>
+            </div>
 
-          {/* Rol  */}
-          <div className="flex flex-col gap-2 justify-center items-center py-2">
-            <p className="leading-3 dark:text-white">
-              {userData.roleId === 1
-                ? roles.admin
-                : userData.roleId === 2
-                ? roles.premium
-                : userData.roleId === 3
-                ? roles.standard
-                : userData.roleId === null
-                ? roles.standard
-                : null}
-            </p>
-            <p className="items-center rounded-lg font-bold text-sm leading-3 text-gray-500">Rol</p>
-          </div>
+            {/* Rol  */}
+            <div className="flex flex-col gap-2 justify-center items-center py-2">
+              <p className="items-center rounded-lg font-bold text-sm leading-3 text-gray-500">Rol</p>
+              <p className="leading-3 dark:text-white">
+                {userData.roleId === 1
+                  ? roles.admin
+                  : userData.roleId === 2
+                    ? roles.premium
+                    : userData.roleId === 3
+                      ? roles.standard
+                      : userData.roleId === null
+                        ? roles.standard
+                        : null}
+              </p>
+            </div>
 
-          {/* Puntos */}
-          <div className="flex flex-col justify-center items-center gap-2 py-2">
-            <p className="leading-3 dark:text-white">
-              {userData.points === null ? 0 : userData.points} puntos
-            </p>
-            <p className="items-center rounded-lg font-bold text-sm leading-3 text-gray-500">
-              Puntos
-            </p>
-          </div>
-          <div className="flex gap-3 ">
-            <ButtonProfile
-              className="bg-green-400 hover:bg-green-500 border-green-400 hover:border-green-500 font-semibold text-primary"
-              onClick={openModal}>
-              <AiFillEdit size={20} />
-              Editar Cuenta
-            </ButtonProfile>
-            <ButtonProfile
-              className="bg-tertiary hover:bg-red-500 border-tertiary hover:border-red-500 font-semibold text-white w-[45px]"
-              onClick={deleteAccount}>
-              <AiOutlineDelete size={20} />
-            </ButtonProfile>
+            <div className="flex gap-3 ">
+              <ButtonProfile
+                className="bg-green-400 hover:bg-green-500 border-green-400 hover:border-green-500 font-semibold text-primary"
+                onClick={openModal}>
+                <AiFillEdit size={20} />
+                Editar Cuenta
+              </ButtonProfile>
+              <ButtonProfile
+                className="bg-tertiary hover:bg-red-500 border-tertiary hover:border-red-500 font-semibold text-white w-[45px]"
+                onClick={deleteAccount}>
+                <AiOutlineDelete size={20} />
+              </ButtonProfile>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col gap-5 bg-white  dark:bg-gray-800 dark:border-gray-700 text-black rounded-lg p-10 px-32 backdrop-blur-2xl">
-        <BudgetChart />
+        <div className="self-start flex flex-col gap-5 bg-white dark:bg-gray-800 dark:border-gray-700 text-black rounded-lg p-5 backdrop-blur-2xl">
+          <BudgetChart />
+        </div>
       </div>
     </Layout>
   );
