@@ -96,7 +96,8 @@ const BudgetChart = () => {
     dispatch(getTransactions(id));
     const dataBudget = calculateBudget(transactions);
     setData(dataBudget);
-  }, [dispatch, data]);
+    
+  }, [dispatch, transactions.length]);
 
   const onPieEnter = (_, index) => {
     setActiveIndex(index);
