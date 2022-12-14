@@ -37,18 +37,7 @@ export const getUserInfo = () => async dispatch => {
         const httpService = new HttpService();
         const response = await httpService.apiPrivate().get('/auth/me');
 
-        const { id, firstName, lastName, email, avatar, roleId, points } =
-            response.data.body;
-
-        const userData = {
-            id,
-            firstName,
-            lastName,
-            email,
-            avatar,
-            roleId,
-            points,
-        };
+        const userData = {...response.data.body};
 
         localStorage.setItem('userData', JSON.stringify(userData));
         dispatch(setUserData(userData));

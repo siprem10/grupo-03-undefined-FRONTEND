@@ -1,19 +1,31 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import { getCategories, getTransactions } from "../../../redux/actions/transactionActions";
 import { getUser } from "../../../redux/actions/userActions";
+import { resetUser } from "../../../redux/slices/userSlice";
+import { HttpService } from "../../../Service/HttpService";
+import { alertErr, alertOk } from "../../../Utils/UI";
 import { isValidEmail, isValidNum } from "../../../Utils/Validator";
 import BaseButton from "../../BaseButton/BaseButton";
 import Card from "../../Card/Card";
 import Dropdown from "../../Dropdown/Dropdown";
 import Layout from "../../Layout/Layout";
+import CategoryDropdown from "./CategoryDropDown/CategoryDropDown";
 import FindUser from "./FindUser/FindUser";
 
-export default function CreateTransaction({ selectType = "" }) {
+export default function CreateTransaction() {
 
   const CARGA_DE_SALDO = "Carga de Saldo";
   const TRANSFERENCIA = "Transferencia";
   const PAGO_DE_SERVICIOS = "Pago de Servicios";
+  
+  const enumLocation = {
+    "deposit-money": CARGA_DE_SALDO,
+    "transfer": TRANSFERENCIA,
+    "services": PAGO_DE_SERVICIOS,
+  };
 
   const type = [
     CARGA_DE_SALDO,
@@ -22,28 +34,38 @@ export default function CreateTransaction({ selectType = "" }) {
   ];
 
   const defaultsValues = {
+    categoryId: '',
     toUserId: '',
     amount: '',
     concept: '',
   };
 
+  const defaultsCategory = "";
+
   const dispatch = useDispatch();
+  const location = useLocation().search?.replace("?", "");
+  const { id } = useSelector(state => state.auth.userData);
   const { findUser } = useSelector(state => state.user);
-  const [typeTransaction, setTypeTransaction] = useState(selectType ? selectType : "Carga de Saldo" );
+  const { categories, balance } = useSelector(state => state.transactions);
+  const [typeTransaction, setTypeTransaction] = useState(enumLocation[location] ? enumLocation[location] : CARGA_DE_SALDO);
+  const [categorySelect, setCategorySelect] = useState(defaultsCategory);
   const [inputState, setInputState] = useState({ ...defaultsValues });
   const [inputError, setInputError] = useState({ ...defaultsValues });
 
   useEffect(() => {
 
-    if(typeTransaction) {
+    dispatch(getCategories());
+    dispatch(getTransactions(id));
+
+    if (typeTransaction) {
       setResetStates();
     }
-    
-  }, [typeTransaction]);
+
+  }, [dispatch, typeTransaction]);
 
   function validateErrs(input) {
     let errors = {};
-    const maxConcept = 15;
+    const maxConcept = 20;
 
     if (input.concept && input.concept.length > maxConcept) {
       errors.concept = `Concepto muy largo (${input.concept.length}/${maxConcept})`;
@@ -53,6 +75,12 @@ export default function CreateTransaction({ selectType = "" }) {
 
     if (!input.amount || !input.amount.length) {
       errors.amount = `Monto requerido`;
+    }
+    else if (input.amount <= 0) {
+      errors.amount = `Monto inválido`;
+    }
+    else if (typeTransaction !== CARGA_DE_SALDO && input.amount > balance) {
+      errors.amount = `Monto mayor a los ingresos`;
     }
 
     if (!input.toUserId) {
@@ -72,6 +100,14 @@ export default function CreateTransaction({ selectType = "" }) {
     handleSetInputErrs(e.target.name, e.target.value);
   }
 
+  function handleSetCategory(value, name) {
+    setInputState({
+      ...inputState,
+      categoryId: value
+    });
+    setCategorySelect(name);
+  }
+
   function handleSetInputErrs(name, value) {
     const objErrors = validateErrs({ ...inputState, [name]: value });
     setInputError(objErrors);
@@ -80,6 +116,9 @@ export default function CreateTransaction({ selectType = "" }) {
   function setResetStates() {
     setInputState({ ...defaultsValues });
     setInputError({ ...defaultsValues });
+    setCategorySelect(defaultsCategory);
+    dispatch(resetUser());
+    dispatch(getTransactions(id));
   }
 
   function isBtnFindDisabled() {
@@ -90,24 +129,49 @@ export default function CreateTransaction({ selectType = "" }) {
   }
 
   function isBtnSendDisabled() {
-    return (
-      !inputState.toUserId ||
+    const condition = (
       !inputState.amount ||
-      inputError.toUserId ||
       inputError.amount ||
-      inputError.concept ||
-      (findUser.status || !findUser.fullname)
+      inputError.concept
     );
+
+    if (typeTransaction === TRANSFERENCIA) {
+      const conditionTransfer = (
+        !inputState.toUserId ||
+        inputError.toUserId ||
+        (findUser.status || !findUser.fullname)
+      );
+
+      return condition || conditionTransfer;
+    }
+
+    if (typeTransaction === PAGO_DE_SERVICIOS) {
+      const conditionService = (!inputState.categoryId);
+
+      return condition || conditionService;
+    }
+
+    return condition;
   }
 
   function handleFindUser() {
     dispatch(getUser(inputState.toUserId));
   }
 
-  function handleSend() {
-    //setResetStates();
-    console.log("CLICK")
-    //dispatch();
+  async function handleSend() {
+    try {
+      const httpService = new HttpService();
+      const request = await httpService.apiPrivate().post(`/transactions`, { ...inputState, toUserId: findUser.id });
+      
+      if (request.data.body) {
+        alertOk("Transacción generada correctamente!");
+        setResetStates();
+      } else {
+        alertErr("No se pudo generar la transacción!");
+      }
+    } catch (error) {
+      alertErr("No se pudo generar la transacción!");
+    }
   }
 
   return (
@@ -116,7 +180,12 @@ export default function CreateTransaction({ selectType = "" }) {
         <Card className="flex flex-col w-fit items-center justify-center">
           <h1 className="mb-2 text-primary font-bold text-2xl uppercase">Generar {typeTransaction}</h1>
           <form className="form" onSubmit={e => e.preventDefault()}>
-            <Dropdown setState={setTypeTransaction} itemDefSelect={CARGA_DE_SALDO} className="mb-4 w-full" title={"Tipo de transacción"} items={type}></Dropdown>
+            <Dropdown setState={setTypeTransaction} itemDefSelect={typeTransaction} className="mb-4 w-full" title={"Tipo de transacción"} items={type}></Dropdown>
+
+            {typeTransaction === PAGO_DE_SERVICIOS &&
+              <CategoryDropdown stateSelect={categorySelect} setState={handleSetCategory} className="mb-4 w-full" title={"Servicio a pagar"} items={categories}></CategoryDropdown>
+            }
+
             {typeTransaction === TRANSFERENCIA &&
               <div className='flex items-center gap-2 mb-4'>
                 <div className="w-full">

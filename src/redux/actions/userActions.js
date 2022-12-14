@@ -4,7 +4,7 @@ import { setUser } from "../slices/userSlice";
  export const getUser = (email) => async (dispatch) => {
   try {
     const httpService = new HttpService();
-    const user = await httpService.apiPrivate().get(`/users/${email}`);
+    const user = await httpService.apiPrivate().get(`/users/${email}?excludeYou=true`);
     
     if(user){
       const data = user.data.body;

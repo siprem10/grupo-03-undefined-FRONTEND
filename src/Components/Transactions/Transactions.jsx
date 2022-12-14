@@ -12,8 +12,7 @@ export default function Home() {
 
     const dispatch = useDispatch();
     const { id } = useSelector(state => state.auth.userData);
-    const { transactionsFilter } = useSelector(state => state.transactions);
-    const { filter } = useSelector(state => state.transactions);
+    const { transactionsFilter, filter } = useSelector(state => state.transactions);
     const [isShow, setShow] = useState(false);
     const h1Style = "anim text-primary text-gray-700 font-bold uppercase md:text-md xl:text-xl lg:text-lg break-words";
 
@@ -40,6 +39,11 @@ export default function Home() {
         return name.includes("Transferencia");
     }
 
+    function showIfService(name) {
+        if (!name) return false;
+        return name.includes("Pago");
+    }
+
     function handleShow() {
         setShow(!isShow);
     }
@@ -47,7 +51,7 @@ export default function Home() {
     function getIconShow() {
         return isShow ? eyeShow : eyeHide;
     }
-
+    
     if (!transactionsFilter.length) {
         return <NotFound title="No hay transacciones" />
     }
@@ -64,14 +68,17 @@ export default function Home() {
                     {transactionsFilter?.map((transaction) =>
                         <Card className='flex flex-col m-2 md:w-full 2xl:w-full w-full hover:bg-gray-100 anim' key={transaction.id}>
                             <div className='flex justify-between w-full'>
-                                <h1 className={`${h1Style} pr-6 xl:pr-12`}>{transaction.Category.name}</h1>
+                                <h1 className={`${h1Style} pr-6 xl:pr-12`}>{transaction.pay}</h1>
                                 <h1 className={`${h1Style} ${isIngreso(transaction.type) ? "text-green-600" : "text-red-600"}`}>{`${isIngreso(transaction.type) ? "+" : "-"} $ ${transaction.amount}`}</h1>
                             </div>
-                            {showIfTransfer(transaction.Category.name) &&
+                            {showIfTransfer(transaction.pay) &&
                                 <div className='flex flex-inline items-center'>
-                                    <h1 className={`${h1Style} mr-2`}>{type(transaction.Category.name) ? "A:" : "De:"}</h1>
-                                    <h1 className={h1Style}>{type(transaction.Category.name) ? transaction.toUser.fullname : transaction.user.fullname}</h1>
+                                    <h1 className={`${h1Style} mr-2`}>{type(transaction.pay) ? "A:" : "De:"}</h1>
+                                    <h1 className={h1Style}>{type(transaction.pay) ? transaction.toUser.fullname : transaction.user.fullname}</h1>
                                 </div>
+                            }
+                            {showIfService(transaction.pay) && transaction?.Category?.name &&
+                                <h1 className={`${h1Style} mr-2`}>{`De: ${transaction.Category.name}`}</h1>                                   
                             }
                             <h1 className={h1Style}>{transaction.updatedAt ?? transaction.createdAt}</h1>
                             {isShow && transaction.concept &&
