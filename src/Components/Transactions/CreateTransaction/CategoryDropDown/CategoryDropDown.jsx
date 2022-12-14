@@ -1,18 +1,18 @@
 import { useState } from "react";
 
-export default function Dropdown({ title, items, className, setState, itemDefSelect }) {
+export default function CategoryDropdown({ title, items, className, setState, itemDefSelect }) {
 
     const [isShow, setShow] = useState(false);
-    const [itemSelect, setItemSelect] = useState(itemDefSelect ?? "");
+    const [itemSelect, setItemSelect] = useState(itemDefSelect ?? "Internet");
 
     function handleShow() {
         setShow(!isShow);
     }
 
     function handleSetState(any) {
-        setState(any);
+        setState(Number(any.id));
         handleShow();
-        setItemSelect(any);
+        setItemSelect(any.name);
     }
 
     return (
@@ -30,7 +30,7 @@ export default function Dropdown({ title, items, className, setState, itemDefSel
                     <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
                         {items?.map((item, i) =>
                             <li key={i}>
-                                {itemSelect !== item && <p onClick={() => handleSetState(item)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{item}</p>}
+                                {itemSelect !== item.name && <p onClick={() => handleSetState(item)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{item.name}</p>}
                             </li>
                         )}
                     </ul>

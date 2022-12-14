@@ -13,7 +13,7 @@ export default function CreditCard() {
         setShow(!isShow);
         e.stopPropagation();
     }
-
+    
     return (
         <div onClick={handleShow} className="flex flex-col justify-center items-start">
             <div className="w-full bg-emerald-500 hover:bg-emerald-400 p-5 rounded-xl flex flex-col justify-center items-start anim cursor-pointer">
@@ -24,8 +24,8 @@ export default function CreditCard() {
                 {isShow &&
                     <>
                         <span className={spanStyle}>Número de tarjeta</span>
-                        <span className={spanStyle}>{userData.creditCard?.num ?? "**** **** **** 1234"}</span>
-                        <span className={spanStyle}>{userData.creditCard?.expDate ?? "01/25"}</span>
+                        <span className={spanStyle}>{userData.creditCard}</span>
+                        <span className={spanStyle}>{userData.creditCardExp}</span>
                         <h1 className={spanStyle} >{`${userData.firstName} ${userData.lastName}` ?? ""}</h1>
                     </>
                 }

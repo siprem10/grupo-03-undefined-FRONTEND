@@ -1,12 +1,17 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getCategories } from "../../../redux/actions/transactionActions";
 import { getUser } from "../../../redux/actions/userActions";
+import { resetUser } from "../../../redux/slices/userSlice";
+import { HttpService } from "../../../Service/HttpService";
+import { alertErr, alertOk } from "../../../Utils/UI";
 import { isValidEmail, isValidNum } from "../../../Utils/Validator";
 import BaseButton from "../../BaseButton/BaseButton";
 import Card from "../../Card/Card";
 import Dropdown from "../../Dropdown/Dropdown";
 import Layout from "../../Layout/Layout";
+import CategoryDropdown from "./CategoryDropDown/CategoryDropDown";
 import FindUser from "./FindUser/FindUser";
 
 export default function CreateTransaction({ selectType = "" }) {
@@ -22,24 +27,26 @@ export default function CreateTransaction({ selectType = "" }) {
   ];
 
   const defaultsValues = {
+    categoryId: '',
     toUserId: '',
     amount: '',
     concept: '',
   };
 
   const dispatch = useDispatch();
-  const { findUser } = useSelector(state => state.user);
-  const [typeTransaction, setTypeTransaction] = useState(selectType ? selectType : "Carga de Saldo" );
+  const { findUser } = useSelector(state => state.user); 
+  const { categories } = useSelector(state => state.transactions);
+  const [typeTransaction, setTypeTransaction] = useState(selectType ? selectType : CARGA_DE_SALDO );
   const [inputState, setInputState] = useState({ ...defaultsValues });
   const [inputError, setInputError] = useState({ ...defaultsValues });
 
   useEffect(() => {
-
+    dispatch(getCategories());
     if(typeTransaction) {
       setResetStates();
     }
     
-  }, [typeTransaction]);
+  }, [dispatch, typeTransaction]);
 
   function validateErrs(input) {
     let errors = {};
@@ -72,6 +79,13 @@ export default function CreateTransaction({ selectType = "" }) {
     handleSetInputErrs(e.target.name, e.target.value);
   }
 
+  function handleSetCategory(value) {
+    setInputState({
+      ...inputState,
+      categoryId: value
+    });
+  }
+
   function handleSetInputErrs(name, value) {
     const objErrors = validateErrs({ ...inputState, [name]: value });
     setInputError(objErrors);
@@ -80,6 +94,7 @@ export default function CreateTransaction({ selectType = "" }) {
   function setResetStates() {
     setInputState({ ...defaultsValues });
     setInputError({ ...defaultsValues });
+    dispatch(resetUser());
   }
 
   function isBtnFindDisabled() {
@@ -90,24 +105,50 @@ export default function CreateTransaction({ selectType = "" }) {
   }
 
   function isBtnSendDisabled() {
-    return (
-      !inputState.toUserId ||
+    const condition = (
       !inputState.amount ||
-      inputError.toUserId ||
       inputError.amount ||
-      inputError.concept ||
-      (findUser.status || !findUser.fullname)
+      inputError.concept
     );
+
+    if(typeTransaction === TRANSFERENCIA) {
+      const conditionTransfer = (
+        !inputState.toUserId ||
+        inputError.toUserId ||
+        (findUser.status || !findUser.fullname)
+      );
+
+      return condition || conditionTransfer;
+    }
+
+    if(typeTransaction === PAGO_DE_SERVICIOS) {
+      const conditionService = (!inputState.categoryId);
+      
+      return condition || conditionService;
+    }
+
+    return condition;
   }
 
   function handleFindUser() {
     dispatch(getUser(inputState.toUserId));
   }
 
-  function handleSend() {
+  async function handleSend() {
     //setResetStates();
-    console.log("CLICK")
-    //dispatch();
+    try {
+      const httpService = new HttpService();
+      const request = await httpService.apiPrivate().post(`/transactions`, {...inputState, toUserId: findUser.id});
+      console.log(request)
+      if (request.data.body) {
+        setResetStates();
+        alertOk("Ok");
+      } else {
+        alertErr(newUser.data.message);
+      }
+    } catch (error) {
+      alertErr(JSON.parse(error.request.response).error[0].msg);
+    }
   }
 
   return (
@@ -117,6 +158,11 @@ export default function CreateTransaction({ selectType = "" }) {
           <h1 className="mb-2 text-primary font-bold text-2xl uppercase">Generar {typeTransaction}</h1>
           <form className="form" onSubmit={e => e.preventDefault()}>
             <Dropdown setState={setTypeTransaction} itemDefSelect={CARGA_DE_SALDO} className="mb-4 w-full" title={"Tipo de transacción"} items={type}></Dropdown>
+            
+            {typeTransaction === PAGO_DE_SERVICIOS &&
+              <CategoryDropdown setState={handleSetCategory} className="mb-4 w-full" title={"Servicio a pagar"} items={categories}></CategoryDropdown>
+            }
+            
             {typeTransaction === TRANSFERENCIA &&
               <div className='flex items-center gap-2 mb-4'>
                 <div className="w-full">

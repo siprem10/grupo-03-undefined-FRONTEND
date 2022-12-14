@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { HttpService } from '../../Service/HttpService';
-import { setTransactions, setFilter } from '../slices/transactionSlice';
+import { setTransactions, setFilter, setCategories } from '../slices/transactionSlice';
 import { formatDate } from '../../Utils/Date';
 
 export const getTransactions = (id, filter) => async (dispatch) => {
@@ -19,22 +19,22 @@ export const getTransactions = (id, filter) => async (dispatch) => {
         }
 
         if (!data.toUserId) {
-          data.Category.name = "Pago de servicio"
+          data.pay = "Pago de servicio"
           data.type = "Egreso";
         }
 
         else if (data.userId === data.toUserId) {
-          data.Category.name = "Carga de saldo"
+          data.pay = "Carga de saldo"
           data.type = "Ingreso";
         }
 
         else if (id !== data.userId) {
-          data.Category.name = "Transferencia recibida"
+          data.pay = "Transferencia recibida"
           data.type = "Ingreso";
         }
 
         else if (id !== data.toUserId) {
-          data.Category.name = "Transferencia enviada"
+          data.pay = "Transferencia enviada"
           data.type = "Egreso";
         }
 
@@ -47,13 +47,13 @@ export const getTransactions = (id, filter) => async (dispatch) => {
         return { ...data, createdAt: formatDate(data.createdAt), updatedAt: formatDate(data.updatedAt) }
       })
     }
-        
+
     const transactionsFilter = transactions.filter(t => t.type.includes(filter));
 
     dispatch(setTransactions({ transactions, balance, transactionsFilter }));
 
   } catch (error) {
-    dispatch(setTransactions({ transactions: [], balance: 0, transactionsFilter: []}));
+    dispatch(setTransactions({ transactions: [], balance: 0, transactionsFilter: [] }));
     return error.message;
   }
 };
@@ -61,8 +61,25 @@ export const getTransactions = (id, filter) => async (dispatch) => {
 export const setFiltered = (filter = "") => async (dispatch) => {
   try {
     dispatch(setFilter(filter));
-    
+
   } catch (error) {
+    return error.message;
+  }
+};
+
+export const getCategories = () => async (dispatch) => {
+  try {
+    const httpService = new HttpService();
+    const response = await httpService.apiPrivate().get(`/categories`);
+    
+    const categories = response.data.body.map(c => {
+      return { id: c.id, name: c.name }
+    });
+
+    dispatch(setCategories(categories));
+
+  } catch (error) {
+    dispatch(setTransactions({ transactions: [], balance: 0, transactionsFilter: [] }));
     return error.message;
   }
 };
