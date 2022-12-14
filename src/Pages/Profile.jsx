@@ -119,7 +119,7 @@ function Profile() {
               </p>
             </div>
 
-            <div className="flex gap-3 ">
+            {/* <div className="flex gap-3 ">
               <ButtonProfile
                 className="bg-green-400 hover:bg-green-500 border-green-400 hover:border-green-500 font-semibold text-primary"
                 onClick={openModal}>
@@ -131,7 +131,7 @@ function Profile() {
                 onClick={deleteAccount}>
                 <AiOutlineDelete size={20} />
               </ButtonProfile>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="self-start flex flex-col gap-5 bg-white dark:bg-gray-800 dark:border-gray-700 text-black rounded-lg p-5 backdrop-blur-2xl">
