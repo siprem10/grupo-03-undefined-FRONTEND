@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { HttpService } from '../Service/HttpService';
 import { logout } from '../redux/actions/authActions';
 import defaultAvatar from '../assets/user/avatar_default.png';
+import BudgetChart from '../Components/Graphs/PieChart/PieChart';
 
 function Profile() {
   const [modifyProfile, setModifyProfile] = useState(false);
@@ -135,12 +136,15 @@ function Profile() {
               Editar Cuenta
             </ButtonProfile>
             <ButtonProfile
-              className="w-[45px] bg-tertiary hover:bg-red-500 border-tertiary hover:border-red-500 font-semibold text-white"
+              className="bg-tertiary hover:bg-red-500 border-tertiary hover:border-red-500 font-semibold text-white w-[45px]"
               onClick={deleteAccount}>
               <AiOutlineDelete size={20} />
             </ButtonProfile>
           </div>
         </div>
+      </div>
+      <div className="flex flex-col gap-5 bg-white  dark:bg-gray-800 dark:border-gray-700 text-black rounded-lg p-10 px-32 backdrop-blur-2xl">
+        <BudgetChart />
       </div>
     </Layout>
   );

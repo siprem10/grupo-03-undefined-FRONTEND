@@ -115,7 +115,9 @@ const BudgetChart = () => {
 
   return (
     <div className="w-[400px] h-[400px] overflow-hidden">
-      <h3 className="text-black dark:text-white text-lg absolute">Grafico</h3>
+      <h3 className="text-black dark:text-white text-lg absolute">
+        Grafico de Ingresos vs. Gastos
+      </h3>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart className="w-[300px] h-[300px]">
           <Pie
