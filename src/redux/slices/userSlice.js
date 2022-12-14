@@ -1,15 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  status: 'idle', // 'idle' | 'loading' | 'failed' | 'success'
-  error: null
+  findUser: {}
 };
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},  
+  reducers: {
+    setUser: (state, action) => { 
+      state.findUser = action.payload;
+    },
+    resetUser: (state) => { 
+      state.findUser = {};
+    }
+  }
 });
 
+export const { 
+  setUser,
+  resetUser
+
+} = userSlice.actions;
 
 export default userSlice.reducer;
