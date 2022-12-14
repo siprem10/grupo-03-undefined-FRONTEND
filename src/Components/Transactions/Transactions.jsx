@@ -12,8 +12,7 @@ export default function Home() {
 
     const dispatch = useDispatch();
     const { id } = useSelector(state => state.auth.userData);
-    const { transactionsFilter } = useSelector(state => state.transactions);
-    const { filter } = useSelector(state => state.transactions);
+    const { transactionsFilter, filter } = useSelector(state => state.transactions);
     const [isShow, setShow] = useState(false);
     const h1Style = "anim text-primary text-gray-700 font-bold uppercase md:text-md xl:text-xl lg:text-lg break-words";
 
@@ -79,7 +78,7 @@ export default function Home() {
                                 </div>
                             }
                             {showIfService(transaction.pay) && transaction?.Category?.name &&
-                                <h1 className={`${h1Style} mr-2`}>{`A: ${transaction.Category.name}`}</h1>                                   
+                                <h1 className={`${h1Style} mr-2`}>{`De: ${transaction.Category.name}`}</h1>                                   
                             }
                             <h1 className={h1Style}>{transaction.updatedAt ?? transaction.createdAt}</h1>
                             {isShow && transaction.concept &&

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../../../redux/actions/transactionActions";
+import { getCategories, getTransactions } from "../../../redux/actions/transactionActions";
 import { getUser } from "../../../redux/actions/userActions";
 import { resetUser } from "../../../redux/slices/userSlice";
 import { HttpService } from "../../../Service/HttpService";
@@ -33,24 +33,31 @@ export default function CreateTransaction({ selectType = "" }) {
     concept: '',
   };
 
+  const defaultsCategory = "";
+
   const dispatch = useDispatch();
-  const { findUser } = useSelector(state => state.user); 
-  const { categories } = useSelector(state => state.transactions);
-  const [typeTransaction, setTypeTransaction] = useState(selectType ? selectType : CARGA_DE_SALDO );
+  const { id } = useSelector(state => state.auth.userData);
+  const { findUser } = useSelector(state => state.user);
+  const { categories, balance } = useSelector(state => state.transactions);
+  const [typeTransaction, setTypeTransaction] = useState(selectType ? selectType : CARGA_DE_SALDO);
+  const [categorySelect, setCategorySelect] = useState(defaultsCategory);
   const [inputState, setInputState] = useState({ ...defaultsValues });
   const [inputError, setInputError] = useState({ ...defaultsValues });
 
   useEffect(() => {
+
     dispatch(getCategories());
-    if(typeTransaction) {
+    dispatch(getTransactions(id));
+
+    if (typeTransaction) {
       setResetStates();
     }
-    
+
   }, [dispatch, typeTransaction]);
 
   function validateErrs(input) {
     let errors = {};
-    const maxConcept = 15;
+    const maxConcept = 20;
 
     if (input.concept && input.concept.length > maxConcept) {
       errors.concept = `Concepto muy largo (${input.concept.length}/${maxConcept})`;
@@ -60,6 +67,12 @@ export default function CreateTransaction({ selectType = "" }) {
 
     if (!input.amount || !input.amount.length) {
       errors.amount = `Monto requerido`;
+    }
+    else if (input.amount <= 0) {
+      errors.amount = `Monto inválido`;
+    }
+    else if (typeTransaction !== CARGA_DE_SALDO && input.amount > balance) {
+      errors.amount = `Monto mayor a los ingresos`;
     }
 
     if (!input.toUserId) {
@@ -79,11 +92,12 @@ export default function CreateTransaction({ selectType = "" }) {
     handleSetInputErrs(e.target.name, e.target.value);
   }
 
-  function handleSetCategory(value) {
+  function handleSetCategory(value, name) {
     setInputState({
       ...inputState,
       categoryId: value
     });
+    setCategorySelect(name);
   }
 
   function handleSetInputErrs(name, value) {
@@ -94,7 +108,9 @@ export default function CreateTransaction({ selectType = "" }) {
   function setResetStates() {
     setInputState({ ...defaultsValues });
     setInputError({ ...defaultsValues });
+    setCategorySelect(defaultsCategory);
     dispatch(resetUser());
+    dispatch(getTransactions(id));
   }
 
   function isBtnFindDisabled() {
@@ -111,7 +127,7 @@ export default function CreateTransaction({ selectType = "" }) {
       inputError.concept
     );
 
-    if(typeTransaction === TRANSFERENCIA) {
+    if (typeTransaction === TRANSFERENCIA) {
       const conditionTransfer = (
         !inputState.toUserId ||
         inputError.toUserId ||
@@ -121,9 +137,9 @@ export default function CreateTransaction({ selectType = "" }) {
       return condition || conditionTransfer;
     }
 
-    if(typeTransaction === PAGO_DE_SERVICIOS) {
+    if (typeTransaction === PAGO_DE_SERVICIOS) {
       const conditionService = (!inputState.categoryId);
-      
+
       return condition || conditionService;
     }
 
@@ -135,19 +151,18 @@ export default function CreateTransaction({ selectType = "" }) {
   }
 
   async function handleSend() {
-    //setResetStates();
     try {
       const httpService = new HttpService();
-      const request = await httpService.apiPrivate().post(`/transactions`, {...inputState, toUserId: findUser.id});
-      console.log(request)
+      const request = await httpService.apiPrivate().post(`/transactions`, { ...inputState, toUserId: findUser.id });
+      
       if (request.data.body) {
+        alertOk("Transacción generada correctamente!");
         setResetStates();
-        alertOk("Ok");
       } else {
-        alertErr(newUser.data.message);
+        alertErr("No se pudo generar la transacción!");
       }
     } catch (error) {
-      alertErr(JSON.parse(error.request.response).error[0].msg);
+      alertErr("No se pudo generar la transacción!");
     }
   }
 
@@ -158,11 +173,11 @@ export default function CreateTransaction({ selectType = "" }) {
           <h1 className="mb-2 text-primary font-bold text-2xl uppercase">Generar {typeTransaction}</h1>
           <form className="form" onSubmit={e => e.preventDefault()}>
             <Dropdown setState={setTypeTransaction} itemDefSelect={CARGA_DE_SALDO} className="mb-4 w-full" title={"Tipo de transacción"} items={type}></Dropdown>
-            
+
             {typeTransaction === PAGO_DE_SERVICIOS &&
-              <CategoryDropdown setState={handleSetCategory} className="mb-4 w-full" title={"Servicio a pagar"} items={categories}></CategoryDropdown>
+              <CategoryDropdown stateSelect={categorySelect} setState={handleSetCategory} className="mb-4 w-full" title={"Servicio a pagar"} items={categories}></CategoryDropdown>
             }
-            
+
             {typeTransaction === TRANSFERENCIA &&
               <div className='flex items-center gap-2 mb-4'>
                 <div className="w-full">

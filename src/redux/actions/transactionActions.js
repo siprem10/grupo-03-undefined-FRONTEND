@@ -19,7 +19,7 @@ export const getTransactions = (id, filter) => async (dispatch) => {
         }
 
         if (!data.toUserId) {
-          data.pay = "Pago de servicio"
+          data.pay = "Pago del servicio"
           data.type = "Egreso";
         }
 
