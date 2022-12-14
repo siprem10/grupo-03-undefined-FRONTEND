@@ -17,17 +17,9 @@ const calculateBudget = transactions => {
     return acc;
   }, 0);
 
-  //   const transfers = transactions.reduce((acc, transaction) => {
-  //     if (transaction.type === 3) {
-  //       acc += transaction.amount;
-  //     }
-  //     return acc;
-  //   }, 0);
-
   return [
     { name: 'Ingresos', value: incomes },
     { name: 'Gastos', value: expenses }
-    // { name: 'Transferencias', value: transfers }
   ];
 };
 
@@ -97,15 +89,14 @@ const BudgetChart = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
-  const { transactions, status } = useSelector(state => state.transactions);
+  const { id } = useSelector(state => state.auth.userData);
+  const { transactions } = useSelector(state => state.transactions);
 
   useEffect(() => {
-    dispatch(getTransactions());
+    dispatch(getTransactions(id));
     const dataBudget = calculateBudget(transactions);
     setData(dataBudget);
   }, []);
-
-  console.log('transactions', transactions);
 
   const onPieEnter = (_, index) => {
     setActiveIndex(index);
@@ -114,12 +105,12 @@ const BudgetChart = () => {
   const colors = ['#abd1c6', '#e16162'];
 
   return (
-    <div className="w-[400px] h-[400px] overflow-hidden">
-      <h3 className="text-black dark:text-white text-lg absolute">
+    <div className="w-[400px] h-[400px]">
+      <h3 className="text-primary font-bold text-black dark:text-white text-lg absolute">
         Grafico de Ingresos vs. Gastos
       </h3>
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart className="w-[280px] h-[300px]">
+      <ResponsiveContainer>
+        <PieChart className="w-[300px] h-[300px]">
           <Pie
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
