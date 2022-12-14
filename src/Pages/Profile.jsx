@@ -134,9 +134,7 @@ function Profile() {
             </div> */}
           </div>
         </div>
-        <div className="self-start flex flex-col gap-5 bg-white dark:bg-gray-800 dark:border-gray-700 text-black rounded-lg p-5 backdrop-blur-2xl">
-          <BudgetChart />
-        </div>
+        <BudgetChart />
       </div>
     </Layout>
   );

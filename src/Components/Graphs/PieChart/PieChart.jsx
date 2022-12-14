@@ -79,7 +79,7 @@ const renderActiveShape = props => {
         textAnchor={textAnchor}
         fill="#f9bc60">{`$ ${value}`}</text>
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-        {`(Tasa ${(percent * 100).toFixed(2)}%)`}
+        {`(Tasa ${(percent * 100).toFixed(0)}%)`}
       </text>
     </g>
   );
@@ -106,20 +106,20 @@ const BudgetChart = () => {
   const colors = ['#abd1c6', '#e16162'];
 
   return (
-    <div className="w-[400px] h-[400px]">
-      <h3 className="text-primary font-bold text-black dark:text-white text-lg absolute">
-        Grafico de Ingresos vs. Gastos
+    <div className="bg-white rounded-lg p-4 flex justify-center uppercase w-[430px] h-[215px]">
+      <h3 className="py-2 text-primary font-bold text-black dark:text-white text-lg absolute">
+        Grafico de Ingresos vs Gastos
       </h3>
       <ResponsiveContainer>
-        <PieChart className="w-[300px] h-[300px]">
+        <PieChart >
           <Pie
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
             data={data}
             cx="50%"
-            cy="50%"
-            innerRadius={60}
-            outerRadius={80}
+            cy="62%"
+            innerRadius={50}
+            outerRadius={60}
             fill={'#abd1c6'}
             dataKey="value"
             onMouseEnter={onPieEnter}>
