@@ -40,14 +40,14 @@ export default function Filter({ currentFilter, className }) {
                         strokeWidth="2"
                         d="M19 9l-7 7-7-7"></path>
                 </svg>
-                <h1 className="ml-3 px-2 text-primary rounded-full border border-emerald-700">{currentFilter ? currentFilter + "s" : "Todos"}</h1>
+                <h1 className="ml-2 px-2 text-primary rounded-full border border-emerald-700">{currentFilter ? currentFilter + "s" : "Todos"}</h1>
             </span>
             {isShow &&
                 <div
-                    className={'flex items-center left-1 relative border border-emerald-700 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600'
+                    className={'flex items-center absolute ml-[80px] border border-emerald-700 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600'
                     }>
                     <ul
-                        className="flex flex-row text-sm text-gray-700 dark:text-gray-200"
+                        className="relative flex flex-row text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="dropdownDividerButton">
                         {items?.map((item, i) => (
                             <li key={i} onClick={handleClose}>
