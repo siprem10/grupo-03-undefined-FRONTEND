@@ -18,7 +18,7 @@ export default function Header() {
 
   return (
     <nav
-      className={`py-1 px-4 xs:py-4 xs:px-10 flex xs:flex-row w-full h-auto items-center shadow-lg bg-white text-primary justify-between`}>
+      className={`${status !== "success" && "py-4"} py-1 px-4 xs:py-4 xs:px-10 flex xs:flex-row w-full h-auto items-center shadow-lg bg-white text-primary justify-between`}>
       <Link to={"/"}>
         <h1 className="flex justify-center py-2 px-4 rounded-full border-2 bg-main border-emerald-900 md:text-2xl font-bold text-md anim">
           {isLowRes ? 'AW' : 'AlkyBank Wallet'}
