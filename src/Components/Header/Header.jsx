@@ -19,15 +19,15 @@ export default function Header() {
 
   return (
     <nav
-      className={`p-4 flex flex-wrap w-full h-auto px-10 items-center shadow-lg bg-white text-primary ${isVeryLowRes ? 'justify-center' : 'justify-between'
+      className={`p-4 flex xs:flex-row flex-col w-full h-auto px-10 items-center shadow-lg bg-white text-primary ${isVeryLowRes ? 'justify-center' : 'justify-between'
         }`}>
       <Link to={"/"}>
-        <h1 className="flex justify-center py-2 px-4 rounded-full border-2 bg-main border-emerald-900 md:text-2xl font-bold text-md tracking-wider anim">
+        <h1 className="flex justify-center py-2 px-4 rounded-full border-2 bg-main border-emerald-900 md:text-2xl font-bold text-md anim">
           {isLowRes ? 'AW' : 'AlkyBank Wallet'}
         </h1>
       </Link>
       {status === "success" &&
-        <ul className="flex flex-wrap self-center">
+        <ul className="flex">
           {sections?.map((section, i) => 
             <li key={i}>
               <Link
