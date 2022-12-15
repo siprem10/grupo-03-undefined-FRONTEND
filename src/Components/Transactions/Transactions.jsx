@@ -21,7 +21,7 @@ export default function Home() {
     useEffect(() => {
         const interval = setInterval(() => dispatch(getTransactions(id, filter)), 7000);
         dispatch(getTransactions(id, filter));
-        setTimeout(() => setLoading(false), 500);
+        setTimeout(() => setLoading(false), 1000);
 
         return () => clearInterval(interval);
 
