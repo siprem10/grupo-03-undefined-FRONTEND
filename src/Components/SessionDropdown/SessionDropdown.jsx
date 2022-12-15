@@ -43,7 +43,7 @@ export default function SessionDropdown() {
         onClick={handleShow}
         id="dropdownDividerButton"
         data-dropdown-toggle="dropdownDivider"
-        className="bg-opacity-0 sm:bg-primary sm:hover:bg-emerald-700 text-white focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm sm:px-3.5 sm:py-2.5 text-center inline-flex items-center"
+        className="bg-opacity-0 sm:bg-primary sm:hover:bg-emerald-700 text-white focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-full sm:rounded-lg text-sm sm:px-3.5 sm:py-2.5 text-center inline-flex items-center"
         type="button">
 
         {authenticated ? (
@@ -77,7 +77,7 @@ export default function SessionDropdown() {
 
       {isOpen &&
         <div
-          className={'xs:top-[66px] md:top-[75px] top-[66px] absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow'
+          className={'top-[66px] right-[6px] xs:top-[75px] xs:right-auto md:top-[75px] absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow'
           }>
           <ul
             className="py-1 text-sm text-gray-700"
