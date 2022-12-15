@@ -7,7 +7,7 @@ module.exports = {
         'xs': '475px'
       },
       colors: {
-        primary: '#004643',
+        primary: '#054a47',
         secondary: '#abd1c6',
         tertiary: '#e16162',
         accent: '#f9bc60',

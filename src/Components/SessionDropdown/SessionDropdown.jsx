@@ -73,7 +73,7 @@ export default function SessionDropdown() {
           onClick={handleShow}
           id="dropdownDividerButton"
           data-dropdown-toggle="dropdownDivider"
-          className="bg-primary bg-emerald-700 text-white focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-3.5 py-2.5 text-center inline-flex items-center"
+          className="bg-primary bg-base hover:bg-emerald-700 text-white focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-3.5 py-2.5 text-center inline-flex items-center"
           type="button">
           <span className='anim md:p-1 p-0.5'>Iniciar Sesión</span>
         </button>
