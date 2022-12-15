@@ -59,7 +59,7 @@ export default function Home() {
         return <Loader />
     }
     
-    if (!isLoading) {
+    if (!transactionsFilter.length) {
         return <NotFound title="No hay transacciones" />
     }
 
