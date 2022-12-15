@@ -21,10 +21,10 @@ export default function Landing() {
       <div className="flex flex-col lg:flex-row w-full xl:p-20 p-10 items-stretch">
         {/* Text Container */}
         <div className="w-full h-full lg:p-20 mb-8">
-          <span className="text-2xl font-medium text-white my-4 inline-block">
+          <span className="text-2xl font-medium text-white inline-block">
             Bienvenido a AlkyBank Wallet
           </span>
-          <h1 className="text-6xl font-medium text-accent my-4 ">
+          <h1 className="xs:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl text-2xl font-medium text-accent my-4 ">
             Gestiona tu dinero de manera fácil
           </h1>
           <p className="">
@@ -40,8 +40,8 @@ export default function Landing() {
         </div>
 
         {/* Image Container */}
-        <div className="flex w-full bg-primary p-20 items-middle justify-center">
-          <img src={imagen} alt="" className="object-contain" />
+        <div className="flex w-full bg-primary p-10 lg:p-20 items-center justify-center">
+          <img src={imagen} alt="" className="w-[300px] lg:w-full" />
         </div>
       </div>
     </Layout>
