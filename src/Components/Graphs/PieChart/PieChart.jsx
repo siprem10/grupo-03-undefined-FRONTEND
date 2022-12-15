@@ -106,7 +106,7 @@ const BudgetChart = () => {
   const colors = ['#abd1c6', '#e16162'];
 
   return (
-    <div className="bg-white rounded-lg p-4 flex justify-center uppercase w-[430px] h-[215px]">
+    <div className="xs:visible invisible bg-white rounded-lg p-4 flex justify-center uppercase sm:w-[430px] w-[90%] h-[215px]">
       <h3 className="py-2 text-primary font-bold text-black dark:text-white text-lg absolute">
         Grafico de Ingresos vs Gastos
       </h3>
@@ -118,8 +118,8 @@ const BudgetChart = () => {
             data={data}
             cx="50%"
             cy="62%"
-            innerRadius={50}
-            outerRadius={60}
+            innerRadius={40}
+            outerRadius={50}
             fill={'#abd1c6'}
             dataKey="value"
             onMouseEnter={onPieEnter}>

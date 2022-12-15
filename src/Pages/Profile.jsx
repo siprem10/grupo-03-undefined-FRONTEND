@@ -62,8 +62,8 @@ function Profile() {
 
   return (
     <Layout>
-      <div className='flex flex-col lg:flex-row gap-5 justify-center items-center'>
-        <div className="flex justify-center w-[430px]">
+      <div className='flex flex-row justify-center items-center flex-wrap	gap-5 my-10'>
+        <div className="flex justify-center w-fit">
           {/* Modal para modificar el perfil */}
           {modifyProfile && (
             <ModifyProfile
