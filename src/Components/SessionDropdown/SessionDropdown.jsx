@@ -81,7 +81,7 @@ export default function SessionDropdown() {
 
       {isOpen &&
         <div
-          className={'top-[66px] right-[6px] xs:top-[75px] xs:right-auto md:top-[75px] absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow'
+          className={'z-10 top-[66px] right-[6px] xs:top-[75px] xs:right-auto md:top-[75px] absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow'
           }>
           <ul
             className="py-1 text-sm text-gray-700"
