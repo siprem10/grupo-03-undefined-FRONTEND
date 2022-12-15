@@ -43,7 +43,7 @@ export default function SessionDropdown() {
         onClick={handleShow}
         id="dropdownDividerButton"
         data-dropdown-toggle="dropdownDivider"
-        className="text-white bg-primary hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-3.5 py-2.5 text-center inline-flex items-center dark:bg-primary dark:hover:bg-tertiary dark:focus:ring-blue-800"
+        className="text-white bg-primary hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-3.5 py-2.5 text-center inline-flex items-center"
         type="button">
 
         {authenticated ? (
@@ -77,18 +77,17 @@ export default function SessionDropdown() {
 
       {isOpen &&
         <div
-          style={{ top: '70px' }}
-          className={'t-10 absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600'
+          className={'xs:top-[66px] md:top-[75px] top-[160px] absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow'
           }>
           <ul
-            className="py-1 text-sm text-gray-700 dark:text-gray-200"
+            className="py-1 text-sm text-gray-700"
             aria-labelledby="dropdownDividerButton">
             {items?.map((item, i) => (
               <li key={i} onClick={handleClose}>
                 {item.to && (
                   <Link
                     to={item.to}
-                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                    className="block py-2 px-4 hover:bg-gray-100">
                     {item.name}
                   </Link>
                 )}
