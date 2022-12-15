@@ -43,20 +43,20 @@ export default function SessionDropdown() {
         onClick={handleShow}
         id="dropdownDividerButton"
         data-dropdown-toggle="dropdownDivider"
-        className="text-white bg-primary hover:bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-3.5 py-2.5 text-center inline-flex items-center"
+        className="bg-opacity-0 sm:bg-primary sm:hover:bg-emerald-700 text-white focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm sm:px-3.5 sm:py-2.5 text-center inline-flex items-center"
         type="button">
 
         {authenticated ? (
           <>
             <img
-              className="anim shadow rounded-full md:h-10 h-7 border-none mr-2"
+              className="anim shadow rounded-full h-12 sm:h-10 border border-emerald-900"
               src={userData.avatar ?? avatar_default}
               onError={setImgUserErr}
               alt="img found"
             />
-            <span>{userData.firstName ?? ''}</span>
+            <span className='hidden sm:flex ml-2'>{userData.firstName ?? ''}</span>
             <svg
-              className="ml-2 w-4 h-4"
+              className="ml-2 w-4 h-4 hidden sm:flex"
               aria-hidden="true"
               fill="none"
               stroke="currentColor"
@@ -77,7 +77,7 @@ export default function SessionDropdown() {
 
       {isOpen &&
         <div
-          className={'xs:top-[66px] md:top-[75px] top-[160px] absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow'
+          className={'xs:top-[66px] md:top-[75px] top-[66px] absolute border border-emerald-500 bg-white rounded divide-y divide-gray-100 shadow'
           }>
           <ul
             className="py-1 text-sm text-gray-700"
