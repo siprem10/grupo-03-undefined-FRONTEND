@@ -7,6 +7,7 @@ import Filter from './Filter/Filter';
 import eyeHide from "../../assets/balance/eyeHide.webp";
 import eyeShow from "../../assets/balance/eyeShow.webp";
 import NotFound from '../NotFound/NotFound';
+import Loader from '../Loader/Loader';
 
 export default function Home() {
 
@@ -14,11 +15,13 @@ export default function Home() {
     const { id } = useSelector(state => state.auth.userData);
     const { transactionsFilter, filter } = useSelector(state => state.transactions);
     const [isShow, setShow] = useState(false);
+    const [isLoading, setLoading] = useState(true);
     const h1Style = "anim text-primary text-gray-700 font-bold uppercase md:text-md xl:text-xl lg:text-lg break-words";
 
     useEffect(() => {
         const interval = setInterval(() => dispatch(getTransactions(id, filter)), 7000);
         dispatch(getTransactions(id, filter));
+        setTimeout(() => setLoading(false), 500);
 
         return () => clearInterval(interval);
 
@@ -51,8 +54,12 @@ export default function Home() {
     function getIconShow() {
         return isShow ? eyeShow : eyeHide;
     }
+
+    if(isLoading){        
+        return <Loader />
+    }
     
-    if (!transactionsFilter.length) {
+    if (!isLoading) {
         return <NotFound title="No hay transacciones" />
     }
 

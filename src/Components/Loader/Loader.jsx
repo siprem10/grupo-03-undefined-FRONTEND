@@ -1,13 +1,7 @@
-import { useEffect } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
 import Layout from "../Layout/Layout";
 
-export default function Loader({setLoading}) {    
-
-    useEffect(() => {
-        setTimeout(() => setLoading(false), 1000);
-
-    }, []);
+export default function Loader() {    
 
     return (
         <Layout>
