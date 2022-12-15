@@ -16,7 +16,7 @@ export default function Home() {
     const { transactionsFilter, filter } = useSelector(state => state.transactions);
     const [isShow, setShow] = useState(false);
     const [isLoading, setLoading] = useState(true);
-    const h1Style = "anim text-primary text-gray-700 font-bold uppercase md:text-md xl:text-xl lg:text-lg break-words";
+    const h1Style = "anim text-primary text-gray-700 font-bold uppercase text-[13px] xs:text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px] xl:text-[20px] break-words";
 
     useEffect(() => {
         const interval = setInterval(() => dispatch(getTransactions(id, filter)), 7000);
@@ -65,15 +65,15 @@ export default function Home() {
 
     return (
         <Layout>
-            <div className="flex w-full justify-center m-5">
-                <Card className="flex flex-col w-full items-center w-fit">
+            <div className="flex w-full justify-center my-10">
+                <Card className="px-6 flex flex-col sm:w-[90%] md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%] w-full items-center">
                     {/* <h1>MOVIMIENTOS</h1> */}
                     <div className='flex w-full justify-start items-center'>
                         <Filter currentFilter={filter} className="flex w-full" />
                         <img className="mb-1 cursor-pointer" onClick={handleShow} src={getIconShow()} alt="img found"></img>
                     </div>
                     {transactionsFilter?.map((transaction) =>
-                        <Card className='flex flex-col m-2 md:w-full 2xl:w-full w-full hover:bg-gray-100 anim' key={transaction.id}>
+                        <Card className='px-6 flex flex-col m-2 w-full hover:bg-gray-100 anim' key={transaction.id}>
                             <div className='flex justify-between w-full'>
                                 <h1 className={`${h1Style} pr-6 xl:pr-12`}>{transaction.pay}</h1>
                                 <h1 className={`${h1Style} ${isIngreso(transaction.type) ? "text-green-600" : "text-red-600"}`}>{`${isIngreso(transaction.type) ? "+" : "-"} $ ${transaction.amount}`}</h1>
