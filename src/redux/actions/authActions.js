@@ -27,7 +27,7 @@ export const login = createAsyncThunk(
 
             return token;
         } catch (error) {
-            return rejectWithValue(error.response.data);
+            return rejectWithValue(error.response.data.error.message);
         }
     }
 );
