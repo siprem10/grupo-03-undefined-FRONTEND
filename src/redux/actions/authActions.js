@@ -57,7 +57,7 @@ export const getUserInfo = () => async (dispatch) => {
 
 export async function updateUserInfo(id, data) {
     try {
-        await apiPublic.put(`/profile/${id}`, data);
+        await apiPublic.put(`/users/profile/${id}`, data);
 
     } catch (error) {
         return error.message;
@@ -66,7 +66,7 @@ export async function updateUserInfo(id, data) {
 
 export async function updateUserPwdInfo(id, { password, newPassword }) {
     try {
-        await apiPublic.put(`/changepassword/${id}`, { password, newPassword });
+        await apiPublic.put(`/users/changepassword/${id}`, { password, newPassword });
     } catch (error) {
         return error.message;
     }
