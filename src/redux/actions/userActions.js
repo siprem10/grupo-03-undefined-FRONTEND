@@ -1,5 +1,5 @@
 import { HttpService } from "../../Service/HttpService";
-import { setUser, setAdminUsers, setBanAdminUsers, setUnbanAdminUsers } from "../slices/userSlice";
+import { setUser, setAdminUsers, setBansAdminUsers } from "../slices/userSlice";
 
 export const getUser = (email) => async (dispatch) => {
   try {
@@ -45,8 +45,15 @@ export const bannedUser = (id) => async (dispatch) => {
   try {
     const httpService = new HttpService();
     const response = await httpService.apiPrivate().delete(`/users/${id}`);
-    const idBanned = response.data.body;
-    dispatch(setBanAdminUsers(idBanned));
+    const userUnban = response.data.body;
+    
+    dispatch(setBansAdminUsers({
+      id: userUnban.id,
+      firstName: userUnban.firstName,
+      lastName: userUnban.lastName,
+      email: userUnban.email,
+      deletedAt: userUnban.deletedAt
+    }));
 
   } catch (error) {
     return error.message;
@@ -59,7 +66,7 @@ export const unbannedUser = (id) => async (dispatch) => {
     const response = await httpService.apiPrivate().post(`/users/${id}`);
     const userUnban = response.data.body;
 
-    dispatch(setUnbanAdminUsers({
+    dispatch(setBansAdminUsers({
       id: userUnban.id,
       firstName: userUnban.firstName,
       lastName: userUnban.lastName,

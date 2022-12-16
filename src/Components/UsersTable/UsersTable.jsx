@@ -15,7 +15,6 @@ export default function UsersTable() {
 
   useEffect(() => {
     dispatch(getAllUsers());
-    console.log("a")
 
     return () => dispatch(resetAdminUsers());
 
@@ -28,6 +27,11 @@ export default function UsersTable() {
   function handleUnban(id) {
     dispatch(unbannedUser(id));
   }
+
+  // function handleRole(roleId) {
+
+  //   //dispatch(changeRoleId(id));
+  // }
 
   const columns = [
     {
@@ -55,7 +59,7 @@ export default function UsersTable() {
         return (
           <>
             {/* <Tooltip title="Editar" arrow enterNextDelay={1500}>
-              <Button onClick={e => handleUpdate(e, params.id)}>
+              <Button onClick={() => handleRole(params.row.roleId)}>
                 <FaUserEdit color="secondary" />
               </Button>
             </Tooltip> */}

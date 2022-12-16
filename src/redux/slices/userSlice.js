@@ -21,13 +21,18 @@ export const userSlice = createSlice({
     resetAdminUsers: (state) => { 
       state.adminUsers = [];
     },
-    setBanAdminUsers: (state, action) => { 
-      console.log(action.payload)
-      state.adminUsers = [...state.adminUsers.filter(user => user.id !== action.payload)];
+    setBansAdminUsers: (state, action) => { 
+      const copy = state.adminUsers.map(copy => {
+
+        if(copy.id === action.payload.id){
+          copy = action.payload;
+        }
+
+        return copy;
+      });
+
+      state.adminUsers = copy;
     },
-    setUnbanAdminUsers: (state, action) => { 
-      state.adminUsers = [...state.adminUsers, action.payload];
-    }
   }
 });
 
@@ -36,8 +41,7 @@ export const {
   resetUser,
   setAdminUsers,
   resetAdminUsers,
-  setBanAdminUsers,
-  setUnbanAdminUsers
+  setBansAdminUsers
 
 } = userSlice.actions;
 
