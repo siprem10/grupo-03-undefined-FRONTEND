@@ -110,7 +110,7 @@ const BudgetChart = () => {
 
   if (isLoading) {
     return (
-      <div className="xs:flex hidden bg-white rounded-lg p-4 flex flex-col items-center justify-center uppercase sm:w-[430px] w-[90%] h-[215px]">
+      <div className="xs:flex hidden bg-white rounded-lg p-2 flex flex-col items-center justify-center uppercase sm:w-[380px] w-[75%] h-[275px]">
         <Loading color="#054a47" />
       </div>)
   }
