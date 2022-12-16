@@ -5,7 +5,7 @@ function alertBase(onClick, icon, title, text) {
         icon: icon ?? "error",
         title: title ?? "Oops...",
         text: text,
-        confirmButtonColor: '#ff714e'
+        confirmButtonColor: '#054a47'
 
     }).then(() => {
         if (onClick && typeof (onClick) === "function") {
