@@ -37,7 +37,7 @@ export default function Balance() {
     return (
         <div className="flex justify-start items-center">
             <h1 className="anim primaryTitle md:text-md xl:text-4xl">{getBalance()}</h1>
-            <img className="pl-2 mt-1 cursor-pointer" onClick={handleShow} src={getIconShow()} alt="img found"></img>
+            <img className="pl-2 mt-1 cursor-pointer h-[36px]" onClick={handleShow} src={getIconShow()} alt="img found"></img>
         </div>
     );
 }
