@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { apiPublic, HttpService } from '../../Service/HttpService';
 import { getToken } from '../../Utils/Auth';
 import { setUserData, setLogout } from '../slices/authSlice';
-import { apiUsers } from '../../Components/Forms/UserForms/apiUser';
 
 export const tokenFromLocal = createAsyncThunk(
     'auth/tokenFromLocal',
@@ -58,7 +57,7 @@ export const getUserInfo = () => async (dispatch) => {
 
 export async function updateUserInfo(id, data) {
     try {
-        await apiUsers.put(`/profile/${id}`, data);
+        await apiPublic.put(`/profile/${id}`, data);
 
     } catch (error) {
         return error.message;
@@ -67,7 +66,7 @@ export async function updateUserInfo(id, data) {
 
 export async function updateUserPwdInfo(id, { password, newPassword }) {
     try {
-        await apiUsers.put(`/changepassword/${id}`, { password, newPassword });
+        await apiPublic.put(`/changepassword/${id}`, { password, newPassword });
     } catch (error) {
         return error.message;
     }
