@@ -14,6 +14,7 @@ import {
 import { UserForm, createUserFields } from './Components/Forms/UserForms';
 import Profile from './Pages/Profile';
 import { isLogged, isLoggedAdmin } from './Hooks/isSession';
+import NotFound from './Components/NotFound/NotFound';
 
 function App() {
     const isSession = isLogged();
@@ -99,6 +100,7 @@ function App() {
                     path='/profile'
                     element={!isSession ? <Navigate to='/' /> : <Profile />}
                 />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>
     );

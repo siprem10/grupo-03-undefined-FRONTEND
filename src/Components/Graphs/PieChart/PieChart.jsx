@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 import { getTransactions } from '../../../redux/actions/transactionActions';
+import Loading from '../../Loading/Loading';
 
 const calculateBudget = transactions => {
   const incomes = transactions.reduce((acc, transaction) => {
@@ -86,6 +87,7 @@ const renderActiveShape = props => {
 };
 
 const BudgetChart = () => {
+  const [isLoading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
@@ -96,7 +98,8 @@ const BudgetChart = () => {
     dispatch(getTransactions(id));
     const dataBudget = calculateBudget(transactions);
     setData(dataBudget);
-    
+    setTimeout(() => setLoading(false), 1000);
+
   }, [dispatch, transactions.length]);
 
   const onPieEnter = (_, index) => {
@@ -105,30 +108,46 @@ const BudgetChart = () => {
 
   const colors = ['#abd1c6', '#e16162'];
 
+  if (isLoading) {
+    return (
+      <div className="xs:flex hidden bg-white rounded-lg p-4 flex flex-col items-center justify-center uppercase sm:w-[430px] w-[90%] h-[215px]">
+        <Loading color="#054a47" />
+      </div>)
+  }
+
   return (
-    <div className="xs:flex hidden bg-white rounded-lg p-4 flex justify-center uppercase sm:w-[430px] w-[90%] h-[215px]">
-      <h3 className="py-2 text-primary font-bold text-black dark:text-white text-lg absolute">
-        Gráfico de Ingresos vs Gastos
-      </h3>
-      <ResponsiveContainer>
-        <PieChart >
-          <Pie
-            activeIndex={activeIndex}
-            activeShape={renderActiveShape}
-            data={data}
-            cx="50%"
-            cy="62%"
-            innerRadius={40}
-            outerRadius={50}
-            fill={'#abd1c6'}
-            dataKey="value"
-            onMouseEnter={onPieEnter}>
-            {data.map((entry, index) => (
-              <Cell key={index} fill={colors[index]} />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
+    <div className="xs:flex hidden bg-white rounded-lg p-4 flex flex-col items-center justify-center uppercase sm:w-[430px] w-[90%] h-[215px]">
+
+      {transactions.length > 0
+        ?
+        <>
+          <h3 className="py-2 text-primary font-bold text-black dark:text-white text-lg">
+            Gráfico de Ingresos vs Gastos
+          </h3>
+          <ResponsiveContainer>
+            <PieChart >
+              <Pie
+                activeIndex={activeIndex}
+                activeShape={renderActiveShape}
+                data={data}
+                cx="50%"
+                cy="62%"
+                innerRadius={40}
+                outerRadius={50}
+                fill={'#abd1c6'}
+                dataKey="value"
+                onMouseEnter={onPieEnter}>
+                {data.map((entry, index) => (
+                  <Cell key={index} fill={colors[index]} />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </>
+        : <h3 className="block py-2 text-primary font-bold text-black dark:text-white text-lg">
+          No tienes gastos aun
+        </h3>
+        }
     </div>
   );
 };
