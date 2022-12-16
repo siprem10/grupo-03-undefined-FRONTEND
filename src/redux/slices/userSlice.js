@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  findUser: {}
+  findUser: {},
+  adminUsers: []
 };
 
 export const userSlice = createSlice({
@@ -13,13 +14,30 @@ export const userSlice = createSlice({
     },
     resetUser: (state) => { 
       state.findUser = {};
+    },
+    setAdminUsers: (state, action) => { 
+      state.adminUsers = action.payload;
+    },
+    resetAdminUsers: (state) => { 
+      state.adminUsers = [];
+    },
+    setBanAdminUsers: (state, action) => { 
+      console.log(action.payload)
+      state.adminUsers = [...state.adminUsers.filter(user => user.id !== action.payload)];
+    },
+    setUnbanAdminUsers: (state, action) => { 
+      state.adminUsers = [...state.adminUsers, action.payload];
     }
   }
 });
 
 export const { 
   setUser,
-  resetUser
+  resetUser,
+  setAdminUsers,
+  resetAdminUsers,
+  setBanAdminUsers,
+  setUnbanAdminUsers
 
 } = userSlice.actions;
 
