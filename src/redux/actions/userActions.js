@@ -58,7 +58,14 @@ export const unbannedUser = (id) => async (dispatch) => {
     const httpService = new HttpService();
     const response = await httpService.apiPrivate().post(`/users/${id}`);
     const userUnban = response.data.body;
-    dispatch(setUnbanAdminUsers(userUnban));
+
+    dispatch(setUnbanAdminUsers({
+      id: userUnban.id,
+      firstName: userUnban.firstName,
+      lastName: userUnban.lastName,
+      email: userUnban.email,
+      deletedAt: userUnban.deletedAt
+    }));
 
   } catch (error) {
     return error.message;
