@@ -14,6 +14,7 @@ export function confirmationAlert(
         showCancelButton,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar',
         confirmButtonText,
         cancelButtonText: 'Cancelar',
     }).then(cb);

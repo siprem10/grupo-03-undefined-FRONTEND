@@ -16,14 +16,13 @@ function UserForm({
   closeModalWithoutConfirmation
 }) {
   const dispatch = useDispatch();
-  const { id, firstName, lastName, email, avatar } = useSelector(user => user.auth.userData);
+  const { id, firstName, lastName, avatar } = useSelector(user => user.auth.userData);
   const [hidePasswordFields, setHidePasswordFields] = useState(true);
 
   const formik = useFormik({
     initialValues: {
       firstName,
       lastName,
-      email,
       image: avatar,
       currentPassword: '',
       newPassword: '',
@@ -32,13 +31,13 @@ function UserForm({
     validationSchema,
     onSubmit: async userData => {
       try {
-        const { firstName, lastName, email, currentPassword, newPassword, image, repeatPassword } =
+        const { firstName, lastName, currentPassword, newPassword, image, repeatPassword } =
           userData;
 
-        if (!firstName || !lastName || !email) {
+        if (!firstName || !lastName) {
           const camposRequeridos = `${!firstName ? '- Nombre' : ''} ${
             !lastName ? '- Apellido' : ''
-          } ${!email ? '- Email' : ''}`;
+          }`;
 
           return alertErr(camposRequeridos, 'Falta completar los siguientes campos:');
         }
@@ -54,7 +53,6 @@ function UserForm({
         const filteredData = {
           firstName,
           lastName,
-          email,
           image,
           currentPassword,
           newPassword
@@ -144,24 +142,7 @@ function UserForm({
             <ErrorMessage msg={formik.errors.lastName} />
           )}
         </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <FormLabel htmlFor="email">Email</FormLabel>
-          <FormInput
-            id="email"
-            name="email"
-            type="email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-            formikError={formik.errors.email}
-            placeholder="jondoe@email.com"
-          />
-          {formik.values.email.length > 0 && formik.errors.email && (
-            <ErrorMessage msg={formik.errors.email} />
-          )}
-        </div>
-      </div>
+      </div>      
       <FormLabel
         className="mb-10 gap-2"
         labelButton={true}

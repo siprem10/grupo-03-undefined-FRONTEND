@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import Layout from '../Components/Layout/Layout';
-import { ButtonProfile } from '../Components/Buttons';
-import { AiOutlineDelete, AiFillEdit } from 'react-icons/ai';
 import ModifyProfile from '../Components/ModifyProfile';
 import { GoVerified } from 'react-icons/go';
 import { confirmationAlert } from '../Utils/Alerts';
@@ -10,6 +8,9 @@ import { HttpService } from '../Service/HttpService';
 import { logout } from '../redux/actions/authActions';
 import defaultAvatar from '../assets/user/avatar_default.png';
 import BudgetChart from '../Components/Graphs/PieChart/PieChart';
+import BaseButton from '../Components/BaseButton/BaseButton';
+import { alertAdvert } from '../Utils/UI';
+import { useEffect } from 'react';
 
 function Profile() {
   const [modifyProfile, setModifyProfile] = useState(false);
@@ -18,6 +19,10 @@ function Profile() {
 
   const openModal = () => setModifyProfile(true);
   const closeModalWithoutConfirmation = () => setModifyProfile(false);
+
+  
+  // useEffect(() => {
+  // }, [dispatch]);
 
   const confirmationModal = boolean => {
     const confirmation = result => {
@@ -36,28 +41,15 @@ function Profile() {
   };
 
   const deleteAccount = () => {
+
     const httpService = new HttpService();
 
-    const confirmation = async result => {
-      if (result.isConfirmed) {
-        await httpService.apiPrivate().delete(`/users/${userData.id}`);
-        dispatch(logout());
-        window.location.href('/');
-      }
+    const confirmation = async () => {
+      await httpService.apiPrivate().delete(`/users/${userData.id}`);
+      dispatch(logout());
     };
 
-    confirmationAlert(
-      'Estas seguro de que quiere eliminar su cuenta?',
-      '',
-      true,
-      'Si quiero eliminar mi cuenta',
-      confirmation
-    );
-  };
-
-  const roles = {
-    admin: 'Administrador',
-    standard: 'Standard'
+    alertAdvert(confirmation, "¿Borrar cuenta permanentemente?");
   };
 
   return (
@@ -94,32 +86,12 @@ function Profile() {
             {/* Rol  */}
             <div className="flex flex-col gap-2 justify-center items-center">
               <p className="items-center rounded-lg font-bold text-lg leading-3 text-gray-500">Rol</p>
-              <p className="leading-3 dark:text-white">
-                {userData.roleId === 1
-                  ? roles.admin
-                  : userData.roleId === 2
-                    ? roles.premium
-                    : userData.roleId === 3
-                      ? roles.standard
-                      : userData.roleId === null
-                        ? roles.standard
-                        : null}
-              </p>
+              <p className="leading-3 dark:text-white">{userData.Role.name} </p>
             </div>
-
-            {/* <div className="flex gap-3 ">
-              <ButtonProfile
-                className="bg-green-400 hover:bg-green-500 border-green-400 hover:border-green-500 font-semibold text-primary"
-                onClick={openModal}>
-                <AiFillEdit size={20} />
-                Editar Cuenta
-              </ButtonProfile>
-              <ButtonProfile
-                className="bg-tertiary hover:bg-red-500 border-tertiary hover:border-red-500 font-semibold text-white w-[45px]"
-                onClick={deleteAccount}>
-                <AiOutlineDelete size={20} />
-              </ButtonProfile>
-            </div> */}
+            <div className="flex gap-3 ">
+              <BaseButton text="Editar Cuenta" onClick={openModal} />
+              <BaseButton text="Borrar cuenta" onClick={deleteAccount} />
+            </div>
           </div>
         </div>
         <BudgetChart />
