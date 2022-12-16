@@ -5,7 +5,7 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import { FormLabel, FormButton, FormInput, ErrorMessage, PreviewImage } from './FormComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { alertErr, alertOkClick } from '../../../Utils/UI';
-import { updateUserInfo } from '../../../redux/actions/authActions';
+import { getUserInfo, updateUserInfo } from '../../../redux/actions/authActions';
 import { setUserData } from '../../../redux/slices/authSlice';
 
 function UserForm({
@@ -58,8 +58,8 @@ function UserForm({
           newPassword
         };
 
-        dispatch(updateUserInfo(id, filteredData));
-        dispatch(setUserData(filteredData));
+        await updateUserInfo(id, filteredData);
+        dispatch(getUserInfo());
 
         alertOkClick(
           closeModalWithoutConfirmation,

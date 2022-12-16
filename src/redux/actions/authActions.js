@@ -32,36 +32,6 @@ export const login = createAsyncThunk(
     }
 );
 
-export const getUserInfo = () => async dispatch => {
-    try {
-        const httpService = new HttpService();
-        const response = await httpService.apiPrivate().get('/auth/me');
-
-        const userData = {...response.data.body};
-
-        localStorage.setItem('userData', JSON.stringify(userData));
-        dispatch(setUserData(userData));
-    } catch (error) {
-        return error.message;
-    }
-};
-
-export function updateUserInfo(id, userUpdated) {
-    return async dispatch => {
-        try {
-            const response = await apiUsers.put(`/${id}`, userUpdated);
-
-            const { password, createdAt, updatedAt, deletedAt, ...userData } =
-                response.data.body;
-
-            localStorage.setItem('userData', JSON.stringify(userData));
-            dispatch(setUserData(userData));
-        } catch (error) {
-            return error.message;
-        }
-    };
-}
-
 export const logout = () => async dispatch => {
     try {
         localStorage.removeItem('accessToken');
@@ -71,3 +41,34 @@ export const logout = () => async dispatch => {
         return error.message;
     }
 };
+
+export const getUserInfo = () => async (dispatch) => {
+    try {
+        const httpService = new HttpService();
+        const response = await httpService.apiPrivate().get('/auth/me');
+
+        const userData = { ...response.data.body };
+
+        localStorage.setItem('userData', JSON.stringify(userData));
+        dispatch(setUserData(userData));
+    } catch (error) {
+        return error.message;
+    }
+};
+
+export async function updateUserInfo(id, data) {
+    try {
+        await apiUsers.put(`/profile/${id}`, data);
+
+    } catch (error) {
+        return error.message;
+    }
+}
+
+export async function updateUserPwdInfo(id, { password, newPassword }) {
+    try {
+        await apiUsers.put(`/changepassword/${id}`, { password, newPassword });
+    } catch (error) {
+        return error.message;
+    }
+}

@@ -24,20 +24,12 @@ function Profile() {
   // useEffect(() => {
   // }, [dispatch]);
 
-  const confirmationModal = boolean => {
-    const confirmation = result => {
-      if (result.isConfirmed) {
-        setModifyProfile(boolean);
-      }
+  const confirmationModal = (boolean) => {
+    const confirmation = () => {      
+      setModifyProfile(boolean);
     };
-
-    confirmationAlert(
-      'Estas seguro de que quiere salir?',
-      'Los cambios no seran guardados',
-      true,
-      'No quiero modificar el perfil',
-      confirmation
-    );
+    
+    alertAdvert(confirmation, "Se descartaran los cambios.", "¿Cerrar ventana?");
   };
 
   const deleteAccount = () => {
