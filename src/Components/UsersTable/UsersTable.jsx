@@ -2,26 +2,27 @@ import Box from '@mui/material/Box';
 import { DataGrid } from '@mui/x-data-grid';
 import useUsersList from '../../Hooks/useUsersList';
 
-const columns = [
-  {
-    field: 'firstName',
-    headerName: 'Nombre',
-    width: 100
-  },
-  {
-    field: 'lastName',
-    headerName: 'Apellido',
-    width: 100
-  },
-  {
-    field: 'email',
-    headerName: 'Correo electrónico',
-    type: 'email',
-    width: 240
-  },
-];
+export default function UsersTable() {
 
-const UsersTable = () => {
+  const columns = [
+    {
+      field: 'firstName',
+      headerName: 'Nombre',
+      width: 100
+    },
+    {
+      field: 'lastName',
+      headerName: 'Apellido',
+      width: 100
+    },
+    {
+      field: 'email',
+      headerName: 'Correo electrónico',
+      type: 'email',
+      width: 240
+    },
+  ];
+
   const users = useUsersList();
 
   const rows = users.map(user => {
@@ -49,5 +50,3 @@ const UsersTable = () => {
     </div>
   );
 };
-
-export default UsersTable;
