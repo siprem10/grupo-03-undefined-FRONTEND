@@ -108,7 +108,7 @@ const BudgetChart = () => {
   return (
     <div className="xs:flex hidden bg-white rounded-lg p-4 flex justify-center uppercase sm:w-[430px] w-[90%] h-[215px]">
       <h3 className="py-2 text-primary font-bold text-black dark:text-white text-lg absolute">
-        Grafico de Ingresos vs Gastos
+        Gráfico de Ingresos vs Gastos
       </h3>
       <ResponsiveContainer>
         <PieChart >
