@@ -70,7 +70,7 @@ export default function Home() {
                     {/* <h1>MOVIMIENTOS</h1> */}
                     <div className='flex w-full justify-start items-center'>
                         <Filter currentFilter={filter} className="flex w-full" />
-                        <img className="mb-1 cursor-pointer" onClick={handleShow} src={getIconShow()} alt="img found"></img>
+                        <img className="mb-1 cursor-pointer h-[36px]" onClick={handleShow} src={getIconShow()} alt="img found"></img>
                     </div>
                     {transactionsFilter?.map((transaction) =>
                         <Card className='px-6 flex flex-col m-2 w-full hover:bg-gray-100 anim' key={transaction.id}>
