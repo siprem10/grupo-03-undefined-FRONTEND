@@ -19,7 +19,7 @@ export default function Shortcuts({className}) {
     return (
         <div className={`flex flex-col xs:flex-row justify-center items-center gap-3 ${className ?? ""}`}>
             {shortcuts?.map((shortcut, i) =>                 
-                <BaseButton key={i} className="anim w-full xs:w-fit md:text-md xl:text-xl lg:text-lg" text={shortcut.name} onClick={() => redirect(shortcut.to)}></BaseButton>                
+                <BaseButton key={i} className="anim w-full xs:w-fit md:text-md lg:text-lg" text={shortcut.name} onClick={() => redirect(shortcut.to)}></BaseButton>                
             )}
         </div>
     );
