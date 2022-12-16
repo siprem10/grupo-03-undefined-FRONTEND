@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <Layout>
-        <Card className="flex flex-col justify-center w-[90%] xs:w-[410px] md:w-[500px]">
+        <Card className="flex flex-col justify-center w-[90%] xs:w-[410px] md:w-[500px] my-10">
           <Balance className={"mb-3 xs:mb-4"} />
           <Shortcuts className={"mb-3 xs:mb-4"} />
           <CreditCard />

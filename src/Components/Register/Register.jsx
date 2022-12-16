@@ -118,101 +118,99 @@ export default function Register() {
 
   return (
     <Layout>
-      <div className="flex flex-col w-full h-full my-10">
-        <div className="flex flex-col justify-center items-center">
-          <h1 className="title">Registro</h1>
-          <form className="form" onSubmit={e => e.preventDefault()}>
-            <div className='flex gap-6'>
-              <div className="mb-4">
-                <label className="label">Nombre</label>
-                <input
-                  className="inputForm"
-                  type="text"
-                  placeholder="Brenda"
-                  name="firstName"
-                  value={inputState.firstName}
-                  onChange={e => handleSetInput(e)}></input>
-                <div className="h-5">
-                  {inputError.firstName && <p className="inputFormErr">{inputError.firstName}</p>}
-                </div>
-              </div>
-
-              <div className="mb-4">
-                <label className="label">Apellido</label>
-                <input
-                  className="inputForm"
-                  type="text"
-                  placeholder="Romero"
-                  name="lastName"
-                  value={inputState.lastName}
-                  onChange={e => handleSetInput(e)}></input>
-                <div className="h-5">
-                  {inputError.lastName && <p className="inputFormErr">{inputError.lastName}</p>}
-                </div>
-              </div>
-            </div>
-
-
+      <div className="flex flex-col justify-center items-center w-[90%] xs:w-[410px] my-10">
+        <h1 className="title">Registro</h1>
+        <form className="form" onSubmit={e => e.preventDefault()}>
+          <div className='flex gap-6'>
             <div className="mb-4">
-              <label className="label">Correo</label>
+              <label className="label">Nombre</label>
               <input
                 className="inputForm"
                 type="text"
-                placeholder="usuario@mail.com"
-                name="email"
-                value={inputState.email}
+                placeholder="Brenda"
+                name="firstName"
+                value={inputState.firstName}
                 onChange={e => handleSetInput(e)}></input>
               <div className="h-5">
-                {inputError.email && <p className="inputFormErr">{inputError.email}</p>}
+                {inputError.firstName && <p className="inputFormErr">{inputError.firstName}</p>}
               </div>
             </div>
 
             <div className="mb-4">
-              <label className="label">Contraseña</label>
+              <label className="label">Apellido</label>
               <input
                 className="inputForm"
-                placeholder="************"
-                type="password"
-                name="password"
-                value={inputState.password}
+                type="text"
+                placeholder="Romero"
+                name="lastName"
+                value={inputState.lastName}
                 onChange={e => handleSetInput(e)}></input>
               <div className="h-5">
-                {inputError.password && <p className="inputFormErr">{inputError.password}</p>}
+                {inputError.lastName && <p className="inputFormErr">{inputError.lastName}</p>}
               </div>
             </div>
+          </div>
 
-            <div className="mb-4">
-              <label className="label">Confirmar Contraseña</label>
-              <input
-                className="inputForm"
-                placeholder="************"
-                type="password"
-                name="passwordConfirm"
-                value={inputState.passwordConfirm}
-                onChange={e => handleSetInput(e)}></input>
-              <div className="h-5">
-                {inputError.passwordConfirm && (
-                  <p className="inputFormErr">{inputError.passwordConfirm}</p>
-                )}
-              </div>
-            </div>
 
-            <div className="flex flex-col w-full">
-              <BaseButton
-                text="Registrarse"
-                onClick={e => handleOnSubmit(e)}
-                disabled={isButtonDisabled()}
-                type="submit"
-              />
-              <p className="mt-2 mb-1 flex justify-center text-black dark:text-white">¿Ya tienes una cuenta?</p>
-              <Link
-                to="/login"
-                className="flex justify-center underline text-black dark:text-white">
-                Inicia sesión
-              </Link>
+          <div className="mb-4">
+            <label className="label">Correo</label>
+            <input
+              className="inputForm"
+              type="text"
+              placeholder="usuario@mail.com"
+              name="email"
+              value={inputState.email}
+              onChange={e => handleSetInput(e)}></input>
+            <div className="h-5">
+              {inputError.email && <p className="inputFormErr">{inputError.email}</p>}
             </div>
-          </form>
-        </div>
+          </div>
+
+          <div className="mb-4">
+            <label className="label">Contraseña</label>
+            <input
+              className="inputForm"
+              placeholder="************"
+              type="password"
+              name="password"
+              value={inputState.password}
+              onChange={e => handleSetInput(e)}></input>
+            <div className="h-5">
+              {inputError.password && <p className="inputFormErr">{inputError.password}</p>}
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <label className="label">Confirmar Contraseña</label>
+            <input
+              className="inputForm"
+              placeholder="************"
+              type="password"
+              name="passwordConfirm"
+              value={inputState.passwordConfirm}
+              onChange={e => handleSetInput(e)}></input>
+            <div className="h-5">
+              {inputError.passwordConfirm && (
+                <p className="inputFormErr">{inputError.passwordConfirm}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="flex flex-col w-full">
+            <BaseButton
+              text="Registrarse"
+              onClick={e => handleOnSubmit(e)}
+              disabled={isButtonDisabled()}
+              type="submit"
+            />
+            <p className="mt-2 mb-1 flex justify-center text-black dark:text-white">¿Ya tienes una cuenta?</p>
+            <Link
+              to="/login"
+              className="flex justify-center underline text-black dark:text-white">
+              Inicia sesión
+            </Link>
+          </div>
+        </form>
       </div>
     </Layout>
   );

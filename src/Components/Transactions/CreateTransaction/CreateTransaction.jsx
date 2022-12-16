@@ -176,7 +176,7 @@ export default function CreateTransaction() {
 
   return (
     <Layout>
-      <div className="flex flex-col justify-center w-[90%] xs:w-[410px] md:w-[500px]">
+      <div className="flex flex-col justify-center items-center w-[90%] xs:w-[410px] md:w-[500px] my-10">
          <form className="form w-full mt-1 mb-3" onSubmit={e => e.preventDefault()}>
          <h1 className="-ml-1 mb-3 text-primary font-bold text-md xs:text-xl uppercase">Generar {typeTransaction}</h1>
        

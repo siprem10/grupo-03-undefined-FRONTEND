@@ -71,10 +71,8 @@ export default function Login() {
 
   return (
     <Layout>
-      <div className="flex flex-col w-full h-full my-5">
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center w-[90%] xs:w-[410px] my-10">
           <h1 className="title">Iniciar sesión</h1>
-
           <form className="form" onSubmit={e => e.preventDefault()}>
             <div className="mb-4">
               <label className="label">Correo</label>
@@ -126,7 +124,6 @@ export default function Login() {
             </div>
           </form>
         </div>
-      </div>
     </Layout>
   );
 }
