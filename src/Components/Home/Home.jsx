@@ -8,13 +8,11 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="flex w-full justify-center">
-        <Card className="md:w-1/2 2xl:w-2/6	w-96">
-          <Balance />
-          <Shortcuts />
+        <Card className="flex flex-col justify-center w-[90%] xs:w-[410px] md:w-[500px]">
+          <Balance className={"mb-3 xs:mb-4"} />
+          <Shortcuts className={"mb-3 xs:mb-4"} />
           <CreditCard />
         </Card>
-      </div>
     </Layout>
   );
 }

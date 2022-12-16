@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import BaseButton from "../../BaseButton/BaseButton";
 
-export default function Shortcuts() {
+export default function Shortcuts({className}) {
 
     const navigate = useNavigate();
 
@@ -17,9 +17,9 @@ export default function Shortcuts() {
     }
 
     return (
-        <div className="flex justify-center items-center gap-2 lg:gap-4">
+        <div className={`flex flex-col xs:flex-row justify-center items-center gap-3 ${className ?? ""}`}>
             {shortcuts?.map((shortcut, i) =>                 
-                <BaseButton key={i} className="anim my-4 md:text-md xl:text-xl lg:text-lg" text={shortcut.name} onClick={() => redirect(shortcut.to)}></BaseButton>                
+                <BaseButton key={i} className="anim w-full xs:w-fit md:text-md xl:text-xl lg:text-lg" text={shortcut.name} onClick={() => redirect(shortcut.to)}></BaseButton>                
             )}
         </div>
     );

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import logoMc from "../../../assets/creditCard/logoMc.png";
 import aw from "../../../assets/app/icon.png";
 
-export default function CreditCard() {
+export default function CreditCard({className}) {
 
     const [isShow, setShow] = useState(false);
     const { userData } = useSelector(state => state.auth);
@@ -15,7 +15,7 @@ export default function CreditCard() {
     }
     
     return (
-        <div onClick={handleShow} className="flex flex-col justify-center items-start">
+        <div onClick={handleShow} className={`flex flex-col justify-center items-start ${className ?? ""}`}>
             <div className="w-full bg-emerald-500 hover:bg-emerald-400 p-5 rounded-xl flex flex-col justify-center items-start anim cursor-pointer">
                 <div className="w-full flex justify-between">
                     <img src={logoMc} className="h-6 xl:h-8 anim" alt="not found" />
