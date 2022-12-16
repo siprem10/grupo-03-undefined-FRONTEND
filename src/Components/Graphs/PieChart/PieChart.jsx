@@ -116,12 +116,12 @@ const BudgetChart = () => {
   }
 
   return (
-    <div className="xs:flex hidden bg-white rounded-lg p-4 flex flex-col items-center justify-center uppercase sm:w-[430px] w-[90%] h-[215px]">
+    <div className="xs:flex hidden bg-white rounded-lg p-2 flex flex-col items-center justify-center uppercase sm:w-[380px] w-[75%] h-[275px]">
 
       {transactions.length > 0
         ?
         <>
-          <h3 className="py-2 text-primary font-bold text-black dark:text-white text-lg">
+          <h3 className="pt-5 text-primary font-bold text-black dark:text-white text-lg relative">
             Gráfico de Ingresos vs Gastos
           </h3>
           <ResponsiveContainer>
@@ -131,7 +131,7 @@ const BudgetChart = () => {
                 activeShape={renderActiveShape}
                 data={data}
                 cx="50%"
-                cy="62%"
+                cy="43%"
                 innerRadius={40}
                 outerRadius={50}
                 fill={'#abd1c6'}
