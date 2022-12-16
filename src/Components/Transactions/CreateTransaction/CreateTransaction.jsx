@@ -202,7 +202,7 @@ export default function CreateTransaction() {
                   {inputError.toUserId && <p className="inputFormErr">{inputError.toUserId}</p>}
                 </div>
               </div>
-              <BaseButton disabled={isBtnFindDisabled()} className={`h-10 mt-2 ${isBtnFindDisabled() ? "disable" : ""}`} onClick={handleFindUser} text="Buscar" />
+              <BaseButton disabled={isBtnFindDisabled()} className="h-10 mt-2" onClick={handleFindUser} text="Buscar" />
             </div>}
           <FindUser className={"mb-4 w-full"} />
           <div className="mb-4">
@@ -233,7 +233,7 @@ export default function CreateTransaction() {
               {inputError.concept && <p className="inputFormErr">{inputError.concept}</p>}
             </div>
           </div>
-          <BaseButton disabled={isBtnSendDisabled()} className={`w-full ${isBtnSendDisabled() ? "disable" : ""}`} onClick={handleSend} text="Enviar" />
+          <BaseButton disabled={isBtnSendDisabled()} className="w-full" onClick={handleSend} text="Enviar" />
         </form>
       </div>
     </Layout>

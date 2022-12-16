@@ -11,7 +11,7 @@ export default function BaseButton({ text, color, onClick, disabled, className }
 
   return (
     <button
-      className={`${getClassName()} hover:opacity-80 text-white rounded-md shadow-md ${className ?? ""}`}
+      className={`${getClassName()} hover:opacity-80 text-white rounded-md shadow-md disabled:opacity-75 ${className ?? ""}`}
       type="submit"
       onClick={onClick}
       disabled={disabled ? disabled : false}>
