@@ -110,18 +110,18 @@ const BudgetChart = () => {
 
   if (isLoading) {
     return (
-      <div className="xs:flex hidden bg-white rounded-lg p-2 flex flex-col items-center justify-center uppercase sm:w-[380px] w-[75%] h-[275px]">
+      <div className="xs:flex hidden bg-white rounded-lg p-2 flex flex-col items-center justify-center uppercase w-[90%] xs:w-[420px] h-[420px]">
         <Loading color="#054a47" />
       </div>)
   }
 
   return (
-    <div className="xs:flex hidden bg-white rounded-lg p-2 flex flex-col items-center justify-center uppercase sm:w-[380px] w-[75%] h-[275px]">
+    <div className="xs:flex hidden bg-white rounded-lg p-2 flex flex-col items-center justify-center uppercase w-[90%] xs:w-[420px] h-[420px]">
 
       {transactions.length > 0
         ?
         <>
-          <h3 className="pt-5 text-primary font-bold text-black dark:text-white text-lg relative">
+          <h3 className="pt-5 text-center px-5 text-primary font-bold text-black dark:text-white text-lg relative">
             Gráfico de Ingresos vs Gastos
           </h3>
           <ResponsiveContainer>
@@ -134,7 +134,7 @@ const BudgetChart = () => {
                 cy="43%"
                 innerRadius={40}
                 outerRadius={50}
-                fill={'#abd1c6'}
+                fill="#abd1c6"
                 dataKey="value"
                 onMouseEnter={onPieEnter}>
                 {data.map((entry, index) => (
