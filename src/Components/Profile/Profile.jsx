@@ -1,36 +1,25 @@
 import React, { useState } from 'react';
-import Layout from '../Components/Layout/Layout';
-import ModifyProfile from '../Components/ModifyProfile';
+import Layout from '../Layout/Layout';
+import ModalModifyProfile from '../ModalModifyProfile/ModalModifyProfile';
+import ModalModifyProfilePwd from '../ModalModifyProfilePwd/ModalModifyProfilePwd';
 import { GoVerified } from 'react-icons/go';
-import { confirmationAlert } from '../Utils/Alerts';
 import { useDispatch, useSelector } from 'react-redux';
-import { HttpService } from '../Service/HttpService';
-import { logout } from '../redux/actions/authActions';
-import defaultAvatar from '../assets/user/avatar_default.png';
-import BudgetChart from '../Components/Graphs/PieChart/PieChart';
-import BaseButton from '../Components/BaseButton/BaseButton';
-import { alertAdvert } from '../Utils/UI';
-import { useEffect } from 'react';
+import { HttpService } from '../../Service/HttpService';
+import { logout } from '../../redux/actions/authActions';
+import defaultAvatar from '../../assets/user/avatar_default.png';
+import BudgetChart from '../Graphs/PieChart/PieChart';
+import BaseButton from '../BaseButton/BaseButton';
+import { alertAdvert } from '../../Utils/UI';
 
 function Profile() {
   const [modifyProfile, setModifyProfile] = useState(false);
+  const [modifyPwd, setModifyPwd] = useState(false);
+
   const userData = useSelector(state => state.auth.userData);
   const dispatch = useDispatch();
 
-  const openModal = () => setModifyProfile(true);
-  const closeModalWithoutConfirmation = () => setModifyProfile(false);
-
-  
-  // useEffect(() => {
-  // }, [dispatch]);
-
-  const confirmationModal = (boolean) => {
-    const confirmation = () => {      
-      setModifyProfile(boolean);
-    };
-    
-    alertAdvert(confirmation, "Se descartaran los cambios.", "¿Cerrar ventana?");
-  };
+  const openModalProfile = (show = true) => setModifyProfile(show);
+  const openModalPwd = (show = true) => setModifyPwd(show);
 
   const deleteAccount = () => {
 
@@ -49,12 +38,14 @@ function Profile() {
       <div className='flex flex-row justify-center items-center flex-wrap	gap-5 my-10'>
         <div className="flex justify-center w-fit">
           {/* Modal para modificar el perfil */}
-          {modifyProfile && (
-            <ModifyProfile
-              closeModalWithoutConfirmation={closeModalWithoutConfirmation}
-              closeModal={() => confirmationModal(false)}
-            />
-          )}
+          {modifyProfile &&
+            <ModalModifyProfile closeModal={() => openModalProfile(false)} />
+          }
+
+          {modifyPwd &&
+            <ModalModifyProfilePwd closeModal={() => openModalPwd(false)} />
+          }
+
           <div className="flex flex-col w-full gap-5 bg-white dark:bg-gray-800 dark:border-gray-700 text-black rounded-lg p-10">
             {/* Profile Image*/}
             <img
@@ -80,8 +71,9 @@ function Profile() {
               <p className="items-center rounded-lg font-bold text-lg leading-3 text-gray-500">Rol</p>
               <p className="leading-3 dark:text-white">{userData.Role.name} </p>
             </div>
-            <div className="flex gap-3 ">
-              <BaseButton text="Editar Cuenta" onClick={openModal} />
+            <div className="flex flex-col gap-3 wrap">
+              <BaseButton text="Editar Cuenta" onClick={openModalProfile} />
+              <BaseButton text="Cambiar Contraseña" onClick={openModalPwd} />
               <BaseButton text="Borrar cuenta" onClick={deleteAccount} />
             </div>
           </div>

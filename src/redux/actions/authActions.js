@@ -56,24 +56,14 @@ export const getUserInfo = () => async (dispatch) => {
 };
 
 export async function updateUserInfo(id, data) {
-    try {
-        const httpService = new HttpService();
-        await httpService.apiPrivate().put(`/users/profile/${id}`, data);
-        
-    } catch (error) {
-        return error.message;
-    }
+    const httpService = new HttpService();
+    const response = await httpService.apiPrivate().put(`/users/profile/${id}`, data);
+    return response.data;
 }
 
 export async function updateUserPwdInfo(id, { password, newPassword }) {
-    try {
-        const httpService = new HttpService();
-        await httpService.apiPrivate().put(`/users/changepassword/${id}`, { password, newPassword });
+    const httpService = new HttpService();
+    const response = await httpService.apiPrivate().put(`/users/changepassword/${id}`, { password, newPassword });
 
-
-    } catch (error) {
-
-        console.log(error)
-        return error.message;
-    }
+    return response.data;
 }

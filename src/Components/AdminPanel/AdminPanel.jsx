@@ -1,7 +1,7 @@
-import Layout from '../../Components/Layout/Layout';
-import UsersTable from '../../Components/UsersTable/UsersTable';
+import Layout from '../Layout/Layout';
+import UsersTable from '../UsersTable/UsersTable';
 
-const PanelAdmin = () => {
+const AdminPanel = () => {
   return (
     <Layout>
       <div className="w-full p-6">
@@ -11,4 +11,5 @@ const PanelAdmin = () => {
     </Layout>
   );
 };
-export default PanelAdmin;
+
+export default AdminPanel;
