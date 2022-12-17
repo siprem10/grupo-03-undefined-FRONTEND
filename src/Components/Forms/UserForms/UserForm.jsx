@@ -1,23 +1,21 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { FaUser } from 'react-icons/fa';
-import { RiLockPasswordFill } from 'react-icons/ri';
-import { FormLabel, FormButton, FormInput, ErrorMessage, PreviewImage } from './FormComponents';
+import { FormLabel, FormInput, ErrorMessage, PreviewImage } from './FormComponents';
 import { useDispatch, useSelector } from 'react-redux';
-import { alertErr, alertOkClick } from '../../../Utils/UI';
-import { getUserInfo, updateUserInfo } from '../../../redux/actions/authActions';
-import { setUserData } from '../../../redux/slices/authSlice';
+import { alertErr, alertOk, alertOkClick } from '../../../Utils/UI';
+import { getUserInfo, updateUserInfo, updateUserPwdInfo } from '../../../redux/actions/authActions';
+import BaseButton from '../../BaseButton/BaseButton';
 
 function UserForm({
   title,
   validationSchema,
-  buttonTitle,
   modify = false,
   closeModalWithoutConfirmation
 }) {
   const dispatch = useDispatch();
   const { id, firstName, lastName, avatar } = useSelector(user => user.auth.userData);
-  const [hidePasswordFields, setHidePasswordFields] = useState(true);
+  const [hidePasswordFields, setHidePasswordFields] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -29,33 +27,18 @@ function UserForm({
       repeatPassword: ''
     },
     validationSchema,
-    onSubmit: async userData => {
+    onSubmit: async (userData) => {
       try {
-        const { firstName, lastName, currentPassword, newPassword, image, repeatPassword } =
-          userData;
+        const { firstName, lastName, image } = userData;
 
         if (!firstName || !lastName) {
-          const camposRequeridos = `${!firstName ? '- Nombre' : ''} ${
-            !lastName ? '- Apellido' : ''
-          }`;
-
-          return alertErr(camposRequeridos, 'Falta completar los siguientes campos:');
-        }
-
-        if ((currentPassword && !newPassword) || (currentPassword && !repeatPassword)) {
-          return alertErr('Si desea cambiar la contraseña debe proporcionar una nueva', 'Error');
-        }
-
-        if (!currentPassword && newPassword && repeatPassword) {
-          return alertErr('Debe introducir su actual contraseña para poder cambiarla', 'Error');
+          return alertErr('Complete todos los campos!');
         }
 
         const filteredData = {
           firstName,
           lastName,
           image,
-          currentPassword,
-          newPassword
         };
 
         await updateUserInfo(id, filteredData);
@@ -67,20 +50,43 @@ function UserForm({
           'Actualizado!'
         );
       } catch (error) {
-        console.log('error', error);
         alertErr(error.response.data.error);
       }
+    },
+  })
+
+  async function handlePwdUser() {
+    try {
+      const { currentPassword, newPassword, repeatPassword } = formik.initialValues;
+
+      if ((currentPassword && !newPassword) || (currentPassword && !repeatPassword)) {
+        return alertErr('Si desea cambiar la contraseña debe proporcionar una nueva');
+      }
+
+      if (!currentPassword && newPassword && repeatPassword) {
+        return alertErr('Debe introducir su actual contraseña para poder cambiarla');
+      }
+
+      const updated = await updateUserPwdInfo(id, {
+        password: currentPassword,
+        newPassword
+      });
+
+      alertOk(updated.data.message);
+
+    } catch (error) {
+      alertErr(error);
     }
-  });
+  }
 
   return (
-    <form className="w-full max-w-lg" onSubmit={formik.handleSubmit} encType="multipart/form-data">
+    <form className="w-full" onSubmit={(e) => e.preventDefault()} encType="multipart/form-data">
       <div className="flex justify-between">
-        <h1 className="flex items-center gap-2 uppercase tracking-wide text-xl font-semibold text-gray-700">
+        <h1 className="flex items-center gap-2 uppercase tracking-wide text-lg font-semibold text-gray-700">
           <FaUser /> {title}
         </h1>
       </div>
-      <div>
+      {/* <div>
         <FormInput
           id="image"
           type="file"
@@ -101,7 +107,7 @@ function UserForm({
             <FormLabel htmlFor="avatar">
               Avatar <small>(Opcional)</small>
             </FormLabel>
-            <FormLabel labelButton={true} htmlFor="image">
+            <FormLabel className="primaryButton hover:opacity-80 text-white rounded-md shadow-md disabled:opacity-75" labelButton={true} htmlFor="image">
               Seleccionar Archivo
             </FormLabel>
             {formik.values.image && formik.errors.image && (
@@ -109,11 +115,10 @@ function UserForm({
             )}
           </div>
         </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      </div> */}
+      <div className="flex flex flex-row justify-center items-center mt-4 gap-2">
+        <div className="w-[100%]">
           <FormLabel htmlFor="firstName">Nombre</FormLabel>
-
           <FormInput
             id="firstName"
             name="firstName"
@@ -121,13 +126,15 @@ function UserForm({
             onChange={formik.handleChange}
             value={formik.values.firstName}
             formikError={formik.errors.firstName}
-            placeholder="Jane"
+            placeholder="Nombre"
           />
-          {formik.values.firstName.length > 0 && formik.errors.firstName && (
-            <ErrorMessage msg={formik.errors.firstName} />
-          )}
+          <div className='h-6 flex justify-start'>
+            {formik.errors.firstName && (
+              <ErrorMessage msg={formik.errors.firstName} />
+            )}
+          </div>
         </div>
-        <div className="w-full md:w-1/2 px-3">
+        <div className="w-[100%]">
           <FormLabel htmlFor="lastName">Apellido</FormLabel>
           <FormInput
             id="lastName"
@@ -136,76 +143,89 @@ function UserForm({
             onChange={formik.handleChange}
             value={formik.values.lastName}
             formikError={formik.errors.lastName}
-            placeholder="Doe"
+            placeholder="Apellido"
           />
-          {formik.values.lastName.length > 0 && formik.errors.lastName && (
-            <ErrorMessage msg={formik.errors.lastName} />
-          )}
-        </div>
-      </div>      
-      <FormLabel
-        className="mb-10 gap-2"
-        labelButton={true}
-        onClick={() => setHidePasswordFields(!hidePasswordFields)}>
-        <RiLockPasswordFill size={16} />
-        Cambiar Contraseña
-      </FormLabel>
-      {modify && (
-        <div className={`flex flex-wrap -mx-3 mb-6 ${hidePasswordFields === true && 'hidden'}`}>
-          <div className="w-full px-3">
-            <FormLabel htmlFor="currentPassword">Contraseña Actual:</FormLabel>
-            <FormInput
-              id="currentPassword"
-              name="currentPassword"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.currentPassword}
-              placeholder="***********"
-            />
+          <div className='h-6 flex justify-start'>
+            {formik.errors.lastName && (
+              <ErrorMessage msg={formik.errors.lastName} />
+            )}
           </div>
         </div>
-      )}
-      <div className={`flex flex-wrap -mx-3 mb-6 ${hidePasswordFields === true && 'hidden'}`}>
-        <div className="w-full px-3">
-          <FormLabel htmlFor="newPassword">Nueva Contraseña</FormLabel>
-          <FormInput
-            id="newPassword"
-            name="newPassword"
-            type="password"
-            onChange={formik.handleChange}
-            value={formik.values.newPassword}
-            formikError={formik.errors.newPassword}
-            placeholder="***********"
-          />
-          {formik.values.newPassword.length > 0 && formik.errors.newPassword && (
-            <ErrorMessage msg={formik.errors.newPassword} />
-          )}
-        </div>
       </div>
-      <div className={`flex flex-wrap -mx-3 mb-6 ${hidePasswordFields === true && 'hidden'}`}>
-        <div className="w-full px-3">
-          <FormLabel htmlFor="repeatPassword">Repetir Nueva Contraseña</FormLabel>
-          <FormInput
-            id="repeatPassword"
-            name="repeatPassword"
-            type="password"
-            onChange={formik.handleChange}
-            value={formik.values.repeatPassword}
-            formikError={formik.errors.repeatPassword}
-            placeholder="***********"
-          />
-          {formik.values.repeatPassword.length > 0 && formik.errors.repeatPassword && (
-            <ErrorMessage msg={formik.errors.repeatPassword} />
+      <BaseButton onClick={formik.handleSubmit} className="w-full mb-4" text="Actualizar Datos Usuario" />
+
+      <div>
+        <div className="w-full mt-1 gap-2">
+          {modify && (
+            <div className={`flex flex-wrap ${hidePasswordFields === true && 'hidden'}`}>
+              <div className="flex justify-between mb-4">
+                <h1 className="flex items-center gap-2 uppercase tracking-wide text-lg font-semibold text-gray-700">
+                  <FaUser /> Cambiar Contraseña
+                </h1>
+              </div>
+              <div className="w-full">
+                <FormLabel htmlFor="currentPassword">Contraseña Actual:</FormLabel>
+                <FormInput
+                  id="currentPassword"
+                  name="currentPassword"
+                  type="password"
+                  onChange={formik.handleChange}
+                  value={formik.values.currentPassword}
+                  placeholder="***********"
+                />
+                <div className='h-6 flex justify-start'>
+                  {formik.errors.currentPassword && (
+                    <ErrorMessage msg={formik.errors.currentPassword} />
+                  )}
+                </div>
+              </div>
+            </div>
           )}
+          <div className={`flex flex-wrap ${hidePasswordFields === true && 'hidden'}`}>
+            <div className="w-full">
+              <FormLabel htmlFor="newPassword">Nueva Contraseña</FormLabel>
+              <FormInput
+                id="newPassword"
+                name="newPassword"
+                type="password"
+                onChange={formik.handleChange}
+                value={formik.values.newPassword}
+                formikError={formik.errors.newPassword}
+                placeholder="***********"
+              />
+              <div className='h-6 flex justify-start'>
+                {formik.errors.newPassword && (
+                  <ErrorMessage msg={formik.errors.newPassword} />
+                )}
+              </div>
+            </div>
+          </div>
+          <div className={`flex flex-wrap ${hidePasswordFields === true && 'hidden'}`}>
+            <div className="w-full">
+              <FormLabel htmlFor="repeatPassword">Repetir Nueva Contraseña</FormLabel>
+              <FormInput
+                id="repeatPassword"
+                name="repeatPassword"
+                type="password"
+                onChange={formik.handleChange}
+                value={formik.values.repeatPassword}
+                formikError={formik.errors.repeatPassword}
+                placeholder="***********"
+              />
+
+              <div className='h-6 flex justify-start'>
+                {formik.errors.repeatPassword && (
+                  <ErrorMessage msg={formik.errors.repeatPassword} />
+                )}
+              </div>
+            </div>
+          </div>
+          {/* <BaseButton className="w-full my-2" text={"Cambiar pwdsadas"} onClick={() => setHidePasswordFields(!hidePasswordFields)} /> */}
+          <BaseButton className="w-full my-2" text={"Cambiar Pwd"} onClick={handlePwdUser} />
+
         </div>
       </div>
 
-      <div className="flex justify-center mt-10">
-        <FormButton className="flex items-center gap-1" type="submit">
-          <FaUser />
-          {buttonTitle}
-        </FormButton>
-      </div>
     </form>
   );
 }

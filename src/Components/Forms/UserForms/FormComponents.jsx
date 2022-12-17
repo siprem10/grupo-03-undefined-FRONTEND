@@ -31,7 +31,7 @@ export function FormInput({
 }
 
 export function ErrorMessage({ msg }) {
-  return <p className="mt-4 text-center text-sm text-red-500 font-semibold">{msg}</p>;
+  return <p className="-mt-2 text-sm text-red-500 font-semibold">{msg}</p>;
 }
 
 export function FormButton({ children, className, type, onClick }) {
