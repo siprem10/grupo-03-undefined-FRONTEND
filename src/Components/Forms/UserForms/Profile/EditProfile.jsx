@@ -53,7 +53,7 @@ export default function EditProfile({ validationSchema, closeModal }) {
   return (
     <form className="w-full" onSubmit={(e) => e.preventDefault()} encType="multipart/form-data">
       <div className="flex justify-between">
-        <h1 className="flex items-center gap-2 uppercase tracking-wide text-lg font-semibold text-gray-700">
+        <h1 className="flex items-center gap-2 uppercase tracking-wide text-md xs:text-lg font-semibold text-gray-700 pr-9">
           <FaUser />Editar usuario
         </h1>
       </div>

@@ -48,7 +48,7 @@ export default function EditProfilePwd({ validationSchema, closeModal }) {
       <div className="w-full mt-1 gap-2">
         <div className="flex flex-wrap">
           <div className="flex justify-between mb-4">
-            <h1 className="flex items-center gap-2 uppercase tracking-wide text-lg font-semibold text-gray-700">
+            <h1 className="flex items-center gap-2 uppercase tracking-wide text-md xs:text-lg font-semibold text-gray-700 pr-9">
               <FaUser /> Cambiar Contraseña
             </h1>
           </div>
