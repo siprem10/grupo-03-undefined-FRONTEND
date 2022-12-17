@@ -72,7 +72,7 @@ function Profile() {
             <div className="flex flex-col gap-2 wrap">
               <BaseButton text="Editar Cuenta" onClick={openModalProfile} />
               <BaseButton text="Cambiar Contraseña" onClick={openModalPwd} />
-              <BaseButton text="Borrar cuenta" onClick={deleteAccount} />
+              <BaseButton className="redButton" text="Borrar cuenta" onClick={deleteAccount} />
             </div>
           </div>
         </div>

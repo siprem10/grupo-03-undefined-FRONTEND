@@ -4,6 +4,7 @@ export default function BaseButton({ text, color, onClick, disabled, className }
   function getClassName() {
     const background = {
       secondaryButton: 'secondaryButton',
+      redButton: 'redButton',
       default: 'primaryButton'
     };
     return background[color] ?? [background.default];
