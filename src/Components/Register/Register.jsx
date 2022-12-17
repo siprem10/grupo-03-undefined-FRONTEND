@@ -31,7 +31,7 @@ export default function Register() {
 
   function validateErrs(input) {
     let errors = {};
-    const maxName = 25;
+    const maxName = 20;
     const minName = 3;
     const minPwd = 8;
 
@@ -121,7 +121,7 @@ export default function Register() {
       <div className="flex flex-col justify-center items-center w-[90%] xs:w-[410px] my-10">
         <h1 className="title">Registro</h1>
         <form className="form" onSubmit={e => e.preventDefault()}>
-          <div className='flex gap-6'>
+          <div className='flex gap-4'>
             <div className="mb-4">
               <label className="label">Nombre</label>
               <input

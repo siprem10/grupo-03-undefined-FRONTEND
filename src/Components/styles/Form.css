@@ -15,5 +15,5 @@
 }
 
 .inputFormErr {
-  @apply text-red-600 font-bold;
+  @apply text-red-600 font-medium text-[14.6px] ml-1;
 }

@@ -40,6 +40,16 @@ export default function EditProfile({ validationSchema, closeModal }) {
     },
   })
 
+  function isButtonDisabled() {
+    return (
+      !formik.values.firstName ||
+      !formik.values.lastName ||
+      formik.errors.firstName ||
+      formik.errors.lastName ||
+      formik.errors.image
+    );
+  }
+
   return (
     <form className="w-full" onSubmit={(e) => e.preventDefault()} encType="multipart/form-data">
       <div className="flex justify-between">
@@ -113,7 +123,7 @@ export default function EditProfile({ validationSchema, closeModal }) {
           </div>
         </div>
       </div>
-      <BaseButton className="w-full mb-4" text="Actualizar Datos Usuario" onClick={formik.handleSubmit} />
+      <BaseButton disabled={isButtonDisabled()} className="w-full mb-4" text="Actualizar Datos Usuario" onClick={formik.handleSubmit} />
     </form>
   );
 }
