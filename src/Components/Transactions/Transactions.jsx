@@ -75,7 +75,7 @@ export default function Home() {
                     {transactionsFilter?.map((transaction) =>
                         <Card className='px-6 flex flex-col m-2 w-full hover:bg-gray-100 anim' key={transaction.id}>
                             <div className='flex justify-between w-full'>
-                                <h1 className={`${h1Style} pr-6 xl:pr-12`}>{transaction.pay}</h1>
+                                <h1 className={`${h1Style} pr-1`}>{transaction.pay}</h1>
                                 <h1 className={`${h1Style} ${isIngreso(transaction.type) ? "text-green-600" : "text-red-600"}`}>{`${isIngreso(transaction.type) ? "+" : "-"} $ ${transaction.amount}`}</h1>
                             </div>
                             {showIfTransfer(transaction.pay) &&
