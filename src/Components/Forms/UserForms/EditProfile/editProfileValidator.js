@@ -9,9 +9,9 @@ export default {
       }
 
       return Yup.string()
-        .min(3, `Nombre muy corto ${value.length}/3`)
-        .max(20, `Nombre muy largo ${value.length}/20`)
-        .matches(/^[A-Za-z ]*$/, "Nombre inválido");
+        .matches(/^[A-Za-z ]*$/, "Nombre inválido")
+        .min(3, `Nombre corto ${value.length}/3`)
+        .max(20, `Nombre largo ${value.length}/20`);
 
     }),
     lastName: Yup.lazy(value => {
@@ -20,9 +20,9 @@ export default {
       }
       
       return Yup.string()
-        .min(3, `Apellido muy corto ${value.length}/3`)
-        .max(20, `Apellido muy largo ${value.length}/20`)
-        .matches(/^[A-Za-z ]*$/, "Apellido inválido");
+        .matches(/^[A-Za-z ]*$/, "Apellido inválido")
+        .min(3, `Apellido corto ${value.length}/3`)
+        .max(20, `Apellido largo ${value.length}/20`);
     })
   })
 };

@@ -40,9 +40,9 @@ export default function Register() {
     } else if (!isValidName(input.firstName)) {
       errors.firstName = 'Nombre invalido';
     } else if (input.firstName.length < minName) {
-      errors.firstName = `Nombre muy corto (${input.firstName.length}/${minName})`;
+      errors.firstName = `Nombre corto ${input.firstName.length}/${minName}`;
     } else if (input.firstName.length > maxName) {
-      errors.firstName = `Nombre muy largo (${input.firstName.length}/${maxName})`;
+      errors.firstName = `Nombre largo ${input.firstName.length}/${maxName}`;
     }
 
     if (!input.lastName) {
@@ -50,9 +50,9 @@ export default function Register() {
     } else if (!isValidName(input.lastName)) {
       errors.lastName = 'Apellido inválido';
     } else if (input.lastName.length < minName) {
-      errors.lastName = `Apellido muy corto (${input.lastName.length}/${minName})`;
+      errors.lastName = `Apellido corto ${input.lastName.length}/${minName}`;
     } else if (input.lastName.length > maxName) {
-      errors.lastName = `Apellido muy largo (${input.lastName.length}/${maxName})`;
+      errors.lastName = `Apellido largo ${input.lastName.length}/${maxName}`;
     }
 
     if (!input.email) {
@@ -64,7 +64,7 @@ export default function Register() {
     if (!input.password) {
       errors.password = 'Contraseña requerida';
     } else if (input.password.length < minPwd) {
-      errors.password = `Contraseña muy corta (${input.password.length}/${minPwd})`;
+      errors.password = `Contraseña muy corta ${input.password.length}/${minPwd}`;
     }
 
     if (!errors.password && input.passwordConfirm !== input.password) {
@@ -118,7 +118,7 @@ export default function Register() {
 
   return (
     <Layout>
-      <div className="flex flex-col justify-center items-center w-[90%] xs:w-[410px] my-10">
+      <div className="flex flex-col justify-center items-center w-[95%] xs:w-[410px] my-10">
         <h1 className="title">Registro</h1>
         <form className="form" onSubmit={e => e.preventDefault()}>
           <div className='flex gap-4'>

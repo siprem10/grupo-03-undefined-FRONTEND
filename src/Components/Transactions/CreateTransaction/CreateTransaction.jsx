@@ -69,7 +69,7 @@ export default function CreateTransaction() {
 
     if (input.concept && input.concept.length > maxConcept) {
       errors.concept = `Concepto muy largo (${input.concept.length}/${maxConcept})`;
-    } else if (!isValidNum(input.concept)) {
+    } else if (input.concept && !isValidNum(input.concept)) {
       errors.concept = `Concepto inválido`;
     }
 
@@ -221,7 +221,7 @@ export default function CreateTransaction() {
           </div>
 
           <div className="mb-4">
-            <label className="label">Concepto</label>
+            <label className="label">Concepto (Opcional)</label>
             <input
               className="inputForm"
               type="text"

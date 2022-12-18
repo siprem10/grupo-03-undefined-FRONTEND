@@ -18,15 +18,7 @@ export default function EditProfilePwd({ validationSchema, closeModal }) {
     validationSchema,
     onSubmit: async () => {
       try {
-        const { currentPassword, newPassword, repeatPassword } = formik.values;
-
-        if ((currentPassword && !newPassword) || (currentPassword && !repeatPassword)) {
-          return alertErr('Si desea cambiar la contraseña debe proporcionar una nueva');
-        }
-
-        if (!currentPassword && newPassword && repeatPassword) {
-          return alertErr('Debe introducir su actual contraseña para poder cambiarla');
-        }
+        const { currentPassword, newPassword } = formik.values;
 
         const updated = await updateUserPwdInfo(id, {
           password: currentPassword,
