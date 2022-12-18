@@ -21,8 +21,8 @@ export default function EditProfile({ validationSchema, closeModal }) {
       try {
         const formData = formik.values;
 
-        if ((formData.firstName && firstName) &&
-          (formData.lastName && lastName)) {
+        if ((formData.firstName === firstName) &&
+          (formData.lastName === lastName)) {
           closeModal();
           return alertAdvert2("", "No se aplicaron cambios!");
         }
