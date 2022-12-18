@@ -76,8 +76,8 @@ function Profile() {
               <p className="leading-3 dark:text-white">{userData.Role.name} </p>
             </div>
             <div className="flex flex-col gap-2 wrap">
-              <BaseButton text="Editar Cuenta" onClick={openModalProfile} />
-              <BaseButton text="Cambiar imagen" onClick={openModalImage} />
+              <BaseButton text="Editar Perfil" onClick={openModalProfile} />
+              <BaseButton text="Cambiar Imagen" onClick={openModalImage} />
               <BaseButton text="Cambiar Contraseña" onClick={openModalPwd} />
               <BaseButton className="redButton" text="Borrar cuenta" onClick={deleteAccount} />
             </div>

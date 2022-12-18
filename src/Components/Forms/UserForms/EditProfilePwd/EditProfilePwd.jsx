@@ -107,7 +107,7 @@ export default function EditProfilePwd({ validationSchema, closeModal }) {
             </div>
           </div>
         </div>
-        <BaseButton className="w-full my-2" text={"Cambiar Contraseña"} onClick={formik.handleSubmit} />
+        <BaseButton className="w-full my-2" text={"Actualizar Contraseña"} onClick={formik.handleSubmit} />
       </div>
     </form>
   );

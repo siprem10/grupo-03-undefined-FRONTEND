@@ -54,7 +54,7 @@ export default function EditProfile({ validationSchema, closeModal }) {
     <form className="w-full" onSubmit={(e) => e.preventDefault()} encType="multipart/form-data">
       <div className="flex justify-between">
         <h1 className="flex items-center gap-2 uppercase tracking-wide text-md xs:text-lg font-semibold text-gray-700 pr-9">
-          <FaUser />Editar usuario
+          <FaUser />Editar Perfil
         </h1>
       </div>      
       <div className="flex flex flex-row justify-center items-center mt-4 gap-2">
@@ -93,7 +93,7 @@ export default function EditProfile({ validationSchema, closeModal }) {
           </div>
         </div>
       </div>
-      <BaseButton disabled={isButtonDisabled()} className="w-full mb-4" text="Actualizar Datos Usuario" onClick={formik.handleSubmit} />
+      <BaseButton disabled={isButtonDisabled()} className="w-full mb-4" text="Actualizar Perfil" onClick={formik.handleSubmit} />
     </form>
   );
 }
