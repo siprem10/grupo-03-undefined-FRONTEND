@@ -28,7 +28,7 @@ export default function CategoryDropdown({ title, items, className, stateSelect,
                     <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
                         {items?.map((item, i) =>
                             <li key={i}>
-                                {stateSelect !== item.name && <p onClick={() => handleSetState(item)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{item.name}</p>}
+                                {<p onClick={() => handleSetState(item)} className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{item.name}</p>}
                             </li>
                         )}
                     </ul>
