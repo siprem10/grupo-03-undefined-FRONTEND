@@ -6,7 +6,7 @@ import { alertErr, alertOk } from '../../../../Utils/UI';
 import { getUserInfo, updateUserImage } from '../../../../redux/actions/authActions';
 import BaseButton from '../../../BaseButton/BaseButton';
 
-export default function EditProfile({ validationSchema, closeModal }) {
+export default function EditImage({ validationSchema, closeModal }) {
 
   const dispatch = useDispatch();
   const { id, avatar } = useSelector(user => user.auth.userData);
