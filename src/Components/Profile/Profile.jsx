@@ -10,16 +10,19 @@ import defaultAvatar from '../../assets/user/avatar_default.png';
 import BudgetChart from '../Graphs/PieChart/PieChart';
 import BaseButton from '../BaseButton/BaseButton';
 import { alertAdvert } from '../../Utils/UI';
+import ModalModifyImage from '../ModalModifyImage/ModalModifyImage';
 
 function Profile() {
   const [modifyProfile, setModifyProfile] = useState(false);
   const [modifyPwd, setModifyPwd] = useState(false);
+  const [modifyImage, setModifyImage] = useState(false);
 
   const userData = useSelector(state => state.auth.userData);
   const dispatch = useDispatch();
 
   const openModalProfile = (show = true) => setModifyProfile(show);
   const openModalPwd = (show = true) => setModifyPwd(show);
+  const openModalImage = (show = true) => setModifyImage(show);
 
   const deleteAccount = () => {
 
@@ -43,6 +46,9 @@ function Profile() {
           }
           {modifyPwd &&
             <ModalModifyProfilePwd closeModal={() => openModalPwd(false)} />
+          }
+          {modifyImage &&
+            <ModalModifyImage closeModal={() => openModalImage(false)} />
           }
           <div className="flex flex-col w-[100%] gap-5 bg-white dark:bg-gray-800 dark:border-gray-700 text-black rounded-lg p-10">
             {/* Profile Image*/}
@@ -71,6 +77,7 @@ function Profile() {
             </div>
             <div className="flex flex-col gap-2 wrap">
               <BaseButton text="Editar Cuenta" onClick={openModalProfile} />
+              <BaseButton text="Cambiar imagen" onClick={openModalPwd} />
               <BaseButton text="Cambiar Contraseña" onClick={openModalPwd} />
               <BaseButton className="redButton" text="Borrar cuenta" onClick={deleteAccount} />
             </div>
