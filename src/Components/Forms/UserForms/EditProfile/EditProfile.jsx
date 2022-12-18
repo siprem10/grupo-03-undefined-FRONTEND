@@ -1,39 +1,40 @@
 import { useFormik } from 'formik';
 import { FaUser } from 'react-icons/fa';
-import { FormLabel, FormInput, ErrorMessage, PreviewImage } from '../FormComponents';
+import { FormLabel, FormInput, ErrorMessage } from '../FormComponents';
 import { useDispatch, useSelector } from 'react-redux';
 import { alertErr, alertOk } from '../../../../Utils/UI';
 import { getUserInfo, updateUserInfo } from '../../../../redux/actions/authActions';
 import BaseButton from '../../../BaseButton/BaseButton';
 
 export default function EditProfile({ validationSchema, closeModal }) {
+
   const dispatch = useDispatch();
-  const { id, firstName, lastName, avatar } = useSelector(user => user.auth.userData);
+  const { id, firstName, lastName } = useSelector(user => user.auth.userData);
 
   const formik = useFormik({
     initialValues: {
       firstName,
-      lastName,
-      image: avatar
+      lastName
     },
     validationSchema,
     onSubmit: async () => {
       try {
-        const { firstName, lastName, image } = formik.values;
+        const { firstName, lastName } = formik.values;
+
         if (!firstName || !lastName) {
           return alertErr('Complete todos los campos!');
         }
 
         const filteredData = {
           firstName,
-          lastName,
-          image,
+          lastName
         };
 
         const updated = await updateUserInfo(id, filteredData);
         dispatch(getUserInfo());
         alertOk(updated.message);
         closeModal();
+
       } catch (error) {
         alertErr(error.response.data.error.message);
       }
@@ -45,8 +46,7 @@ export default function EditProfile({ validationSchema, closeModal }) {
       !formik.values.firstName ||
       !formik.values.lastName ||
       formik.errors.firstName ||
-      formik.errors.lastName ||
-      formik.errors.image
+      formik.errors.lastName
     );
   }
 
@@ -56,37 +56,7 @@ export default function EditProfile({ validationSchema, closeModal }) {
         <h1 className="flex items-center gap-2 uppercase tracking-wide text-md xs:text-lg font-semibold text-gray-700 pr-9">
           <FaUser />Editar usuario
         </h1>
-      </div>
-      {/* <div>
-        <FormInput
-          id="image"
-          type="file"
-          name="image"
-          onChange={e => formik.setFieldValue('image', e.target.files[0])}
-          invisible={true}
-        />
-
-        <div className="justify-center mb-5">
-          {formik.values.image && (
-            <PreviewImage
-              className="w-32 h-32 rounded-full object-cover"
-              file={formik.values.image}
-              onClick={() => formik.setFieldValue('image', null)}
-            />
-          )}
-          <div className="flex flex-col items-center justify-center">
-            <FormLabel htmlFor="avatar">
-              Avatar <small>(Opcional)</small>
-            </FormLabel>
-            <FormLabel className="primaryButton hover:opacity-80 text-white rounded-md shadow-md disabled:opacity-75" labelButton={true} htmlFor="image">
-              Seleccionar Archivo
-            </FormLabel>
-            {formik.values.image && formik.errors.image && (
-              <ErrorMessage msg={formik.errors.image} />
-            )}
-          </div>
-        </div>
-      </div> */}
+      </div>      
       <div className="flex flex flex-row justify-center items-center mt-4 gap-2">
         <div className="w-[100%]">
           <FormLabel htmlFor="firstName">Nombre</FormLabel>

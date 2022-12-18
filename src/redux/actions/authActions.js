@@ -61,6 +61,12 @@ export async function updateUserInfo(id, data) {
     return response.data;
 }
 
+export async function updateUserImage(id, image) {
+    const httpService = new HttpService();
+    const response = await httpService.apiPrivate().put(`/users/changeimage/${id}`, image);
+    return response.data;
+}
+
 export async function updateUserPwdInfo(id, { password, newPassword }) {
     const httpService = new HttpService();
     const response = await httpService.apiPrivate().put(`/users/changepassword/${id}`, { password, newPassword });

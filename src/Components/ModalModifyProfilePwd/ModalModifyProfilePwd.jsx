@@ -1,6 +1,6 @@
 import React from 'react';
-import EditProfilePwd from '../Forms/UserForms/Pwd/EditProfilePwd';
-import editProfilePwdValidator from '../Forms/UserForms/Pwd/editProfilePwdValidator';
+import EditProfilePwd from '../Forms/UserForms/EditProfilePwd/EditProfilePwd';
+import editProfilePwdValidator from '../Forms/UserForms/EditProfilePwd/editProfilePwdValidator';
 import Modal from '../Modal';
 
 export default function ModalModifyProfilePwd({ closeModal }) {
