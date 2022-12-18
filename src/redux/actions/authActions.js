@@ -61,9 +61,13 @@ export async function updateUserInfo(id, data) {
     return response.data;
 }
 
-export async function updateUserImage(id, image) {
+export async function updateUserImage(id, file) {
+    const image = new FormData();
+    image.append("image", file);
+
     const httpService = new HttpService();
-    const response = await httpService.apiPrivate().put(`/users/changeimage/${id}`, image);
+    const response = await httpService.apiPrivateFormData().put(`/users/changeimage/${id}`, image);
+
     return response.data;
 }
 

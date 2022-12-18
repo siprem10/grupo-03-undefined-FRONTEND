@@ -16,9 +16,8 @@ export function FormInput({
       className={
         invisible === true
           ? 'invisible m-0 w-0 h-0 l-0 r-0'
-          : `mb-3 appearance-none block w-full bg-gray-200 text-gray-700 border ${
-              value.length > 0 && formikError ? 'border-red-500' : 'border-gray-200'
-            } rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 ${className}`
+          : `mb-3 appearance-none block w-full bg-gray-200 text-gray-700 border ${value.length > 0 && formikError ? 'border-red-500' : 'border-gray-200'
+          } rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-teal-500 ${className}`
       }
       id={id}
       name={name}
@@ -50,7 +49,7 @@ export function FormLabel({ labelButton = false, children, htmlFor, onClick, cla
     <label
       className={
         labelButton === true
-          ? `flex space-x-2 justify-center items-center w-fit m-0 px-6 py-2.5 bg-teal-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-teal-700 hover:shadow-lg focus:bg-teal-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-teal-800 active:shadow-lg transition duration-150 ease-in-out hover:cursor-pointer ${className}`
+          ? `primaryButton hover:opacity-80 text-white rounded-md shadow-md disabled:opacity-75 ${className}`
           : `block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 ${className}`
       }
       htmlFor={htmlFor}
@@ -60,7 +59,7 @@ export function FormLabel({ labelButton = false, children, htmlFor, onClick, cla
   );
 }
 
-export function PreviewImage({ file, onClick }) {
+export function PreviewImage({ className, file, onClick }) {
   const [preview, setPreview] = useState(null);
   const nameImage = !file.name ? file.split('/')[4] : file.name;
 
@@ -73,16 +72,16 @@ export function PreviewImage({ file, onClick }) {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className={`flex flex-col justify-center items-center ${className ?? ""}`}>
       <button
         onClick={onClick}
-        className="relative top-4 left-14 px-2 py-1 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out mb-2">
+        className="hover:bg-red-700 anim z-10 h-32 w-32 rounded-full border-4 border-slate-500 bg-opacity-0	text-white font-bold text-xl">
         X
       </button>
       <img
         src={file.type ? preview : file}
         alt={nameImage}
-        className="h-32 w-32 rounded-full border-4 border-slate-500 object-cover object-center"
+        className="z-1 absolute h-32 w-32 rounded-full border-4 border-slate-500 object-cover object-center"
       />
     </div>
   );

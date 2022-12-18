@@ -44,11 +44,11 @@ function Profile() {
           {modifyProfile &&
             <ModalModifyProfile closeModal={() => openModalProfile(false)} />
           }
-          {modifyPwd &&
-            <ModalModifyProfilePwd closeModal={() => openModalPwd(false)} />
-          }
           {modifyImage &&
             <ModalModifyImage closeModal={() => openModalImage(false)} />
+          }
+          {modifyPwd &&
+            <ModalModifyProfilePwd closeModal={() => openModalPwd(false)} />
           }
           <div className="flex flex-col w-[100%] gap-5 bg-white dark:bg-gray-800 dark:border-gray-700 text-black rounded-lg p-10">
             {/* Profile Image*/}
@@ -77,7 +77,7 @@ function Profile() {
             </div>
             <div className="flex flex-col gap-2 wrap">
               <BaseButton text="Editar Cuenta" onClick={openModalProfile} />
-              <BaseButton text="Cambiar imagen" onClick={openModalPwd} />
+              <BaseButton text="Cambiar imagen" onClick={openModalImage} />
               <BaseButton text="Cambiar Contraseña" onClick={openModalPwd} />
               <BaseButton className="redButton" text="Borrar cuenta" onClick={deleteAccount} />
             </div>

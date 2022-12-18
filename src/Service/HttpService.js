@@ -18,6 +18,17 @@ export class HttpService {
       }
     });
   }
+
+  apiPrivateFormData() {
+    return axios.create({
+      baseURL: BASE_URL,
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'auth-token': `${getToken()}`,
+        withCredentials: true
+      }
+    });
+  }
 }
 
 // get data from api without token

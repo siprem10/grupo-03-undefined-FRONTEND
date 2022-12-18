@@ -26,7 +26,8 @@ export default function EditImage({ validationSchema, closeModal }) {
         alertOk(updated.message);
         closeModal();
 
-      } catch (error) {
+      } catch (error) { 
+        console.error(error)
         alertErr(error.response.data.error.message);
       }
     },
@@ -55,27 +56,27 @@ export default function EditImage({ validationSchema, closeModal }) {
           invisible={true}
         />
         <div className="justify-center mb-5">
-          {formik.values.image && (
+          {formik.values.image && !formik.errors.image &&
             <PreviewImage
-              className="w-32 h-32 rounded-full object-cover"
+              className="pb-4"
               file={formik.values.image}
               onClick={() => formik.setFieldValue('image', null)}
             />
-          )}
+          }
           <div className="flex flex-col items-center justify-center">
-            <FormLabel htmlFor="avatar">
-              Avatar <small>(Opcional)</small>
-            </FormLabel>
-            <FormLabel className="primaryButton hover:opacity-80 text-white rounded-md shadow-md disabled:opacity-75" labelButton={true} htmlFor="image">
+
+            <FormLabel labelButton={true} htmlFor="image">
               Seleccionar Archivo
-            </FormLabel>
-            {formik.values.image && formik.errors.image && (
-              <ErrorMessage msg={formik.errors.image} />
-            )}
+            </FormLabel>  
+            <div className='pt-4 h-6 flex justify-start'>
+              {formik.values.image && formik.errors.image && (
+                <ErrorMessage msg={formik.errors.image} />
+              )}
+            </div>
           </div>
         </div>
       </div>
-      <BaseButton disabled={isButtonDisabled()} className="w-full mb-4" text="Actualizar Datos Usuario" onClick={formik.handleSubmit} />
+      <BaseButton disabled={isButtonDisabled()} className="w-full mb-4" text="Actualizar Imagen" onClick={formik.handleSubmit} />
     </form>
   );
 }
