@@ -53,7 +53,7 @@ function Profile() {
           <div className="flex flex-col w-[100%] gap-5 bg-white dark:bg-gray-800 dark:border-gray-700 text-black rounded-lg p-10">
             {/* Profile Image*/}
             <img
-              className="h-36 w-36 rounded-full self-center shadow-md shadow-black border-4 border-teal-600 border-spacing-x-60"
+              className="h-36 w-36 rounded-full self-center shadow-md shadow-black border-4 border-teal-600"
               src={userData.avatar || defaultAvatar}
               alt={userData.firstName}
             />

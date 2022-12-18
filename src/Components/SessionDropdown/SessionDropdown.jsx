@@ -48,7 +48,7 @@ export default function SessionDropdown() {
           className="bg-opacity-0 sm:bg-primary sm:hover:bg-emerald-700 text-white focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-full sm:rounded-lg text-sm sm:px-3.5 sm:py-2.5 text-center inline-flex items-center"
           type="button">
           <img
-            className="anim shadow rounded-full h-12 sm:h-10 border border-emerald-900"
+            className="anim shadow rounded-full h-12 w-12 sm:h-10 sm:w-10 border border-emerald-900"
             src={userData.avatar ?? avatar_default}
             onError={setImgUserErr}
             alt="img found"

@@ -75,13 +75,13 @@ export function PreviewImage({ className, file, onClick }) {
     <div className={`flex flex-col justify-center items-center ${className ?? ""}`}>
       <button
         onClick={onClick}
-        className="hover:bg-red-700 anim z-10 h-32 w-32 rounded-full border-4 border-slate-500 bg-opacity-0	text-white font-bold text-xl">
+        className="hover:bg-red-700 anim z-10 h-32 w-32 rounded-full border-4 border-teal-600 bg-opacity-0	text-white font-bold text-xl">
         X
       </button>
       <img
         src={file.type ? preview : file}
         alt={nameImage}
-        className="z-1 absolute h-32 w-32 rounded-full border-4 border-slate-500 object-cover object-center"
+        className="z-1 absolute h-32 w-32 rounded-full border-4 border-teal-600 object-cover"
       />
     </div>
   );
