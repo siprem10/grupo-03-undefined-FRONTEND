@@ -44,3 +44,7 @@ export function alertAdvert(onClick, text, title = "Atención!") {
     alertBase(onClick, "warning", title, text, true);
 }
 
+export function alertAdvert2(text, title = "Atención!") {
+    alertBase(null, "warning", title, text);
+}
+

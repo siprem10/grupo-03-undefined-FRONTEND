@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import { FaUser } from 'react-icons/fa';
 import { FormLabel, FormInput, ErrorMessage } from '../FormComponents';
 import { useDispatch, useSelector } from 'react-redux';
-import { alertErr, alertOk } from '../../../../Utils/UI';
+import { alertAdvert, alertAdvert2, alertErr, alertOk } from '../../../../Utils/UI';
 import { getUserInfo, updateUserInfo } from '../../../../redux/actions/authActions';
 import BaseButton from '../../../BaseButton/BaseButton';
 
@@ -19,15 +19,17 @@ export default function EditProfile({ validationSchema, closeModal }) {
     validationSchema,
     onSubmit: async () => {
       try {
-        const { firstName, lastName } = formik.values;
+        const formData = formik.values;
 
-        if (!firstName || !lastName) {
-          return alertErr('Complete todos los campos!');
+        if ((formData.firstName && firstName) &&
+          (formData.lastName && lastName)) {
+          closeModal();
+          return alertAdvert2("", "No se aplicaron cambios!");
         }
 
         const filteredData = {
-          firstName,
-          lastName
+          firstName: formData.firstName,
+          lastName: formData.lastName
         };
 
         const updated = await updateUserInfo(id, filteredData);
@@ -56,7 +58,7 @@ export default function EditProfile({ validationSchema, closeModal }) {
         <h1 className="flex items-center gap-2 uppercase tracking-wide text-md xs:text-lg font-semibold text-gray-700 pr-9">
           <FaUser />Editar Perfil
         </h1>
-      </div>      
+      </div>
       <div className="flex flex flex-row justify-center items-center mt-4 gap-2">
         <div className="w-[100%]">
           <FormLabel htmlFor="firstName">Nombre</FormLabel>
