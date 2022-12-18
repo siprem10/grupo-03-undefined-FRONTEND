@@ -29,8 +29,8 @@ export default function Landing() {
           </h1>
           <p className="">
             Toma el control de tus finanzas personales y de tu negocio con AlkyBank Wallet. Con esta
-            app podrás llevar un control de tus gastos, ingresos y transferencias. Además, podrás
-            crear presupuestos y ver tus estadísticas de gastos.
+            app podrás llevar un control de tus ingresos y gastos. Además, podrás
+            realizar carga de saldo, transferencias, pago de servicios y ver estadísticas.
           </p>
           <BaseButton
             text={status === 'success' ? 'Ir a mi cuenta' : 'Registrate'}
